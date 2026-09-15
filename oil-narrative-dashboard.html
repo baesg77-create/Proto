@@ -1553,6 +1553,47 @@
       .pc-phase { grid-template-columns: 4.2rem minmax(0,1fr); }
     }
 
+  
+    /* ===== v9: assumption matrix + restructured monthly narrative ===== */
+    .assume-wrap { margin-bottom: var(--space-xl); }
+    .assume-grid .ag-cell .pill.none { color: var(--color-muted); background: var(--color-paper-3); }
+    .assume-grid .ag-cell b { color: var(--color-ink); }
+    .assume-grid .ag-cell .ag-note { display: block; margin-top: 3px; color: var(--color-muted); font-size: .6875rem; line-height: 1.5; }
+    .assume-grid .ag-row.key-row .ag-key { color: var(--color-accent); }
+
+    .month-title-row { display: flex; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap; margin-bottom: var(--space-md); }
+    .month-title-row h3 { flex: 0 0 auto; }
+    .month-headline { margin: 0; color: var(--color-accent); font-size: 1rem; font-weight: 800; line-height: 1.4; }
+
+    .month-chain { display: flex; align-items: center; gap: var(--space-2xs); flex-wrap: wrap; margin-bottom: var(--space-md); padding: var(--space-sm) var(--space-md); background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius); }
+    .month-chain .mc-label { margin-right: var(--space-2xs); color: var(--color-muted); font-size: .625rem; font-weight: 800; letter-spacing: .04em; }
+    .month-chain .mc-step { padding: 3px 9px; background: var(--color-paper); border: 1px solid var(--color-rule-strong); border-radius: 999px; font-size: .75rem; font-weight: 700; color: var(--color-ink); }
+    .month-chain .mc-arrow { color: var(--color-accent); font-weight: 800; }
+    .month-chain.dir-up .mc-step:last-of-type { color: var(--up); border-color: var(--up); background: var(--up-soft); }
+    .month-chain.dir-flat .mc-step:last-of-type { color: oklch(45% 0.09 80); border-color: var(--flat); background: var(--flat-soft); }
+    .month-chain.dir-down .mc-step:last-of-type { color: var(--down); border-color: var(--down); background: var(--down-soft); }
+
+    .month-body { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-xs); }
+    .month-body li { position: relative; padding-left: 1rem; color: var(--color-ink-2); font-size: .8125rem; line-height: 1.7; }
+    .month-body li::before { content: ""; position: absolute; left: 0; top: .6em; width: .35rem; height: .35rem; border-radius: 50%; background: var(--color-rule-strong); }
+
+    .month-next { margin-top: var(--space-md); padding: var(--space-sm) var(--space-md); background: var(--teal-soft); border-left: 3px solid var(--color-accent); border-radius: 0 var(--radius) var(--radius) 0; }
+    .month-next strong { display: block; margin-bottom: 2px; color: var(--color-accent); font-size: .625rem; font-weight: 800; letter-spacing: .04em; }
+    .month-next p { margin: 0; color: var(--color-ink); font-size: .75rem; line-height: 1.6; }
+
+    .scenario-active-events ul { padding-left: 0; list-style: none; }
+    .scenario-active-events li { display: flex; align-items: flex-start; gap: var(--space-xs); padding: var(--space-xs) var(--space-sm); background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius); }
+    .scenario-active-events li .ev-tag { flex: 0 0 auto; padding: 1px 6px; border-radius: 999px; font-size: .5625rem; font-weight: 800; }
+    .scenario-active-events li .ev-tag.up { color: var(--up); background: var(--up-soft); }
+    .scenario-active-events li .ev-tag.down { color: var(--down); background: var(--down-soft); }
+    .scenario-active-events li .ev-tag.mixed { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .scenario-active-events li .ev-tag.none { color: var(--color-muted); background: var(--color-paper-3); }
+    .scenario-active-events li .ev-name { min-width: 0; color: var(--color-ink-2); font-size: .75rem; line-height: 1.5; }
+
+    @media (max-width: 640px) {
+      .month-headline { font-size: .875rem; }
+    }
+
   </style>
 </head>
 <body>
@@ -1968,6 +2009,13 @@
             <div class="traj-strip" id="trajStrip"></div>
           </div>
         </div>
+        <div class="assume-wrap">
+          <div class="integrated-heading" style="margin-bottom:var(--space-2xs)">
+            <h4 style="margin:0;font-size:.875rem;">비교 가정별 경로 차이</h4>
+            <span class="asof">파란 배경 = 경로 간 차이가 결정적인 가정</span>
+          </div>
+          <div class="assume-matrix"><div class="assume-grid" id="assumeGrid"></div></div>
+        </div>
         <div class="gantt">
           <div class="integrated-heading" style="margin-bottom:var(--space-2xs)">
             <h4 style="margin:0;font-size:.875rem;">핵심 가정별 활성 구간 비교</h4>
@@ -2004,11 +2052,16 @@
         </div>
         <article class="scenario-narrative-copy" aria-live="polite">
           <div class="scenario-narrative-meta"><span class="scenario-direction-badge" id="scenarioDirectionBadge">상승</span><span class="section-kicker" id="scenarioPathMeta">BASE PATH</span></div>
-          <h3 id="scenario-narrative-title">M월 경로 해석</h3>
-          <p id="scenarioNarrativeText"></p>
+          <div class="month-title-row">
+            <h3 id="scenario-narrative-title">M월 경로 해석</h3>
+            <p class="month-headline" id="scenarioMonthHeadline"></p>
+          </div>
+          <div class="month-chain" id="scenarioChain"></div>
+          <ul class="month-body" id="scenarioNarrativeText"></ul>
+          <div class="month-next" id="scenarioNextSignal" hidden><strong>다음 전환 신호</strong><p></p></div>
+          <div class="scenario-active-events"><strong>활성 이벤트 · ACTIVE EVENTS</strong><ul id="scenarioActiveEvents"></ul></div>
           <div class="scenario-similar-sources"><strong>유사 기관지</strong><div class="scenario-source-list" id="scenarioSimilarSources"></div></div>
-          <div class="scenario-active-events"><strong>ACTIVE EVENTS</strong><ul id="scenarioActiveEvents"></ul></div>
-          <div class="scenario-axis-block"><strong>SIX-AXIS NARRATIVE · RESULT TEXT</strong><div class="scenario-axis-grid" id="scenarioAxisNarratives"></div></div>
+          <div class="scenario-axis-block"><strong>6축 내러티브 · SIX-AXIS NARRATIVE</strong><div class="scenario-axis-grid" id="scenarioAxisNarratives"></div></div>
         </article>
       </section>
     </section>
@@ -2245,28 +2298,150 @@
         geopolitics: "지정학"
       };
 
+      const MONTH_HEADLINES = {
+        "Base 경로": [
+          "이벤트 이전의 출발점 — 항로·정유 차질이 만든 현재의 긴축",
+          "항로 차질에 재고 긴축까지, 상승 압력이 겹친다",
+          "정유 차질이 재고 저점을 시험한다",
+          "부분 회복이 시작되지만 재고는 여전히 낮다",
+          "항로가 열리기 시작 — 공급 개선과 EV 수요 하방이 맞선다",
+          "차질 이벤트 소멸 — 공급 회복이 수요 약세와 같은 편에 서다",
+          "재균형과 구조적 수요 약화, 재고가 다시 쌓이기 시작",
+          "재고 완충력은 개선, 그러나 EV가 수요 상단을 막는다",
+          "부분 정상화는 이어지고 재고 증가세는 둔화된다",
+          "비OPEC 물량 확대로 재고 재축적이 본격화된다",
+          "공급은 돌아오고 수요는 약하다 — 완충력 회복",
+          "공급·재고 회복이 수요 안정과 균형을 이루다",
+          "공급 정상화 뒤 남은 것은 구조적 수요 약세"
+        ],
+        "상승 경로": [
+          "이벤트 이전의 출발점 — 항로·정유 차질이 만든 현재의 긴축",
+          "부분 통항 회복에도 정유 차질이 상승을 끌고 간다",
+          "중국 구매 반등이 제품 부족과 만나 상승을 지지한다",
+          "공급 회복과 수요 약세가 맞서 균형에 들어서다",
+          "중국 구매와 항로 부분 회복으로 재고 인출이 멈추다",
+          "생산 회복이 수요를 앞지르며 하락 압력이 우세해지다",
+          "비OPEC 증산으로 재고 재축적, 물리적 긴축이 풀린다",
+          "공급 회복이 이어지며 재고 순증 — 하락이 지속된다",
+          "수요 회복이 공급 증가를 흡수하기 시작한다",
+          "수요 증가가 공급 증가를 상쇄하며 보합이 굳어진다",
+          "완만한 재고 재축적, 방향성은 중립에 머문다",
+          "수요 강화로 재고 축적이 둔화 — 일시적 반등",
+          "공급과 수요가 균형에 접근, 완만한 축적으로 마감"
+        ],
+        "대안 경로": [
+          "이벤트 이전의 출발점 — 항로·정유 차질이 만든 현재의 긴축",
+          "항로 차질과 재고 인출이 약한 수요를 압도한다",
+          "정유 차질로 재고가 저점을 향한다",
+          "부분 회복에도 재고 감소가 이어져 상승이 연장되다",
+          "항로가 부분적으로 열리며 재고 인출이 둔화된다",
+          "공급은 회복, 수요 회복은 지연 — 방향은 중립",
+          "증산과 항로 정상화를 수요가 못 받아내며 재고가 쌓인다",
+          "EV 억제가 가세 — 수요 약세가 두 겹이 되다",
+          "공급 증가에 EV 수요 제약까지, 재고 완충이 확대된다",
+          "수요 구성의 비대칭 — 재고 완충 속 보합",
+          "부분 회복이 재고 감소 압력을 덜어낸다",
+          "공급 증가를 수요가 제한적으로만 흡수한다",
+          "항로 회복 뒤 균형 완화 — 재고 재축적으로 마감"
+        ]
+      };
+      const FACTOR_SHORT = { up: "상승요인", down: "하락요인", mixed: "양방향" };
+
+      /* V20 서술문을 전개경로 / 본문 / 다음 신호로 분해 */
+      function parseMonthNarrative(text) {
+        const sentences = text.split(/(?<=\.)\s+/).map((s) => s.trim()).filter(Boolean);
+        let chainRaw = "", nextRaw = "";
+        const body = [];
+        sentences.forEach((s) => {
+          if (s.includes("전개경로")) {
+            const idx = s.search(/다음\s*(?:달에는|전환|신호|확인|점검)/);
+            if (idx > -1) { chainRaw = s.slice(0, idx); nextRaw = s.slice(idx); }
+            else chainRaw = s;
+          } else if (/^다음(?:\s*달에는|\s*전환|\s*신호|에는|은|의)/.test(s)) {
+            nextRaw = nextRaw ? nextRaw + " " + s : s;
+          } else body.push(s);
+        });
+        let steps = [];
+        const m = chainRaw.match(/전개경로는\s*([\s\S]*)/);
+        if (m) {
+          let c = m[1].split("이며")[0].split("로 이어져")[0].split("으로 연결되며")[0];
+          steps = c.split("→").map((s) => s.trim()).filter(Boolean);
+          if (steps.length) {
+            steps[steps.length - 1] = steps[steps.length - 1]
+              .split(",")[0].replace(/\.$/, "").replace(/(?:이다|다|이|가)$/, "").trim();
+          }
+          steps = steps.filter(Boolean);
+        }
+        nextRaw = nextRaw.replace(/^다음\s*달에는\s*/, "").replace(/^다음\s*(?:전환\s*)?신호는\s*/, "")
+          .replace(/^다음에는\s*/, "").replace(/^다음은\s*/, "").trim();
+        return { steps, body: body.length ? body : sentences, next: nextRaw };
+      }
       function renderScenarioNarrative() {
         const path = scenarioData[selectedScenarioPath];
         const [label, direction, narrative, events, axes, similarSources] = path.months[selectedScenarioMonth];
+        const dc = dirClass(direction);
         document.getElementById("scenarioDirectionBadge").textContent = direction;
         document.getElementById("scenarioPathMeta").textContent = `${path.role} · ${path.probability.toFixed(1)}% · 대표 seed ${path.representativeSeed}`;
         document.getElementById("scenario-narrative-title").textContent = `${label} 경로 해석`;
-        document.getElementById("scenarioNarrativeText").textContent = narrative;
+
+        const heads = MONTH_HEADLINES[path.role] || [];
+        document.getElementById("scenarioMonthHeadline").textContent =
+          heads[selectedScenarioMonth] ? `“${heads[selectedScenarioMonth]}”` : "";
+
+        const parsed = parseMonthNarrative(narrative);
+        const chain = document.getElementById("scenarioChain");
+        chain.className = `month-chain ${dc}`;
+        if (parsed.steps.length) {
+          const kids = [];
+          const lab = document.createElement("span"); lab.className = "mc-label"; lab.textContent = "전개경로";
+          kids.push(lab);
+          parsed.steps.forEach((s, i) => {
+            if (i) { const a = document.createElement("span"); a.className = "mc-arrow"; a.textContent = "→"; kids.push(a); }
+            const st = document.createElement("span"); st.className = "mc-step"; st.textContent = s; kids.push(st);
+          });
+          chain.replaceChildren(...kids);
+          chain.hidden = false;
+        } else { chain.replaceChildren(); chain.hidden = true; }
+
+        const bodyList = document.getElementById("scenarioNarrativeText");
+        bodyList.replaceChildren(...parsed.body.map((s) => {
+          const li = document.createElement("li"); li.textContent = s; return li;
+        }));
+
+        const nextBox = document.getElementById("scenarioNextSignal");
+        if (parsed.next) { nextBox.querySelector("p").textContent = parsed.next; nextBox.hidden = false; }
+        else nextBox.hidden = true;
+
         const sourceList = document.getElementById("scenarioSimilarSources");
         sourceList.replaceChildren(...(similarSources.length ? similarSources : ["직접 연결 근거 없음"]).map((source) => {
           const item = document.createElement("span");
           item.textContent = source;
           return item;
         }));
+
         const eventList = document.getElementById("scenarioActiveEvents");
-        const emptyEventLabel = selectedScenarioMonth === 0
-          ? "기준월: 경로 이벤트 활성 전"
-          : "활성 이벤트 없음: 펀더멘털·정상화 구간";
-        eventList.replaceChildren(...(events.length ? events : [emptyEventLabel]).map((eventName) => {
-          const item = document.createElement("li");
-          item.textContent = eventName;
-          return item;
-        }));
+        if (events.length) {
+          eventList.replaceChildren(...events.map((eventName) => {
+            const li = document.createElement("li");
+            const cat = CATEGORY_META.find((c) => c.key === EVENT_CATEGORY[eventName]);
+            const tag = document.createElement("span");
+            tag.className = `ev-tag ${cat ? cat.factor : "none"}`;
+            tag.textContent = cat ? FACTOR_SHORT[cat.factor] : "미분류";
+            const nm = document.createElement("span"); nm.className = "ev-name"; nm.textContent = eventName;
+            li.append(tag, nm);
+            return li;
+          }));
+        } else {
+          const li = document.createElement("li");
+          const tag = document.createElement("span"); tag.className = "ev-tag none"; tag.textContent = "—";
+          const nm = document.createElement("span"); nm.className = "ev-name";
+          nm.textContent = selectedScenarioMonth === 0
+            ? "기준월: 경로 이벤트 활성 전 (확인된 현재 상태)"
+            : "활성 이벤트 없음: 펀더멘털·정상화 구간";
+          li.append(tag, nm);
+          eventList.replaceChildren(li);
+        }
+
         const axisContainer = document.getElementById("scenarioAxisNarratives");
         axisContainer.replaceChildren(...axes.map(([axis, axisNarrative, axisSources]) => {
           const item = document.createElement("section");
@@ -2878,6 +3053,70 @@
         return out;
       }
 
+      /* 비교 가정 매트릭스 — 구간 수치는 V20 이벤트 활성 월 집계와 일치시킨 값 */
+      const SCEN_COLS = ["Base 경로 · 하락", "상승 경로 · 보합", "대안 경로 · 보합"];
+      const scenarioAssumptions = [
+        { key: "공급 차질 지속 (항로·정유)", factor: "up", hot: false, cells: [
+          ["up", "M+1~M+4 · 4개월", "M+5에 소멸. 이후에는 하락요인만 남습니다."],
+          ["up", "M+1~M+5 · 5개월", "<b>세 경로 중 최장.</b> 공급 측면에서는 가장 타이트한 경로입니다."],
+          ["up", "M+1~M+4 · 4개월", "Base와 <b>동일한 기간</b>이지만, 이후 회복이 ‘부분’에 그쳐 잔여 차질이 끝까지 남습니다."] ] },
+        { key: "완화·재균형 시작 (비OPEC 증산·항로 회복)", factor: "down", hot: false, cells: [
+          ["down", "M+4 시작 · 8개월", "‘항로 회복’을 포함한 재균형이라 공급 정상화 폭이 가장 큽니다."],
+          ["down", "M+5 시작 · 8개월", "<b>가장 늦게 시작.</b> ‘역내 생산 회복’ 중심이라 항로 정상화는 제한적입니다."],
+          ["down", "M+4 시작 · 9개월", "기간은 가장 길지만 <b>‘부분적’ 항로 회복</b>에 한정됩니다."] ] },
+        { key: "중국 EV 구조적 수요 약화", factor: "down", hot: true, cells: [
+          ["down", "M+4~M+12 · 9개월", "<b>가장 이르고 가장 길다.</b> Base가 유일하게 하락으로 끝나는 직접 원인입니다."],
+          ["none", "이벤트 없음", "세 경로 중 <b>유일하게 EV 하방을 반영하지 않습니다.</b> (GS는 2027년 구조적 하방으로 제시)"],
+          ["down", "M+7~M+12 · 6개월", "Base보다 <b>3개월 늦게</b> 시작해 하락 압력이 그만큼 약합니다."] ] },
+        { key: "세계 석유수요 약세 지속", factor: "down", hot: true, cells: [
+          ["down", "M+1~M+4 · 4개월", "초반에만 작동하고 이후에는 EV 이벤트가 수요 하방을 이어받습니다."],
+          ["down", "M+1~M+3 · 3개월", "<b>가장 짧다.</b> 이후 수요는 오히려 아시아·석유화학 중심으로 강화됩니다."],
+          ["down", "M+1~M+12 · 12개월", "<b>전 구간 지속.</b> 그러나 공급도 완전히 풀리지 않아 서로 상쇄됩니다."] ] },
+        { key: "재고 긴축 (가시·상업재고 인출)", factor: "up", hot: false, cells: [
+          ["up", "M+1~M+2 · 2개월", "초기 상승 국면을 강화합니다."],
+          ["none", "이벤트 없음", "별도 재고 긴축 이벤트가 없어 초기 긴축 강도가 상대적으로 얕습니다."],
+          ["up", "M+1~M+2 · 2개월", "초기 상승 국면을 강화합니다."] ] },
+        { key: "최종(M+12) 누적 방향", factor: "mixed", hot: false, cells: [
+          ["down", "하락", "공급 정상화와 구조적 수요 약세가 <b>동시에</b> 작동."],
+          ["mixed", "보합", "수요가 늘어난 공급을 <b>흡수</b>."],
+          ["mixed", "보합", "부분 회복과 약한 수요가 <b>상쇄</b>."] ] },
+        { key: "발생 확률 · seeds", factor: "none", hot: false, cells: [
+          ["none", "53.3% · 16 seeds", "대표 seed 512041"],
+          ["none", "13.3% · 4 seeds", "대표 seed 1107721 — 가장 얇음"],
+          ["none", "33.3% · 10 seeds", "대표 seed 713681"] ] }
+      ];
+
+      function renderAssumeMatrix() {
+        const grid = document.getElementById("assumeGrid");
+        if (!grid) return;
+        const head = document.createElement("div"); head.className = "ag-head";
+        ["비교 가정", ...SCEN_COLS].forEach((h, i) => {
+          const s = document.createElement("span");
+          if (i === 1) s.className = "col-base";
+          s.textContent = h; head.append(s);
+        });
+        const rows = scenarioAssumptions.map((r) => {
+          const row = document.createElement("div");
+          row.className = "ag-row" + (r.hot ? " key-row" : "");
+          const key = document.createElement("div"); key.className = "ag-key"; key.textContent = r.key;
+          row.append(key);
+          r.cells.forEach(([tone, headline, note], ci) => {
+            const cell = document.createElement("div");
+            cell.className = "ag-cell" + (r.hot ? " hot" : "");
+            cell.setAttribute("data-col", SCEN_COLS[ci]);
+            const pill = document.createElement("span");
+            pill.className = "pill " + (tone === "up" ? "dir-up" : tone === "down" ? "dir-down" : tone === "mixed" ? "dir-flat" : "none");
+            pill.textContent = tone === "up" ? "상승요인" : tone === "down" ? "하락요인" : tone === "mixed" ? "양방향" : "—";
+            const hl = document.createElement("b"); hl.textContent = " " + headline;
+            cell.append(pill, hl);
+            if (note) { const n = document.createElement("span"); n.className = "ag-note"; n.innerHTML = note; cell.append(n); }
+            row.append(cell);
+          });
+          return row;
+        });
+        grid.replaceChildren(head, ...rows);
+      }
+
       function renderScenarioCompare() {
         const strip = document.getElementById("trajStrip");
         if (!strip) return;
@@ -2948,6 +3187,8 @@
           row.append(label, cells);
           return row;
         }));
+
+        renderAssumeMatrix();
 
         // ---- assumption gantt ----
         const body = document.getElementById("ganttBody");
