@@ -1486,6 +1486,73 @@
       .d-bar { grid-column: 2; }
     }
 
+  
+    /* ===== v7: path headline/phases + selected-path dossier ===== */
+    .path-card .pc-headline { display: block; margin: var(--space-2xs) 0 var(--space-xs); color: var(--color-accent); font-size: .8125rem; font-weight: 800; line-height: 1.45; }
+    .pc-phases { display: grid; gap: 2px; margin-top: var(--space-xs); padding-top: var(--space-xs); border-top: 1px solid var(--color-rule); }
+    .pc-phase { display: grid; grid-template-columns: 4.6rem minmax(0,1fr); gap: var(--space-2xs); align-items: baseline; font-size: .625rem; line-height: 1.45; }
+    .pc-phase .ph-r { padding: 0 4px; border-radius: 3px; font-weight: 800; text-align: center; }
+    .pc-phase .ph-r.dir-up { color: var(--up); background: var(--up-soft); }
+    .pc-phase .ph-r.dir-flat { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .pc-phase .ph-r.dir-down { color: var(--down); background: var(--down-soft); }
+    .pc-phase .ph-n { color: var(--color-ink-2); }
+
+    .selector-lead { margin: var(--space-xl) 0 var(--space-2xs); }
+    .selector-lead h3 { margin: 0; font-size: 1rem; }
+    .selector-lead p { margin: var(--space-2xs) 0 0; color: var(--color-muted); font-size: .6875rem; }
+
+    .path-dossier { margin: var(--space-lg) 0 0; padding: var(--space-lg); background: var(--color-paper); border: 1px solid var(--color-rule-strong); border-radius: var(--radius); border-top-width: 4px; }
+    .path-dossier.dir-up { border-top-color: var(--up); }
+    .path-dossier.dir-flat { border-top-color: var(--flat); }
+    .path-dossier.dir-down { border-top-color: var(--down); }
+    .pd-kicker { display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap; margin-bottom: var(--space-2xs); }
+    .pd-kicker .pd-tag { padding: 2px 8px; border-radius: 999px; font-size: .625rem; font-weight: 800; }
+    .pd-kicker .pd-prob { color: var(--color-muted); font-size: .6875rem; font-weight: 700; }
+    .pd-kicker .pd-tag.dir-up { color: var(--up); background: var(--up-soft); }
+    .pd-kicker .pd-tag.dir-flat { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .pd-kicker .pd-tag.dir-down { color: var(--down); background: var(--down-soft); }
+    .pd-headline { margin: 0 0 var(--space-xs); font-size: var(--text-lg); line-height: 1.3; color: var(--color-ink); }
+    .pd-lead { max-width: 78ch; margin: 0 0 var(--space-lg); color: var(--color-ink-2); font-size: .875rem; line-height: 1.7; }
+    .pd-sec-title { display: flex; align-items: center; gap: var(--space-xs); margin: var(--space-lg) 0 var(--space-sm); }
+    .pd-sec-title h4 { margin: 0; font-size: .875rem; font-weight: 800; color: var(--color-ink); }
+    .pd-sec-title span { color: var(--color-muted); font-size: .625rem; }
+
+    .pd-phases { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: var(--space-sm); }
+    .pd-phase { padding: var(--space-md); background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius); border-left-width: 3px; }
+    .pd-phase.dir-up { border-left-color: var(--up); }
+    .pd-phase.dir-flat { border-left-color: var(--flat); }
+    .pd-phase.dir-down { border-left-color: var(--down); }
+    .pd-phase .pp-top { display: flex; align-items: center; gap: var(--space-2xs); margin-bottom: var(--space-2xs); flex-wrap: wrap; }
+    .pd-phase .pp-range { font-size: .6875rem; font-weight: 800; color: var(--color-accent); }
+    .pd-phase .pp-dir { padding: 1px 6px; border-radius: 999px; font-size: .5625rem; font-weight: 800; }
+    .pd-phase .pp-dir.dir-up { color: var(--up); background: var(--up-soft); }
+    .pd-phase .pp-dir.dir-flat { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .pd-phase .pp-dir.dir-down { color: var(--down); background: var(--down-soft); }
+    .pd-phase .pp-name { display: block; margin-bottom: var(--space-2xs); font-size: .8125rem; font-weight: 800; color: var(--color-ink); }
+    .pd-phase .pp-what { margin: 0; color: var(--color-ink-2); font-size: .6875rem; line-height: 1.6; }
+
+    .pd-assumes { display: grid; gap: var(--space-sm); }
+    .pd-assume { padding: var(--space-md); background: var(--color-paper-2); border: 1px solid var(--color-rule); border-radius: var(--radius); }
+    .pd-assume .pa-claim { display: block; margin-bottom: var(--space-xs); color: var(--color-ink); font-size: .8125rem; font-weight: 800; line-height: 1.5; }
+    .pd-assume .pa-claim::before { content: "가정 " attr(data-n) " · "; color: var(--color-accent); }
+    .pd-assume dl { display: grid; grid-template-columns: 5.4rem minmax(0,1fr); gap: var(--space-2xs) var(--space-sm); margin: 0; }
+    .pd-assume dt { color: var(--color-muted); font-size: .625rem; font-weight: 800; }
+    .pd-assume dd { margin: 0; color: var(--color-ink-2); font-size: .6875rem; line-height: 1.6; }
+    .pd-assume dd em { font-style: normal; padding: 0 3px; background: var(--teal-soft); border-radius: 3px; color: var(--color-accent); font-weight: 700; }
+    .pd-src { display: inline-block; margin-right: 4px; padding: 0 5px; border-radius: 3px; background: var(--color-paper-3); color: var(--color-ink-2); font-size: .5625rem; font-weight: 800; }
+
+    .pd-warn { margin-top: var(--space-lg); padding: var(--space-md); background: var(--flat-soft); border: 1px solid var(--flat); border-left-width: 4px; border-radius: var(--radius); }
+    .pd-warn strong { color: oklch(42% 0.10 80); font-size: .75rem; }
+    .pd-warn p { margin: var(--space-2xs) 0 0; color: var(--color-ink); font-size: .75rem; line-height: 1.65; }
+    .pd-vs { margin-top: var(--space-sm); padding: var(--space-md); background: var(--teal-soft); border-left: 4px solid var(--color-accent); border-radius: 0 var(--radius) var(--radius) 0; }
+    .pd-vs strong { color: var(--color-accent); font-size: .75rem; }
+    .pd-vs p { margin: var(--space-2xs) 0 0; color: var(--color-ink); font-size: .75rem; line-height: 1.65; }
+
+    @media (max-width: 640px) {
+      .pd-assume dl { grid-template-columns: 1fr; }
+      .pc-phase { grid-template-columns: 4.2rem minmax(0,1fr); }
+    }
+
   </style>
 </head>
 <body>
@@ -1884,7 +1951,6 @@
         </div>
       </header>
 
-      <div class="scenario-path-selector" id="scenarioPathSelector" aria-label="시나리오 경로 선택"></div>
 
       <section class="scenario-compare" aria-labelledby="scenario-compare-title">
         <div class="integrated-heading">
@@ -1916,6 +1982,11 @@
         <p style="margin:var(--space-md) 0 0;padding:var(--space-sm) var(--space-md);background:var(--color-paper-2);border-left:3px solid var(--flat);color:var(--color-ink-2);font-size:.6875rem;line-height:1.6;"><strong>이름 주의:</strong> ‘상승 경로 / 대안 경로’는 V20 토론의 <strong>seed 군집 명칭</strong>일 뿐이며, 실제 M+12 누적 방향과 일치하지 않습니다. 두 경로 모두 최종 <strong>보합</strong>이고, 오히려 ‘Base 경로’가 유일한 <strong>하락</strong>입니다. 방향 판단은 이름이 아니라 각 카드의 M+12 값으로 하십시오.</p>
       </section>
 
+      <div class="selector-lead">
+        <h3>경로를 선택해 상세 전개를 확인하세요</h3>
+        <p>선택한 경로의 이벤트 생존 맵과 M+12까지의 상세 내러티브가 아래에 함께 표시됩니다.</p>
+      </div>
+      <div class="scenario-path-selector" id="scenarioPathSelector" aria-label="시나리오 경로 선택"></div>
       <figure class="scenario-figure" aria-labelledby="scenario-map-title">
         <figcaption>
           <div><h3 id="scenario-map-title">이벤트 생존 맵</h3><p>V20 결과의 이벤트 목록을 기준으로 월별 발생·지속·소멸 상태를 표시합니다.</p></div>
@@ -1923,6 +1994,8 @@
         </figcaption>
         <div class="scenario-scroll"><div class="scenario-map" id="scenarioEventMap"></div></div>
       </figure>
+
+      <section class="path-dossier" id="pathDossier" aria-live="polite"></section>
 
       <section class="scenario-narrative" aria-labelledby="scenario-narrative-title">
         <div>
@@ -2280,8 +2353,81 @@
           });
           return button;
         }));
+        renderPathDossier();
         renderScenarioNarrative();
       }
+
+      function renderPathDossier() {
+        const host = document.getElementById("pathDossier");
+        if (!host) return;
+        const path = scenarioData[selectedScenarioPath];
+        const info = PATH_INFO[path.role];
+        if (!info) { host.replaceChildren(); return; }
+        host.className = `path-dossier ${dirClass(path.terminal)}`;
+
+        const frag = document.createDocumentFragment();
+        const kicker = document.createElement("div"); kicker.className = "pd-kicker";
+        const tag = document.createElement("span");
+        tag.className = `pd-tag ${dirClass(path.terminal)}`;
+        tag.style.color = ""; tag.textContent = `${path.role} · M+12 ${path.terminal}`;
+        const prob = document.createElement("span"); prob.className = "pd-prob";
+        prob.textContent = `발생 확률 ${path.probability.toFixed(1)}% · ${path.seedCount} seeds · 대표 seed ${path.representativeSeed}`;
+        kicker.append(tag, prob);
+        const h3 = document.createElement("h3"); h3.className = "pd-headline";
+        h3.textContent = `“${info.headline}”`;
+        const lead = document.createElement("p"); lead.className = "pd-lead"; lead.innerHTML = info.lead;
+        frag.append(kicker, h3, lead);
+
+        frag.append(secTitle("M+1 → M+12 구간별 전개", "V20 결과의 이벤트 활성 구간과 월별 방향에서 집계"));
+        const ph = document.createElement("div"); ph.className = "pd-phases";
+        info.phases.forEach((p) => {
+          const box = document.createElement("article"); box.className = `pd-phase ${dirClass(p.d)}`;
+          const top = document.createElement("div"); top.className = "pp-top";
+          const rg = document.createElement("span"); rg.className = "pp-range"; rg.textContent = p.r;
+          const dd = document.createElement("span"); dd.className = `pp-dir ${dirClass(p.d)}`; dd.textContent = p.d;
+          top.append(rg, dd);
+          const nm = document.createElement("span"); nm.className = "pp-name"; nm.textContent = p.n;
+          const wt = document.createElement("p"); wt.className = "pp-what"; wt.innerHTML = p.w;
+          box.append(top, nm, wt); ph.append(box);
+        });
+        frag.append(ph);
+
+        frag.append(secTitle("이 경로가 성립하려면 — 핵심 가정과 근거", "근거는 적재된 8월 기관 리포트·수집 기사에서만 인용"));
+        const as = document.createElement("div"); as.className = "pd-assumes";
+        info.assumes.forEach((a, idx) => {
+          const box = document.createElement("article"); box.className = "pd-assume";
+          const cl = document.createElement("span"); cl.className = "pa-claim";
+          cl.setAttribute("data-n", String(idx + 1)); cl.textContent = a.claim;
+          const dl = document.createElement("dl");
+          [["기관 근거", a.basis], ["확인 지표", a.sign]].forEach(([k, v]) => {
+            const dt = document.createElement("dt"); dt.textContent = k;
+            const dd2 = document.createElement("dd"); dd2.innerHTML = v;
+            dl.append(dt, dd2);
+          });
+          box.append(cl, dl); as.append(box);
+        });
+        frag.append(as);
+
+        const warn = document.createElement("div"); warn.className = "pd-warn";
+        const ws = document.createElement("strong"); ws.textContent = "이 경로에서 검증되지 않은 부분";
+        const wp = document.createElement("p"); wp.innerHTML = info.warn;
+        warn.append(ws, wp);
+        const vs = document.createElement("div"); vs.className = "pd-vs";
+        const vss = document.createElement("strong"); vss.textContent = "다른 두 경로와의 결정적 차이";
+        const vsp = document.createElement("p"); vsp.innerHTML = info.vs;
+        vs.append(vss, vsp);
+        frag.append(warn, vs);
+
+        host.replaceChildren(frag);
+
+        function secTitle(title, sub) {
+          const d = document.createElement("div"); d.className = "pd-sec-title";
+          const h = document.createElement("h4"); h.textContent = title;
+          const s = document.createElement("span"); s.textContent = sub;
+          d.append(h, s); return d;
+        }
+      }
+
 
       function activateDashboardTab(tab) {
         document.querySelectorAll("[data-dashboard-tab]").forEach((button) => button.setAttribute("aria-selected", String(button.dataset.dashboardTab === tab)));
@@ -2646,11 +2792,83 @@
         { key: "demandWeak", label: "세계 석유수요 약세 지속", factor: "down", tone: "down" }
       ];
       const FACTOR_LABEL = { up: "유가 상승요인", down: "유가 하락요인", mixed: "양방향" };
-      const PATH_NOTE = {
-        "Base 경로": "항로 회복(M+4~)과 중국 EV 수요약화(M+4~)가 9개월 겹쳐 재고가 쌓임 → 세 경로 중 유일한 하락.",
-        "상승 경로": "EV 구조적 수요약화 이벤트가 없고 아시아·석유화학 수요가 공급 증가분을 흡수 → 보합.",
-        "대안 경로": "수요 약세가 전 구간(12개월) 이어지나 잔여 차질도 끝까지 남아 상·하방이 상쇄 → 보합."
+      /* Path dossiers. 전개·이벤트 구간은 V20 결과에서 집계했고, '성립 조건'은
+         이 대시보드에 적재된 8월 기관 리포트와 수집 기사에서만 인용했습니다. */
+      const PATH_INFO = {
+        "Base 경로": {
+          headline: "항로는 열리고 수요는 식는다",
+          note: "항로 회복(M+4~)과 중국 EV 수요약화(M+4~)가 9개월 겹쳐 재고가 쌓임 → 세 경로 중 유일한 하락.",
+          lead: "M+1~M+2 긴축으로 출발하지만 M+4를 기점으로 공급은 돌아오고 수요는 구조적으로 깎입니다. 두 힘이 9개월간 같은 방향으로 작동해 재고 인출이 멈추고 재축적으로 돌아서며, 세 경로 중 유일하게 M+12 누적 유가가 하락합니다. 확률 53.3%로 가장 두껍지만, 그 성립은 아직 관측되지 않은 '항로 회복'에 걸려 있습니다.",
+          phases: [
+            { r: "M+1~M+2", d: "상승", n: "긴축 정점", w: "중동 항로·정유 차질에 더해 글로벌 가시재고와 미국 상업재고가 동시에 추가 긴축. 중국 구매는 제한적 반등에 그쳐 공급 제약을 상쇄하지 못합니다. 활성 이벤트 4개로 전 구간 중 가장 많습니다." },
+            { r: "M+3~M+4", d: "보합", n: "변곡점", w: "재고 긴축 이벤트가 M+3에 소멸합니다. M+4에 '비OPEC 증산·항로 회복에 따른 부분적 재균형'과 '중국 EV 구조적 수요 약화'가 동시에 발생해, 공급 개선과 수요 하방이 정확히 상쇄됩니다." },
+            { r: "M+5~M+8", d: "하락", n: "공급 우위 전환", w: "중동 항로·정유 제약 이벤트가 M+5에 소멸하고, 남은 두 이벤트가 모두 하락요인이 됩니다. 공급 유입이 늘고 수요는 구조적으로 약해 재고 인출 속도가 둔화됩니다." },
+            { r: "M+9~M+12", d: "보합", n: "재고 재축적", w: "재균형 이벤트는 M+11에 종료되고 EV 수요약화만 M+12까지 남습니다. 공급은 정상화되되 제한적 잔존 차질이 남고, 재고 증가가 수요 약세를 흡수해 월별로는 보합이지만 M 대비 누적은 하락으로 확정됩니다." }
+          ],
+          assumes: [
+            { claim: "M+4부터 호르무즈 통항이 실제로 회복되기 시작한다",
+              basis: "<span class='pd-src'>EIA</span>8월까지 심각한 수송 제약이 이어진 뒤 <em>9월부터 통과량이 서서히 증가</em>해 2027년 초 대부분의 생산·교역이 분쟁 전 평균에 근접(단 2027년 말까지 약 <em>0.6mb/d</em> 잔존). <span class='pd-src'>S&amp;P</span>해협이 신뢰성 있게 열리면 <em>30일 안에</em> 정유가동이 빠르게 증가.",
+              sign: "합의 '발표'가 아니라 호르무즈 <em>주간 통과 물량의 연속 증가</em>, 바브엘만데브 우회 물량(2Q26 8.1mb/d), 정유 가동률의 동반 회복." },
+            { claim: "중국 EV 확산이 M+4부터 운송연료 수요를 구조적으로 깎는다",
+              basis: "<span class='pd-src'>Goldman Sachs</span>중국 전기차 침투를 <em>2027년 중국 석유 수요의 구조적 하방 요인</em>으로 제시. 단 GS가 지목한 시점은 2027년이라, 이 경로의 M+4 시작은 기관 서술보다 이른 가정입니다.",
+              sign: "EV 판매 비중, 중국 휘발유 소비, 정유 가동률과 제품 수출의 방향이 수입 증가와 <em>분리</em>되는지." },
+            { claim: "비OPEC 증산이 중동 손실을 실제 물량으로 메운다",
+              basis: "<span class='pd-src'>JPMorgan</span>비OPEC 공급 전년 대비 <em>+2.44mb/d</em>(이번 10년 중 최고), 1H26 페르시아만 외 생산이 예상보다 <em>+0.7mb/d</em> 많았음. 다만 충격 흡수에 <em>6억 배럴</em> 재고 인출이 필요했다는 점을 함께 제시.",
+              sign: "재고 인출 속도의 둔화 → <em>재축적 전환</em> 여부. OECD·미국 상업·제품 재고를 분리해 확인." }
+          ],
+          warn: "V20 결과는 항로 회복의 <strong>계기</strong>(미·이란 합의, 휴전 연장, 봉쇄 해제 등)를 특정하지 않고 '회복'만을 가정으로 둡니다. 반면 이 대시보드가 수집한 실제 관측은 반대 방향입니다 — <strong>2026.08.26</strong> 이란·오만 임시 호르무즈 통로 협의는 <strong>미확정</strong>이며 제재 해제·봉쇄 종료 조건과 연계돼 있고, <strong>08.12·08.17</strong> 보도는 미·이란 휴전 연장 협상이 <strong>정체</strong>됐음을 확인했습니다. 따라서 M+4 회복은 확보된 사실이 아니라 <strong>검증 대상 가정</strong>으로 다뤄야 합니다.",
+          vs: "상승 경로와 달리 중국 EV 이벤트를 가지고 있고(9개월), 대안 경로보다 EV가 <strong>3개월 일찍</strong>(M+4 vs M+7) 시작합니다. 공급 차질 지속(4개월)은 대안과 같습니다. 즉 Base를 유일한 하락으로 만드는 것은 공급이 아니라 <strong>수요를 깎는 이벤트가 가장 길고 가장 이르다는 점</strong>입니다."
+        },
+        "상승 경로": {
+          headline: "차질은 더 오래 가지만, 수요가 받아낸다",
+          note: "EV 구조적 수요약화 이벤트가 없고 아시아·석유화학 수요가 공급 증가분을 흡수 → 보합.",
+          lead: "이름과 달리 M+12 누적은 보합입니다. 세 경로 중 항로 차질이 가장 오래(M+5) 이어지고 완화 이벤트도 가장 늦게(M+5) 시작하는, 공급 측면에서는 가장 타이트한 경로입니다. 그럼에도 아시아·석유화학 수요가 회복 물량을 흡수해 재고 재축적이 완만해지고 가격이 버팁니다. 중국 EV發 구조적 수요 약화 이벤트가 <strong>없는 유일한 경로</strong>이며, 확률은 13.3%(4 seeds)로 가장 낮습니다.",
+          phases: [
+            { r: "M+1~M+2", d: "상승", n: "제한적 긴축", w: "'제한된 항로·정유 차질과 재고 인출의 단기 지속'과 '주요 항로의 간헐적 차질'이 함께 작동합니다. 다만 다른 두 경로와 달리 별도의 재고 긴축 이벤트는 없어 긴축 강도가 상대적으로 얕습니다." },
+            { r: "M+3~M+5", d: "보합", n: "차질 최장 지속", w: "주요 항로의 간헐적 차질이 M+5까지 이어져 세 경로 중 가장 깁니다. 중국 구매의 단기 반등(M+2~M+5)이 수요를 일부 지지하지만 지속성은 검증되지 않은 상태로 남습니다." },
+            { r: "M+5~M+7", d: "하락", n: "재고 재축적 개시", w: "'비OPEC 증산·역내 생산 회복에 따른 재고 재축적'이 M+5에 발생해 이후 M+12까지 유일한 활성 이벤트로 남습니다. 공급 회복이 본격화되며 가격을 누릅니다." },
+            { r: "M+8~M+12", d: "보합", n: "수요가 흡수", w: "아시아·석유화학 수요가 완만히 강화되며 늘어난 물량을 흡수해 재고 증가 속도가 제한됩니다. 잔여 차질도 남아 완전 정상화가 지연되고, M+11에는 한 차례 상승이 나타난 뒤 보합으로 마감합니다." }
+          ],
+          assumes: [
+            { claim: "아시아·석유화학 수요가 회복 물량을 흡수한다",
+              basis: "<span class='pd-src'>Goldman Sachs</span><em>5월 저점 이후</em> 추적 가능한 세계 수요가 반등했고 현물 프리미엄도 높아졌다는 관찰. 이 경로의 수요 측 근거는 사실상 이 관찰 하나에 의존합니다.",
+              sign: "아시아 정유 처리량, 석유화학 원료 수요, 그리고 수입 증가가 <em>실제 최종소비</em>로 전달되는지." },
+            { claim: "중국 구매 반등이 단기에 그치지 않는다",
+              basis: "<span class='pd-src'>Reuters 09.08</span>중국 8월 원유 수입이 <em>2개월 연속 증가</em>하고 정제유 수출은 전월 대비 <em>+29%</em>. 다만 수입량은 전년 동월과 <em>전쟁 전 수준에 아직 미달</em>합니다.",
+              sign: "수입 증가가 일시 반등을 넘어 <em>추세 전환</em>으로 이어지는지, 정유 가동의 지속성." },
+            { claim: "잔여 차질이 남아 공급이 완전 정상화되지는 않는다",
+              basis: "<span class='pd-src'>EIA</span>2027년 말까지 약 <em>0.6mb/d</em>의 폐쇄 관련 차질이 잔존할 수 있다고 제시. 이 잔여분이 재고 재축적 속도를 제한해 보합을 지지합니다.",
+              sign: "잔여 차질 규모의 축소 여부와 정유시설 복구 일정." }
+          ],
+          warn: "이 경로에는 <strong>중국 EV 구조적 수요 약화 이벤트가 아예 없습니다.</strong> Goldman Sachs가 EV 침투를 2027년 중국 석유 수요의 구조적 하방 요인으로 명시한 것과 배치되므로, 이 경로는 'EV 영향이 아직 본격화되지 않는다'는 전제를 깔고 있는 것으로 읽어야 합니다. 발생 확률도 <strong>13.3%(4 seeds)</strong>로 세 경로 중 가장 얇습니다. 또한 경로 이름이 '상승'이지만 <strong>M+12 누적 방향은 보합</strong>입니다.",
+          vs: "Base·대안과 달리 EV 이벤트가 없고 수요가 <strong>강화되는</strong> 유일한 경로입니다. 역설적으로 공급 측은 가장 오래 조입니다(차질 M+5까지, 완화 시작도 M+5로 가장 늦음). 즉 이 경로와 Base의 차이는 공급이 아니라 <strong>수요가 늘어난 공급을 받아내느냐</strong>입니다."
+        },
+        "대안 경로": {
+          headline: "열렸다 닫혔다 — 부분 회복과 약한 수요가 서로를 상쇄",
+          note: "수요 약세가 전 구간(12개월) 이어지나 잔여 차질도 끝까지 남아 상·하방이 상쇄 → 보합.",
+          lead: "상승 구간이 M+3까지로 가장 길고, 공급은 '부분적'으로만 회복돼 잔여 차질과 재중단 위험이 끝까지 남습니다. 동시에 세계 석유수요 약세가 M+1~M+12 <strong>전 구간</strong> 지속되어 상방과 하방이 서로를 상쇄하고, M+12 누적은 보합에 머뭅니다. S&amp;P Global의 '수출 재개·중단 반복' 서술에 가장 가까운 경로이며, 확률은 33.3%입니다.",
+          phases: [
+            { r: "M+1~M+3", d: "상승", n: "긴축 지속", w: "중동 수송·정유 차질에 낮은 글로벌 가시재고와 미국 상업재고 압박이 겹칩니다. 월별 상승이 M+3까지 이어져 세 경로 중 상승 국면이 가장 깁니다." },
+            { r: "M+4~M+6", d: "보합", n: "부분 완화", w: "'비OPEC 증산과 <strong>부분적</strong> 항로 회복에 따른 실물 균형 완화'가 M+4에 발생해 M+12까지 9개월간 지속됩니다. 중국 원유 구매의 제한적 재개(M+4~M+7)가 겹치지만 최종수요 회복은 지연됩니다." },
+            { r: "M+7~M+8", d: "하락", n: "EV 억제 가세", w: "중국 EV 확산에 따른 석유수요 구조적 억제가 M+7에 뒤늦게 발생합니다. 공급 완화와 수요 억제가 함께 작동하며 이 경로에서 가장 뚜렷한 하락 구간이 나타납니다." },
+            { r: "M+9~M+12", d: "보합", n: "상쇄 균형", w: "재고가 완만히 재축적되지만 잔여 차질과 항로 재중단 위험이 하방을 제한합니다. 수요 약세는 계속되고 공급도 완전히 풀리지 않아 양방향이 상쇄된 보합으로 마감합니다." }
+          ],
+          assumes: [
+            { claim: "항로가 '부분적'으로만 회복되고 잔여 차질이 끝까지 남는다",
+              basis: "<span class='pd-src'>S&amp;P</span>수출이 <em>재개와 중단을 반복</em>하는 환경을 전제하며, 반복될 경우 4Q26~2027년 회복 경로를 <em>자동 적용하지 않는다</em>고 명시. 세 경로 중 기관의 조건부 단서를 가장 그대로 반영한 가정입니다.",
+              sign: "통항의 <em>연속성</em>(단발 재개 아님), 잔여 차질 규모의 축소, 정유시설 복구 일정." },
+            { claim: "세계 석유수요가 12개월 내내 약하다",
+              basis: "<span class='pd-src'>S&amp;P</span>2026년 세계 액체연료 수요 <em>103.9mb/d</em>로 전년 대비 <em>−2.1mb/d</em>. 2027년 약 +3mb/d 회복해도 <em>전쟁 전 예상 경로에는 미달</em>.",
+              sign: "운송연료·석유화학 원료의 지역별 회복 격차, 회복이 고르게 나타나는지." },
+            { claim: "중국 EV 억제는 M+7로 늦게 시작한다",
+              basis: "<span class='pd-src'>Goldman Sachs</span>EV 구조적 하방을 <em>2027년</em>으로 지목. Base의 M+4보다 이 경로의 M+7 시작이 기관 서술 시점과 더 정합적입니다.",
+              sign: "EV 침투율 상승이 운송연료 수요 감소로 전달되는 시점." }
+          ],
+          warn: "Base와 마찬가지로 항로 '부분 회복'의 <strong>계기는 특정되지 않습니다.</strong> 다만 이 경로는 회복을 단정하지 않고 재중단 위험을 끝까지 남겨 두기 때문에, 08.26 이란·오만 협의 <strong>미확정</strong>·08.17 협상 <strong>정체</strong> 같은 현재 관측과 충돌이 가장 적습니다. 즉 현재까지의 사실만 놓고 보면 Base보다 이 경로의 전제가 덜 앞서 나간 편입니다.",
+          vs: "Base와 공급 차질 지속 기간(M+1~M+4, 4개월)은 <strong>동일</strong>합니다. 차이는 회복을 '부분'으로 제한하고 EV 억제를 <strong>3개월 늦춘</strong> 데 있으며, 그 결과 하락 압력이 상쇄돼 보합으로 끝납니다. 수요 약세 지속은 <strong>12개월로 세 경로 중 최장</strong>입니다."
+        }
       };
+      const PATH_NOTE = Object.fromEntries(Object.entries(PATH_INFO).map(([k, v]) => [k, v.note]));
 
       function categoryMonths(path, catKey) {
         const out = [];
@@ -2688,9 +2906,19 @@
           meta.append(document.createTextNode("발생 확률 "));
           const b = document.createElement("b"); b.textContent = `${path.probability.toFixed(1)}%`;
           meta.append(b, document.createTextNode(` · ${path.seedCount} seeds · 대표 ${path.representativeSeed}`));
+          const info = PATH_INFO[path.role] || {};
+          const head = document.createElement("span"); head.className = "pc-headline";
+          head.textContent = info.headline ? `“${info.headline}”` : "";
           const note = document.createElement("p"); note.className = "pc-note";
-          note.textContent = PATH_NOTE[path.role] || "";
-          card.append(top, meta, note);
+          note.textContent = info.note || "";
+          const phases = document.createElement("div"); phases.className = "pc-phases";
+          (info.phases || []).forEach((p) => {
+            const row = document.createElement("div"); row.className = "pc-phase";
+            const r = document.createElement("span"); r.className = `ph-r ${dirClass(p.d)}`; r.textContent = p.r;
+            const n = document.createElement("span"); n.className = "ph-n"; n.textContent = p.n;
+            row.append(r, n); phases.append(row);
+          });
+          card.append(top, meta, head, note, phases);
           return card;
         }));
 
