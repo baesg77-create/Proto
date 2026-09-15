@@ -1372,6 +1372,120 @@
       .assume-grid .ag-cell::before { content: attr(data-col) " · "; color: var(--color-accent); font-weight: 800; }
     }
 
+  
+    /* ===== v4/v5: quarterly price chart, gantt, disagreement axes ===== */
+    .qchart { display: block; width: 100%; height: auto; }
+    .qc-band { fill: var(--color-paper-3); opacity: .55; }
+    .qc-seg { stroke-width: 5; stroke-linecap: round; }
+    .qc-range { opacity: .15; }
+    .qc-connect { stroke-width: 1.2; stroke-dasharray: 3 3; opacity: .5; }
+    .qc-val { font-size: 11px; font-weight: 800; }
+    .qc-anchor-line { stroke: var(--color-ink); stroke-width: 1; stroke-dasharray: 2 3; opacity: .4; }
+    .qc-anchor-dot { fill: var(--color-ink); }
+    .qc-anchor-label { font-size: 10px; font-weight: 700; fill: var(--color-ink-2); }
+    .qc-year { font-size: 10px; font-weight: 800; fill: var(--color-muted); letter-spacing: .04em; }
+    .qc-yearsplit { stroke: var(--color-rule-strong); stroke-width: 1; }
+    /* legend rebuilt for the quarterly chart */
+    .price-legend li { display: block; }
+    .price-legend .pl-top { display: flex; align-items: center; gap: var(--space-2xs); }
+    .price-legend .pl-top i { width: .7rem; height: .7rem; border-radius: 2px; border: 2px solid; flex: 0 0 auto; }
+    .price-legend .pl-top strong { font-size: .75rem; }
+    .price-legend .pl-stance { margin-left: auto; padding: 1px 7px; border-radius: 999px; font-size: .5625rem; font-weight: 800; white-space: nowrap; }
+    .price-legend .st-eia { color: var(--down); background: var(--down-soft); }
+    .price-legend .st-jpm { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .price-legend .st-sp { color: oklch(48% 0.13 55); background: oklch(95% 0.03 55); }
+    .price-legend .st-gs { color: var(--up); background: var(--up-soft); }
+    .price-legend small { display: block; margin-top: 2px; color: var(--color-muted); font-size: .625rem; }
+    .price-legend p { margin: var(--space-2xs) 0 0; color: var(--color-ink-2); font-size: .6875rem; line-height: 1.5; }
+
+    /* ---- scenario: path summary cards ---- */
+    .path-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-sm); margin-bottom: var(--space-lg); }
+    .path-card { padding: var(--space-md); background: var(--color-paper); border: 1px solid var(--color-rule-strong); border-radius: var(--radius); border-top-width: 3px; }
+    .path-card.dir-up { border-top-color: var(--up); }
+    .path-card.dir-flat { border-top-color: var(--flat); }
+    .path-card.dir-down { border-top-color: var(--down); }
+    .path-card .pc-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-xs); }
+    .path-card .pc-name { font-size: .8125rem; font-weight: 800; color: var(--color-ink); }
+    .path-card .pc-term { padding: 1px 7px; border-radius: 999px; font-size: .625rem; font-weight: 800; white-space: nowrap; }
+    .path-card .pc-meta { margin: var(--space-2xs) 0 var(--space-xs); color: var(--color-muted); font-size: .6875rem; }
+    .path-card .pc-meta b { color: var(--color-accent); font-size: .8125rem; }
+    .path-card .pc-note { margin: var(--space-xs) 0 0; color: var(--color-ink-2); font-size: .6875rem; line-height: 1.5; }
+
+    /* ---- scenario: assumption gantt ---- */
+    .gantt { margin-top: var(--space-md); }
+    .gantt-scroll { overflow-x: auto; scrollbar-width: thin; }
+    .gantt-inner { min-width: 44rem; }
+    .gantt-head { display: grid; grid-template-columns: 6.5rem minmax(0,1fr) 8.5rem; gap: var(--space-sm); margin-bottom: var(--space-2xs); }
+    .gantt-head .gh-cells { display: grid; grid-template-columns: repeat(13, minmax(0,1fr)); gap: 2px; }
+    .gantt-head .gh-cells span { text-align: center; color: var(--color-muted); font-size: .5rem; font-weight: 800; }
+    .gantt-cat { margin-top: var(--space-md); padding-top: var(--space-xs); border-top: 1px solid var(--color-rule); }
+    .gantt-cat.spread-hi { background: oklch(97.5% 0.02 235); border-radius: var(--radius); padding: var(--space-xs) var(--space-xs) var(--space-2xs); border-top-color: var(--color-accent); }
+    .gantt-cat-head { display: flex; align-items: center; gap: var(--space-xs); margin-bottom: var(--space-2xs); flex-wrap: wrap; }
+    .gantt-cat-head h5 { margin: 0; font-size: .75rem; font-weight: 800; color: var(--color-ink); }
+    .gantt-cat-head .factor { padding: 1px 6px; border-radius: 999px; font-size: .5625rem; font-weight: 800; }
+    .gantt-cat-head .factor.up { color: var(--up); background: var(--up-soft); }
+    .gantt-cat-head .factor.down { color: var(--down); background: var(--down-soft); }
+    .gantt-cat-head .factor.mixed { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .gantt-cat-head .spread-tag { margin-left: auto; padding: 1px 6px; border-radius: 999px; font-size: .5625rem; font-weight: 800; color: var(--color-accent-ink); background: var(--color-accent); }
+    .gantt-row { display: grid; grid-template-columns: 6.5rem minmax(0,1fr) 8.5rem; gap: var(--space-sm); align-items: center; padding: 1px 0; }
+    .gantt-row .gr-name { font-size: .6875rem; font-weight: 800; color: var(--color-ink-2); }
+    .gantt-cells { display: grid; grid-template-columns: repeat(13, minmax(0,1fr)); gap: 2px; }
+    .gantt-cell { min-height: 1.15rem; border-radius: 3px; background: var(--color-paper-3); }
+    .gantt-cell.on-up { background: var(--up-soft); box-shadow: inset 0 0 0 1px var(--up); }
+    .gantt-cell.on-down { background: var(--down-soft); box-shadow: inset 0 0 0 1px var(--down); }
+    .gantt-cell.on-mixed { background: var(--flat-soft); box-shadow: inset 0 0 0 1px var(--flat); }
+    .gantt-row .gr-win { color: var(--color-ink-2); font-size: .625rem; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+    .gantt-row .gr-win.none { color: var(--color-muted); font-weight: 400; }
+
+    /* ---- disagreement: axis cards ---- */
+    .disagreement-axes { display: grid; gap: var(--space-md); }
+    .daxis { padding: var(--space-md); background: var(--color-paper); border: 1px solid var(--color-rule-strong); border-radius: var(--radius); }
+    .daxis-head { display: flex; align-items: baseline; gap: var(--space-xs); flex-wrap: wrap; margin-bottom: var(--space-2xs); }
+    .daxis-head h4 { margin: 0; font-size: .875rem; font-weight: 800; color: var(--color-ink); }
+    .daxis-head .factor { padding: 1px 7px; border-radius: 999px; font-size: .5625rem; font-weight: 800; }
+    .daxis-head .factor.up { color: var(--up); background: var(--up-soft); }
+    .daxis-head .factor.down { color: var(--down); background: var(--down-soft); }
+    .daxis-head .factor.mixed { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .daxis > .daxis-why { margin: 0 0 var(--space-sm); color: var(--color-muted); font-size: .6875rem; line-height: 1.5; }
+    .daxis-rows { display: grid; gap: 2px; }
+    .drow { display: grid; grid-template-columns: 6.6rem 3.1rem 3.6rem minmax(0,1fr); gap: var(--space-sm); align-items: start; padding: var(--space-xs) var(--space-2xs); border-radius: 4px; }
+    .drow:nth-child(odd) { background: var(--color-paper-2); }
+    .drow .d-inst { font-size: .6875rem; font-weight: 800; color: var(--color-ink); }
+    .drow .d-dir { padding: 1px 6px; border-radius: 999px; font-size: .5625rem; font-weight: 800; text-align: center; }
+    .drow .d-dir.up { color: var(--up); background: var(--up-soft); }
+    .drow .d-dir.down { color: var(--down); background: var(--down-soft); }
+    .drow .d-dir.mixed { color: oklch(45% 0.09 80); background: var(--flat-soft); }
+    .drow .d-dir.neutral { color: var(--color-muted); background: var(--color-paper-3); }
+    .d-bar { display: flex; gap: 2px; align-items: center; padding-top: 2px; }
+    .d-bar i { width: .55rem; height: .55rem; border-radius: 2px; background: var(--color-paper-3); box-shadow: inset 0 0 0 1px var(--color-rule-strong); }
+    .d-bar.up i.f { background: var(--up); box-shadow: none; }
+    .d-bar.down i.f { background: var(--down); box-shadow: none; }
+    .d-bar.mixed i.f { background: var(--flat); box-shadow: none; }
+    .drow .d-copy { min-width: 0; }
+    .drow .d-key { display: block; color: var(--color-ink); font-size: .75rem; font-weight: 800; line-height: 1.45; }
+    .drow .d-key em { font-style: normal; padding: 0 3px; background: var(--teal-soft); border-radius: 3px; color: var(--color-accent); }
+    .drow .d-detail { display: block; margin-top: 2px; color: var(--color-muted); font-size: .6875rem; line-height: 1.5; }
+
+    /* baseline definition box */
+    .baseline-def { margin: 0 0 var(--space-md); padding: var(--space-sm) var(--space-md); background: var(--color-paper-2); border-left: 3px solid var(--color-accent); border-radius: 0 var(--radius) var(--radius) 0; }
+    .baseline-def strong { color: var(--color-accent); }
+    .baseline-def p { margin: 2px 0 0; color: var(--color-ink-2); font-size: .75rem; line-height: 1.6; }
+
+    /* v5: push variance/monitor panels to the very bottom */
+    .bottom-grid { order: 9; }
+
+    @media (max-width: 820px) {
+      .drow { grid-template-columns: 5.6rem 2.9rem 3.2rem minmax(0,1fr); }
+    }
+    @media (max-width: 640px) {
+      .gantt-head { display: none; }
+      .gantt-row { grid-template-columns: 4.6rem minmax(0,1fr); }
+      .gantt-row .gr-win { grid-column: 2; text-align: left; }
+      .drow { grid-template-columns: 1fr auto; row-gap: 2px; }
+      .drow .d-copy { grid-column: 1 / -1; }
+      .d-bar { grid-column: 2; }
+    }
+
   </style>
 </head>
 <body>
@@ -1481,50 +1595,25 @@
     <section class="outlook-brief" aria-labelledby="outlook-brief-title">
       <header class="outlook-brief-header">
         <div>
-          <p class="eyebrow">1. SOURCE-BASED MARKET SERIES</p>
-          <h2 id="outlook-brief-title">7개 시장 지표와 기관별 유가 전망</h2>
+          <p class="eyebrow">1. INSTITUTION PRICE OUTLOOK</p>
+          <h2 id="outlook-brief-title">기관별 유가 전망 · 3Q26 → 4Q27</h2>
         </div>
-        <p class="outlook-takeaway">실적은 보유 엑셀의 월별 관측값, 전망은 EIA STEO와 기관지에 직접 제시된 값만 사용합니다. V20 토론에서 생성된 LLM 전망값은 제외했습니다.</p>
-        <div class="forecast-count" aria-label="시계열 구성"><span>SEVEN INDICES</span><strong>실적 2024.01~2026.07</strong></div>
+        <p class="outlook-takeaway">8월 기관지가 <strong>직접 제시한 값만</strong> 사용합니다. 기관이 기간 평균으로 제시한 값은 해당 분기 구간에 수평 막대로 표시하며, 임의의 월별 보간은 하지 않습니다. V20 토론에서 생성된 LLM 전망값은 제외했습니다.</p>
+        <div class="forecast-count" aria-label="전망 구성"><span>4 INSTITUTIONS</span><strong>3Q26 – 4Q27</strong></div>
       </header>
 
       <section class="price-forecast-board" aria-labelledby="price-forecast-title">
         <div class="price-forecast-heading">
-          <div><span class="section-kicker">AUGUST 2026 INSTITUTION OUTLOOKS</span><h3 id="price-forecast-title">8월 초 Brent 실적에서 이어지는 기관별 전망</h3></div>
-          <p>2026년 8월 3일 ICE Brent 최근월물 종가 83.77달러/b를 모든 기관 경로의 공통 기준점으로 사용합니다. 이후에는 8월 기관지가 직접 제시한 전망만 연결하며 월별 보간은 하지 않습니다.</p>
+          <div><span class="section-kicker">AUGUST 2026 INSTITUTION OUTLOOKS</span><h3 id="price-forecast-title">분기별 기관 전망 경로 (차년도 연말까지)</h3></div>
+          <p>2026년 8월 3일 ICE Brent 최근월물 종가 <strong>$83.77/b</strong>가 공통 기준점입니다. 가로축은 3Q26부터 4Q27까지 6개 분기이며, 각 기관의 값은 <strong>그 값이 대표하는 기간에만</strong> 수평 막대로 그립니다. 값이 없는 분기는 비워 두고 점선으로만 연결합니다.</p>
         </div>
         <div class="price-comparison-layout">
           <div class="price-chart-frame" id="priceChartFrame" aria-label="2026년 8월 기관지에 직접 제시된 기관별 유가 전망 비교 차트"></div>
           <ul class="price-legend" id="priceLegend" aria-label="기관별 직접 제시 유가 전망 요약"></ul>
         </div>
-        <p class="price-chart-note">기준점: ICE Brent 최근월물 2026.08.03 종가 $83.77/b, LSEG 원천값. 전망 출처: EIA Short-Term Energy Outlook Aug 2026, Goldman Sachs Oil Tracker 2026.08.04, S&amp;P Global August 2026 Short-Term Outlook. 기관지가 범위로 제시한 GS $80–90와 S&amp;P $85–90는 막대 없이 중앙값 $85와 $87.5로 표시하며 원래 범위는 우측에 병기했습니다. JPMorgan 2026.08.06 자료에는 직접 가격 전망이 없습니다.</p>
+        <p class="price-chart-note"><strong>읽는 법:</strong> 굵은 수평 막대 = 기관이 그 기간의 평균으로 직접 제시한 값. 연한 띠 = 기관이 제시한 범위(GS $80–90 · S&amp;P $85–90). 점선 = 제시값 사이를 잇는 보조선일 뿐 월별 전망이 아닙니다. EIA는 4Q26 값을, Goldman은 2027년 값을 직접 제시하지 않아 해당 분기가 비어 있습니다. Goldman의 36M(2029.08) $76은 이 차트 구간 밖이라 범례에만 적었습니다. JPMorgan 2026.08.06 자료에는 직접 가격 전망이 없습니다. 출처: EIA STEO Aug 2026, Goldman Sachs Oil Tracker 2026.08.04, S&amp;P Global August 2026 Short-Term Outlook, 기준점 LSEG.</p>
       </section>
 
-      <div class="forecast-brief-grid">
-        <aside class="forecast-guide" aria-labelledby="forecast-guide-title">
-          <span class="section-kicker">READING BASIS</span>
-          <h3 id="forecast-guide-title">실적과 전망의 기준</h3>
-          <p>수요·공급·OECD 재고는 EIA STEO Aug 2026의 2026년 8월 이후 값을 전망 구간으로 표시합니다. 나머지 지표는 보유 엑셀에 전망값이 없어 실적까지만 그립니다.</p>
-          <dl class="definition-list">
-            <div><dt>실적</dt><dd>EIA·LSEG·GPR·COT 원천을 취합한 월별 엑셀 이력입니다.</dd></div>
-            <div><dt>전망</dt><dd>EIA STEO 2026년 8월판의 수요·공급·OECD 재고 전망입니다.</dd></div>
-            <div><dt>미제공</dt><dd>DXY·미 10년물·ICE Brent 포지션·GPR은 임의 전망으로 연장하지 않습니다.</dd></div>
-          </dl>
-        </aside>
-
-        <section class="forecast-index-panel" aria-labelledby="forecast-index-title">
-          <div class="forecast-index-header">
-            <div>
-              <span class="section-kicker">V20 SEVEN INDICATORS</span>
-              <h3 id="forecast-index-title">수급·재고·금융·투기·지정학 시계열</h3>
-              <p>EIA 세계 석유 수요·공급, OECD 재고, 달러 인덱스, 미국채 10년물, ICE Brent Managed Money, GPR Index를 동일 월축으로 비교합니다.</p>
-            </div>
-            <div class="forecast-legend" aria-label="시계열 범례"><span><i class="actual-key"></i>실적</span><span><i class="forecast-key"></i>기관 전망</span></div>
-          </div>
-
-          <div class="indicator-chart-grid" id="indicatorChartGrid" aria-label="7개 시장 지표 시계열 차트"></div>
-        </section>
-      </div>
 
     </section>
 
@@ -1583,32 +1672,9 @@
       <section class="disagreement-panel" id="disagreementPanel" aria-labelledby="disagreement-title">
         <div class="disagreement-header">
           <div><span class="section-kicker">INTEGRATED VIEW ONLY</span><h3 id="disagreement-title">기관 간 불일치 비교</h3></div>
-          <p>같은 숫자로 평균내지 않고, 기관별 전제와 관측 범위를 나란히 비교합니다.</p>
+          <p>비교축마다 <strong>그 축이 유가의 상승요인인지 하락요인인지</strong>를 먼저 밝히고, 기관별 방향(상승·하락·중립)과 <strong>상대 강도</strong>를 나란히 놓습니다. 강도는 각 기관이 제시한 <strong>수치·시점·전제의 구체성과 세기</strong>를 기준으로 상대 비교한 것이며, 행은 강세→약세 순으로 정렬됩니다.</p>
         </div>
-        <div class="disagreement-comparison" role="table" aria-label="기관별 전망 전제 비교">
-          <div class="comparison-head" role="row"><span role="columnheader">비교 축</span><span role="columnheader">EIA</span><span role="columnheader">Goldman Sachs</span><span role="columnheader">JPMorgan</span><span role="columnheader">S&amp;P Global</span></div>
-          <article class="comparison-row" role="row">
-            <h4 role="rowheader">정상화 속도</h4>
-            <p role="cell"><span class="comparison-institution">EIA</span>9월부터 점진 회복, 2027년 초 대부분 정상화. 다만 0.6mb/d 차질 잔존 가능.</p>
-            <p role="cell"><span class="comparison-institution">Goldman Sachs</span>낮은 물리적 흐름과 정유 차질이 더 길게 이어질 가능성에 무게.</p>
-            <p role="cell"><span class="comparison-institution">JPMorgan</span>비OPEC 공급 증가가 하반기와 2027년에도 완충 역할을 지속.</p>
-            <p role="cell"><span class="comparison-institution">S&amp;P Global</span>8월 10mb/d, 9월 11~12mb/d 회복 뒤 4Q26~2027년 추가 정상화.</p>
-          </article>
-          <article class="comparison-row" role="row">
-            <h4 role="rowheader">물량·재고 완충</h4>
-            <p role="cell"><span class="comparison-institution">EIA</span>미국 상업 재고의 구조적 저점과 잔여 차질 가능성을 함께 제시.</p>
-            <p role="cell"><span class="comparison-institution">Goldman Sachs</span>가시 재고가 최근 2주 6.3mb/d 감소했고, 러시아 정유 차질은 3.8mb/d 수준.</p>
-            <p role="cell"><span class="comparison-institution">JPMorgan</span>공급 손실 대응에 6억 배럴 재고 인출이 필요했고, 5억 배럴은 추적 가능.</p>
-            <p role="cell"><span class="comparison-institution">S&amp;P Global</span>원유·정제제품 재고가 전쟁 전보다 약 4억4,000만 배럴 감소.</p>
-          </article>
-          <article class="comparison-row" role="row">
-            <h4 role="rowheader">가격·수요 조건</h4>
-            <p role="cell"><span class="comparison-institution">EIA</span>재고 재축적과 생산 복구가 진행되면 2027년 브렌트 평균 69달러/b 가능.</p>
-            <p role="cell"><span class="comparison-institution">Goldman Sachs</span>합의 또는 공격 확대 여부에 따라 브렌트 80~90달러의 조건부 범위 제시.</p>
-            <p role="cell"><span class="comparison-institution">JPMorgan</span>직접 가격 범위보다 예상보다 강한 비OPEC 증산의 수급 완충에 초점.</p>
-            <p role="cell"><span class="comparison-institution">S&amp;P Global</span>수요 103.9mb/d, 2026년 하반기 Dated Brent 평균 87달러/b의 기준 경로.</p>
-          </article>
-        </div>
+        <div class="disagreement-axes" id="disagreementAxes"></div>
       </section>
     </section>
 
@@ -1775,11 +1841,11 @@
 
     <section class="bottom-grid" aria-label="기준선 검토 및 관찰지표">
       <article class="panel">
-        <div class="panel-heading"><h2>기준선 대비 차이 분석</h2><span class="count">경로 수정 판단용</span></div>
-        <div class="variance-lead"><span>이전 기준선 대비</span><p><strong>수송·정유 정상화 시점은 실제 물량이 연속 확인되기 전까지 앞당기지 않습니다.</strong> 기관의 9월 이후 회복 가정과 현재 관측의 차이를 월별 유가 경로 반영 사유로 남깁니다.</p></div>
+        <div class="panel-heading"><h2>기관 기준선(8월 base case) 대비 최신 관측 차이</h2><span class="count">가정 수정 판단용</span></div>
+        <div class="baseline-def"><strong>여기서 ‘기준선’이란?</strong><p>2026년 8월 기관 리포트(EIA STEO Aug 2026 · Goldman Sachs 08.04~08.21 · JPMorgan 08.06 · S&amp;P Global August Outlook)가 <strong>자기 base case로 제시한 가정값</strong>을 말합니다. 우리가 만든 전망이 아니라 기관이 적어 둔 전제이며, 아래 표는 그 전제와 <strong>2026.09.09까지 실제 관측</strong>을 같은 행에 놓고 “기관의 가정을 수정해야 하는가”를 판정합니다.</p></div><div class="variance-lead"><span>판정 원칙</span><p><strong>수송·정유 정상화 시점은 실제 물량이 연속 확인되기 전까지 앞당기지 않습니다.</strong> 기관의 9월 이후 회복 가정과 현재 관측의 차이를 월별 유가 경로 반영 사유로 남깁니다.</p></div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Key Factor</th><th>기관 기준선</th><th>최신 관측</th><th>판단</th><th>다음 확인</th></tr></thead>
+            <thead><tr><th>Key Factor</th><th>기관 기준선 가정 (8월 리포트)</th><th>실제 관측 (~2026.09.09)</th><th>판정</th><th>다음 확인</th></tr></thead>
             <tbody>
               <tr><td>호르무즈 통항</td><td>9월부터 점진 회복 가정</td><td>폐쇄·공격 재개와 낮은 통과량 확인</td><td class="state-cell"><span class="status critical">수정 검토</span></td><td>통과량 연속 증가</td></tr>
               <tr><td>정유 가동</td><td>긴장 완화 시 회복 가능</td><td>공격·재가동 지연이 9월까지 지속</td><td class="state-cell"><span class="status critical">수정 검토</span></td><td>정지 물량·복구일</td></tr>
@@ -1792,7 +1858,7 @@
       </article>
 
       <article class="panel">
-        <div class="panel-heading"><h2>경로 전환 관찰지표</h2><span class="count">주간 검토</span></div>
+        <div class="panel-heading"><h2>경로(시나리오) 전환 확인 지표</h2><span class="count">주간 검토</span></div>
         <div class="monitor-list">
           <div class="monitor-item"><span class="monitor-name">호르무즈</span><div class="monitor-copy"><strong>통과 물량의 연속 회복</strong>단일 합의 발표가 아니라 실제 수송량 증가가 지속되는지 확인</div></div>
           <div class="monitor-item"><span class="monitor-name">정유</span><div class="monitor-copy"><strong>중동·러시아 가동률과 복구 일정</strong>정지 물량, 추가 공격, 재가동 지연을 분리하여 기록</div></div>
@@ -1827,17 +1893,28 @@
         </div>
         <div class="keydiff-callout">
           <span class="section-kicker">가장 큰 가정 차이 · KEY DIVERGENCE</span>
-          <p>세 경로의 최종 방향을 가르는 결정적 차이는 <strong>①공급 차질이 얼마나 오래 지속되는가</strong>와 <strong>②늘어난 공급·회복분을 수요가 흡수하는가</strong>입니다. <strong>Base 경로</strong>에서만 ‘공급 정상화 + 중국 EV發 구조적 수요 약세’가 동시에 나타나 재고가 크게 쌓이며 <b style="color:var(--down)">하락</b>으로 갈라지고, <strong>상승·대안 경로</strong>는 아시아·석유화학 수요가 증가분을 흡수해 <b style="color:oklch(45% 0.09 80)">보합</b>에서 멈춥니다.</p>
+          <p>세 경로를 가르는 것은 공급이 아니라 <strong>수요 측 구조 가정</strong>입니다. 공급 차질 지속 기간은 4~5개월로 사실상 비슷합니다. <strong>Base 경로</strong>에서만 ‘항로 회복에 따른 공급 정상화’와 ‘중국 EV發 운송연료 수요의 구조적 약화’가 <strong>M+4부터 9개월간 겹쳐</strong> 재고가 쌓이고, 그 결과 세 경로 중 <b style="color:var(--down)">유일하게 하락</b>으로 끝납니다. <strong>상승 경로</strong>는 EV 이벤트가 <strong>아예 없고</strong> 아시아·석유화학 수요가 증가분을 흡수해 <b style="color:oklch(45% 0.09 80)">보합</b>, <strong>대안 경로</strong>는 EV 억제가 M+7로 <strong>늦게</strong> 시작하고 잔여 차질이 끝까지 남아 <b style="color:oklch(45% 0.09 80)">보합</b>입니다.</p>
         </div>
+        <div class="path-cards" id="pathCards"></div>
         <div class="traj-scroll">
           <div class="traj-inner">
             <div class="traj-head"><div></div><div class="th-cells" id="trajHeadCells"></div></div>
             <div class="traj-strip" id="trajStrip"></div>
           </div>
         </div>
-        <div class="assume-matrix"><div class="assume-grid" id="assumeGrid"></div></div>
+        <div class="gantt">
+          <div class="integrated-heading" style="margin-bottom:var(--space-2xs)">
+            <h4 style="margin:0;font-size:.875rem;">핵심 가정별 활성 구간 비교</h4>
+            <span class="asof">V20 결과의 이벤트 활성 월을 그대로 집계</span>
+          </div>
+          <p style="margin:0 0 var(--space-sm);color:var(--color-muted);font-size:.6875rem;line-height:1.5;">각 경로에서 해당 가정(이벤트)이 <strong>실제로 활성인 달</strong>을 칠했습니다. 경로 간 지속 개월 수 차이가 4개월 이상이면 <strong>차이 큼</strong>으로 표시합니다.</p>
+          <div class="gantt-scroll"><div class="gantt-inner">
+            <div class="gantt-head"><div></div><div class="gh-cells" id="ganttHeadCells"></div><div></div></div>
+            <div id="ganttBody"></div>
+          </div></div>
+        </div>
+        <p style="margin:var(--space-md) 0 0;padding:var(--space-sm) var(--space-md);background:var(--color-paper-2);border-left:3px solid var(--flat);color:var(--color-ink-2);font-size:.6875rem;line-height:1.6;"><strong>이름 주의:</strong> ‘상승 경로 / 대안 경로’는 V20 토론의 <strong>seed 군집 명칭</strong>일 뿐이며, 실제 M+12 누적 방향과 일치하지 않습니다. 두 경로 모두 최종 <strong>보합</strong>이고, 오히려 ‘Base 경로’가 유일한 <strong>하락</strong>입니다. 방향 판단은 이름이 아니라 각 카드의 M+12 값으로 하십시오.</p>
       </section>
-
 
       <figure class="scenario-figure" aria-labelledby="scenario-map-title">
         <figcaption>
@@ -1992,46 +2069,93 @@
       function renderPriceChart() {
         const frame = document.getElementById("priceChartFrame");
         const legend = document.getElementById("priceLegend");
-        const width = 680;
-        const height = 275;
-        const margin = { top: 24, right: 18, bottom: 42, left: 42 };
-        const plotWidth = width - margin.left - margin.right;
-        const plotHeight = height - margin.top - margin.bottom;
-        const x = (index) => margin.left + (index / 4) * plotWidth;
-        const y = (value) => margin.top + ((95 - value) / 30) * plotHeight;
-        const svg = svgNode("svg", { class: "price-chart-svg", viewBox: `0 0 ${width} ${height}`, role: "img", "aria-labelledby": "priceSvgTitle priceSvgDesc" });
-        svg.append(svgNode("title", { id: "priceSvgTitle" }, "2026년 8월 3일 Brent 실적에서 시작하는 기관별 유가 전망"));
-        svg.append(svgNode("desc", { id: "priceSvgDesc" }, "ICE Brent 최근월물 83.77달러를 공통 시작점으로 EIA, Goldman Sachs, S&P Global의 전망을 해당 기간 기준으로 연결합니다. JPMorgan 자료에는 직접 가격 전망이 없습니다."));
-        [65,70,75,80,85,90,95].forEach((value) => {
-          svg.append(svgNode("line", { class: "chart-grid-line", x1: margin.left, x2: width - margin.right, y1: y(value), y2: y(value) }));
-          svg.append(svgNode("text", { class: "chart-label", x: margin.left - 7, y: y(value) + 3, "text-anchor": "end" }, `$${value}`));
+        const quarters = ["3Q26", "4Q26", "1Q27", "2Q27", "3Q27", "4Q27"];
+        const anchor = 83.77;
+        const series = [
+          { name: "EIA", key: "eia", color: "var(--series-1)", date: "Aug 2026 STEO", stance: "약세",
+            segs: [{ a: 0, b: 0, v: 85, note: "3Q26 평균" }, { a: 2, b: 5, v: 69, note: "2027 연평균" }],
+            summary: "3Q26 $85 → 2027 연평균 $69 (4Q26 미제시)" },
+          { name: "S&P Global", key: "sp", color: "var(--series-3)", date: "August 2026 Outlook", stance: "중립·강세",
+            segs: [{ a: 0, b: 0, v: 90, note: "8월" }, { a: 1, b: 1, v: 87.5, r: [85, 90], note: "2026 잔여" }, { a: 2, b: 5, v: 81, note: "2027" }],
+            summary: "8월 $90 → 2026 잔여 $87.5 (범위 85–90) → 2027 $81" },
+          { name: "Goldman Sachs", key: "gs", color: "var(--series-2)", date: "2026.08.04", stance: "강세(조건부)",
+            segs: [{ a: 1, b: 1, v: 85, r: [80, 90], note: "단기" }],
+            summary: "단기 $85 (범위 80–90) · 36M(2029.08) $76 — 2027 구간 직접 제시 없음" },
+          { name: "JPMorgan", key: "jpm", color: "var(--color-muted)", date: "2026.08.06", stance: "중립",
+            segs: [], summary: "직접 가격 전망 없음 (공급·재고 중심 리포트)" }
+        ];
+
+        const width = 760, height = 330;
+        const margin = { top: 26, right: 18, bottom: 46, left: 52 };
+        const plotW = width - margin.left - margin.right;
+        const plotH = height - margin.top - margin.bottom;
+        const bw = plotW / quarters.length;
+        const yMin = 64, yMax = 94;
+        const y = (v) => margin.top + ((yMax - v) / (yMax - yMin)) * plotH;
+        const qx = (i) => margin.left + i * bw;
+        const pad = bw * 0.12;
+
+        const svg = svgNode("svg", { class: "indicator-chart-svg qchart", viewBox: `0 0 ${width} ${height}`,
+          role: "img", "aria-label": "3Q26부터 4Q27까지 기관별 Brent 전망 분기 구간 차트" });
+        svg.append(svgNode("title", {}, "기관별 Brent 전망: 각 기관이 직접 제시한 기간 평균을 해당 분기에 표시"));
+
+        // quarter bands + x labels
+        quarters.forEach((q, i) => {
+          if (i % 2 === 1) svg.append(svgNode("rect", { class: "qc-band", x: qx(i), y: margin.top, width: bw, height: plotH }));
+          svg.append(svgNode("text", { class: "chart-label", x: qx(i) + bw / 2, y: height - 26, "text-anchor": "middle" }, q));
         });
-        ["8/3 실적","3Q26·8월","2026 잔여","2027 평균","36M 가정"].forEach((label, index) => svg.append(svgNode("text", { class: "chart-label", x: x(index), y: height - 10, "text-anchor": index === 0 ? "start" : index === 4 ? "end" : "middle" }, label)));
-        institutionPriceSeries.forEach((series, index) => {
-          const definedPoints = series.values.flatMap((value, pointIndex) => {
-            if (value === null) return [];
-            return [[x(pointIndex), y(value)]];
+        svg.append(svgNode("text", { class: "qc-year", x: qx(0) + bw, y: height - 10, "text-anchor": "middle" }, "2026"));
+        svg.append(svgNode("text", { class: "qc-year", x: qx(2) + bw * 2, y: height - 10, "text-anchor": "middle" }, "2027"));
+        svg.append(svgNode("line", { class: "qc-yearsplit", x1: qx(2), x2: qx(2), y1: margin.top, y2: margin.top + plotH + 8 }));
+
+        // gridlines
+        [70, 75, 80, 85, 90].forEach((v) => {
+          svg.append(svgNode("line", { class: "chart-grid-line", x1: margin.left, x2: width - margin.right, y1: y(v), y2: y(v) }));
+          svg.append(svgNode("text", { class: "chart-label", x: margin.left - 6, y: y(v) + 3, "text-anchor": "end" }, `$${v}`));
+        });
+
+        // anchor (2026.08.03 actual)
+        svg.append(svgNode("line", { class: "qc-anchor-line", x1: margin.left, x2: width - margin.right, y1: y(anchor), y2: y(anchor) }));
+        svg.append(svgNode("circle", { class: "qc-anchor-dot", cx: margin.left, cy: y(anchor), r: 4 }));
+        svg.append(svgNode("text", { class: "qc-anchor-label", x: margin.left + 7, y: y(anchor) + 13 }, `8/3 실적 $${anchor} (공통 기준점)`));
+
+        // series
+        series.forEach((s) => {
+          s.segs.forEach((g) => {
+            const x1 = qx(g.a) + pad, x2 = qx(g.b) + bw - pad;
+            if (g.r) svg.append(svgNode("rect", { class: "qc-range", x: x1, y: y(g.r[1]), width: x2 - x1,
+              height: y(g.r[0]) - y(g.r[1]), fill: s.color }));
+            svg.append(svgNode("line", { class: "qc-seg", x1, x2, y1: y(g.v), y2: y(g.v), stroke: s.color }));
+            svg.append(svgNode("text", { class: "qc-val", x: (x1 + x2) / 2, y: y(g.v) - 8, "text-anchor": "middle", fill: s.color }, `$${g.v}`));
           });
-          if (definedPoints.length > 1) {
-            svg.append(svgNode("polyline", { class: `price-series-line series-${index}`, points: definedPoints.map(([px, py]) => `${px.toFixed(1)},${py.toFixed(1)}`).join(" ") }));
+          for (let k = 0; k < s.segs.length - 1; k += 1) {
+            const p = s.segs[k], n = s.segs[k + 1];
+            svg.append(svgNode("line", { class: "qc-connect", x1: qx(p.b) + bw - pad, x2: qx(n.a) + pad,
+              y1: y(p.v), y2: y(n.v), stroke: s.color }));
           }
-          series.values.forEach((value, pointIndex) => {
-            if (value === null) return;
-            svg.append(svgNode("circle", { class: `price-series-point series-${index}`, cx: x(pointIndex), cy: y(value), r: 3.5 }));
-          });
-          const item = document.createElement("li");
-          const swatch = document.createElement("i");
-          swatch.className = `series-${index}${series.values.every((value) => value === null) ? " no-price" : ""}`;
-          const name = document.createElement("strong");
-          name.textContent = `${series.name} (${series.date})`;
-          const value = document.createElement("span");
-          value.textContent = series.summary;
-          item.append(swatch, name, value);
-          legend.append(item);
         });
-        svg.append(svgNode("circle", { class: "chart-point-actual", cx: x(0), cy: y(83.77), r: 4.5 }));
-        svg.append(svgNode("text", { class: "chart-label", x: x(0) + 7, y: y(83.77) - 7 }, "$83.77"));
-        frame.append(svg);
+        frame.replaceChildren(svg);
+
+        legend.replaceChildren(...series.map((s) => {
+          const li = document.createElement("li");
+          const top = document.createElement("div");
+          top.className = "pl-top";
+          const sw = document.createElement("i");
+          sw.style.background = s.segs.length ? s.color : "transparent";
+          sw.style.borderColor = s.color;
+          const nm = document.createElement("strong");
+          nm.textContent = s.name;
+          const st = document.createElement("span");
+          st.className = `pl-stance st-${s.key}`;
+          st.textContent = s.stance;
+          top.append(sw, nm, st);
+          const dt = document.createElement("small");
+          dt.textContent = s.date;
+          const sm = document.createElement("p");
+          sm.textContent = s.summary;
+          li.append(top, dt, sm);
+          return li;
+        }));
       }
 
       const scenarioData = [{"role":"Base 경로","name":"Base 경로 - M월 대비 M+12 유가 하락","probability":53.333333333333336,"seedCount":16,"representativeSeed":512041,"terminal":"하락","months":[["M","상승","M월은 활성 Event가 없는 확인된 현재 상태로, 중동 항로와 정유시설 차질이 공급 접근성을 낮추고 있다. 낮은 가시재고와 OECD 재고 감소는 유입 부족을 재고 인출과 현물 긴축으로 전달한다. 수요는 저점에서 회복했지만 전년 수준을 밑도는 부분 회복에 그쳐 공급 제약을 상쇄하지 못한다. 금융과 투기는 기관의 직접 내러티브가 없어 유가나 위험 프리미엄을 금융지표·포지션의 증거로 해석할 수 없다. 지정학적 긴장은 약해졌지만 호르무즈와 홍해의 실제 운송 차질 및 정유 복구 지연은 남아 있다. 전개경로는 공급 제약 → 재고 인출 → 수요 약세의 상쇄 → 유가 상승이다. 다음 전환 신호는 항로 통항과 정유가동의 지속적 회복, 그리고 재고 감소 둔화다.",[],[["demand","M월 수요는 전월보다 강화됐지만 전년 수준을 밑도는 부분 회복 상태다. 저점 이후 이동성·구매력 개선은 감소 속도를 늦추지만 운송연료와 석유화학 원료 약세가 공급 긴축을 상쇄하지 못한다. 다음 신호는 회복이 실제 최종소비로 이어지는지와 전년 대비 격차가 좁혀지는지다.",["S&P"]],["supply","M월 공급은 전월보다 약화됐고 호르무즈·홍해 통항 및 중동·러시아 정유가동 차질이 가용 원유와 제품을 제한한다. 비중동 공급과 우회 수송은 일부 보완하지만 도착 시점과 현물 접근성을 정상화하지 못해 재고 인출을 유발한다. 다음 신호는 항로 물량과 정유소 가동률이 함께 회복되는지다.",["GS","S&P"]],["inventory","M월 재고는 전월보다 약화됐으며 글로벌 가시재고와 OECD 상업재고의 감소가 완충력을 낮춘다. 공급 유입 제한과 높은 정유 투입이 재고 인출을 늘리는 반면 단기 미국 재고 반등은 전체 긴축을 되돌릴 직접 근거가 아니다. 다음 신호는 재고 감소가 지속되는지와 수출 도착이 이를 둔화시키는지다.",["GS"]],["financial","M월 금융은 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 따라서 달러나 미국 국채금리의 관측값을 유가 방향의 기관 근거로 합성하지 않으며 금융 경로는 별도 판단으로 제한한다. 다음 신호는 기관이 금융 여건과 원유시장 전달을 직접 연결해 제시하는지다.",[]],["speculation","M월 투기는 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 현물가격이나 위험 프리미엄을 투기 포지션의 직접 증거로 바꾸지 않으며 확보된 포지션 관측도 기관 내러티브를 대신하지 않는다. 다음 신호는 기관이 포지션 변화와 실물 수급의 연결을 명시하는지다.",[]],["geopolitics","M월 지정학은 위험 지표가 약해졌지만 호르무즈·홍해·흑해의 사건과 운송 차질은 지속되는 상태다. 사건 자체가 항로 접근성, 보험, 도착 신뢰성, 정유 복구를 제약해 공급 감소와 재고 인출로 전달된다. 다음 신호는 통항 재개가 일시 반등인지 지속 회복인지다.",["EIA","S&P"]]],["EIA","GS","S&P"]],["M+1","상승","M+1월에는 중동 항로·정유시설의 간헐적 공급 제약이 발생하고, 낮은 글로벌 가시재고와 미국 상업재고의 추가 긴축이 시작된다. 세계 석유수요의 약세는 지속되지만 계절성과 부분 회복이 하방 압력을 일부 제한한다. 중국 원유 구매는 제한적으로 반등하나 낮은 정유가동과 최종수요 제약 때문에 물리적 소비 회복으로 확정되지 않는다. 공급 지연은 재고 인출과 현물 부족으로 전달되어 수요 약세를 압도한다. 금융과 투기는 기관의 직접 근거가 없으므로 대표 관측이나 포지션을 가격 원인의 직접 증거로 사용하지 않는다. 지정학적으로 통항 재개와 재중단이 반복되어 유가는 상승한다. 전개경로는 항로 차질 → 재고 긴축 → 수요 약세 상쇄 → 유가 상승이다. 다음 전환 신호는 중국 구매의 지속성과 항로 회복의 신뢰성이다.",["중동 항로·정유시설의 간헐적 공급 제약 지속","낮은 글로벌 가시재고와 미국 상업재고의 추가 긴축","세계 석유수요의 약세 지속과 불균등한 안정화","중국 원유 구매의 제한적 반등과 최종수요 제약"],[["demand","M+1월 수요는 약세가 이어지지만 부분 회복과 중국 구매 반등이 감소 속도를 완화한다. 다만 중국의 낮은 정유가동과 미온적 최종수요 때문에 추가 원유 구매가 실제 연료 소비보다 재고 보충에 머물 수 있어 공급 긴축을 상쇄하지 못한다. 다음 신호는 구매 반등이 정유 투입과 내수 소비로 이어지는지다.",["GS","S&P"]],["supply","M+1월 공급은 중동 항로·정유시설의 간헐적 제약으로 전월보다 약화되고 호르무즈 재개와 재중단이 도착 신뢰성을 낮춘다. 우회 수송과 비중동 물량은 일부 보완하지만 원유·제품 유입 부족이 재고 인출을 확대해 물리적 균형을 더 긴축시킨다. 다음 신호는 통항 증가가 몇 주 이상 지속되는지다.",["EIA","S&P"]],["inventory","M+1월 재고는 낮은 글로벌 가시재고와 미국 상업재고의 추가 긴축으로 전월보다 더 약화된다. 공급 지연과 제품 차질이 인출을 늘리고, 일시적인 미국 재고 반등이 있더라도 높은 정유 투입과 낮은 순수입이 완충력을 다시 낮춘다. 다음 신호는 수출 도착 뒤 미국 재고가 재차 감소하는지다.",["EIA","GS"]],["financial","M+1월 금융은 기관의 직접 내러티브가 없어 전환 방향을 확인할 수 없다. 대표 금융지표의 관측이나 가격 움직임은 금융 충격의 직접 근거가 아니며 실물 차질에서 금융 경로를 새로 합성하지 않는다. 다음 신호는 기관이 달러·금리와 원유 수급의 전달 메커니즘을 직접 제시하는지다.",[]],["speculation","M+1월 투기는 기관의 직접 내러티브가 없어 포지션 방향을 기관 근거로 확정할 수 없다. 물리적 긴축이 포지션에 영향을 줄 가능성은 보조 경로일 뿐 현물가격이나 위험 프리미엄을 직접 증거로 바꾸지 않는다. 다음 신호는 기관이 포지션과 실물 부족을 함께 설명하는지다.",[]],["geopolitics","M+1월 지정학은 호르무즈·홍해의 간헐적 통항 차질과 정유시설 위험이 지속되는 상태다. 사건은 보험·선적·도착 시점을 불규칙하게 만들고 그 결과 공급 접근성이 낮아져 재고 인출과 현물 긴축이 커진다. 다음 신호는 통항 재개가 일시적 흐름인지 안정적 운송 회복인지다.",["EIA"]]],["EIA","GS","S&P"]],["M+2","상승","M+2월에는 중동 항로·정유시설 제약과 낮은 재고 긴축이 이어지며 계절정비와 정유소 차질이 제품 공급을 추가로 제한한다. 세계 석유수요는 약세 속에서 중국 구매 반등과 운송연료 부진이 병존해 공급 손실을 흡수하지 못한다. 재고는 미국과 OECD의 저점을 시험하며 물리적 균형은 전월보다 더 긴축된다. 금융과 투기는 기관의 직접 전망이 없으므로 지표와 포지션 관측을 가격 방향의 직접 근거로 해석하지 않는다. 지정학적 위험은 통항 재개와 재중단의 반복으로 운송 신뢰성을 훼손한다. 전개경로는 정유·항로 차질 → 재고 저점 시험 → 수요 억제 → 유가 상승이다. 따라서 유가는 상승하지만 수요 약세가 상승폭을 제한한다. 다음 신호는 재고 저점 통과와 항로 정상화 여부다.",["중동 항로·정유시설의 간헐적 공급 제약 지속","낮은 글로벌 가시재고와 미국 상업재고의 추가 긴축","세계 석유수요의 약세 지속과 불균등한 안정화","중국 원유 구매의 제한적 반등과 최종수요 제약"],[["demand","M+2월 수요는 약세 속 부분 안정화로 전월과 비슷한 상태이며 중국 구매 반등과 운송연료 부진이 함께 나타난다. 가격 상승과 낮은 최종수요는 소비를 추가로 제한하고, 중국 구매가 실제 정유 투입이 아니면 재고 긴축을 완화하지 못한다. 다음 신호는 운송연료 약세가 완화되는지다.",["S&P"]],["supply","M+2월 공급은 계절정비와 정유소 차질이 겹쳐 전월보다 제약이 강화되고 항로의 재개·재중단이 유입을 불규칙하게 만든다. 비중동 공급과 우회 경로가 일부 물량을 보태지만 제품 공급 감소와 원유 도착 지연이 재고 저점 시험으로 이어진다. 다음 신호는 정유가동과 항로 물량의 동시 회복이다.",["EIA","JPM"]],["inventory","M+2월 재고는 미국·OECD 상업재고가 저점을 시험하면서 전월보다 추가 약화된다. 항로와 정유 차질은 원유·제품 유입을 줄이고 인출을 늘리며, 중국의 제한적 구매 반등은 최종수요가 약해 완충 효과가 제한된다. 다음 신호는 재고 감소가 둔화되고 공급 도착이 인출을 실제로 줄이는지다.",["EIA","S&P"]],["financial","M+2월 금융은 기관의 직접 전망이 확인되지 않아 전월과 같은 근거 한계가 지속된다. 달러와 미국 국채금리의 관측값 또는 유가 변동을 금융 전달의 직접 증거로 사용하지 않고 실물 경로와 분리한다. 다음 신호는 금융여건이 원유 수급에 미치는 영향을 기관이 직접 설명하는지다.",[]],["speculation","M+2월 투기는 기관의 직접 전망이 없어 공급 긴축에 따른 포지션 증가를 확인된 기관 사실로 만들 수 없다. 실물 부족이 투기 행동에 영향을 줄 수 있다는 논리는 보조적 가능성일 뿐 현물가격과 위험 프리미엄은 직접 포지션 증거가 아니다. 다음 신호는 기관의 포지션 자료와 해석이 함께 제시되는지다.",[]],["geopolitics","M+2월 지정학은 호르무즈·홍해 통항의 재개와 재중단이 반복되어 전월의 위험이 지속되는 상태다. 사건은 선적과 도착 신뢰성을 낮추고 정유시설 복구를 지연시켜 공급·제품 접근성을 줄이며 재고 인출로 전달된다. 다음 신호는 통항 안정과 재공격 위험의 변화를 함께 확인하는 것이다.",["GS","S&P"]]],["GS","S&P"]],["M+3","보합","M+3월에는 중동 항로·정유시설의 간헐적 공급 제약이 지속되지만 일부 항로 회복과 비중동 공급이 차질을 보완한다. 세계 석유수요는 약세 속에서 불균등한 안정화를 보이며 중국 구매 반등의 영향은 약화된다. 낮은 재고는 여전히 완충력을 제한하지만 추가 긴축 Event의 직접 영향은 소멸해 재고 감소는 둔화된다. 금융과 투기는 기관의 직접 근거가 없어 금융지표나 포지션을 가격 방향의 직접 증거로 사용할 수 없다. 지정학적 긴장은 다소 약해져도 정유시설 복구 지연과 재공격 위험이 운송·공급 접근성에 남는다. 전개경로는 부분 공급 회복 → 낮은 재고 유지 → 수요 안정화 → 유가 보합이다. 따라서 유가는 보합이며 다음 전환은 항로 회복의 지속성과 재고 재축적 여부에 달려 있다.",["중동 항로·정유시설의 간헐적 공급 제약 지속","세계 석유수요의 약세 지속과 불균등한 안정화"],[["demand","M+3월 수요는 전월의 약세를 유지하면서 부분 안정화가 감소 압력을 완화하는 상태다. 중국 구매 반등은 약해지고 운송연료와 석유화학 원료의 부진이 남아 공급 회복이 곧 수요 회복으로 이어지지 않는다. 다음 신호는 안정화가 전년 대비 격차 축소로 연결되는지다.",["GS","S&P"]],["supply","M+3월 공급은 일부 항로 회복과 비중동 공급으로 전월보다 개선되지만 중동 항로·정유시설의 간헐적 제약은 지속된다. 유입 증가가 재고 감소 속도를 늦추고 제품 공급을 보완하나 정유 복구 지연과 재중단 위험 때문에 완전한 정상화는 아니다. 다음 신호는 회복 물량의 지속성과 정유가동 개선이다.",["GS","S&P"]],["inventory","M+3월 재고는 추가 긴축의 직접 영향이 소멸하면서 전월보다 약화되지 않고 낮은 수준을 유지한다. 부분적인 공급 회복이 인출 속도를 늦추지만 이전 감소로 완충력은 제한되어 재고가 즉시 재축적되지는 않는다. 다음 신호는 미국·글로벌 재고가 감소에서 안정 또는 재축적으로 전환하는지다.",["EIA"]],["financial","M+3월 금융은 기관의 직접 내러티브가 없어 전월과 마찬가지로 방향을 확인할 수 없다. 달러와 미국 국채금리의 관측값을 유가 보합의 원인으로 연결하거나 실물 긴축의 금융 증거로 확대하지 않는다. 다음 신호는 기관의 금융시장 전달 설명이 새로 확인되는지다.",[]],["speculation","M+3월 투기는 기관의 직접 내러티브가 없는 상태가 지속되며 가격 상승 모멘텀 둔화가 포지션 변화를 낳았다고 단정할 수 없다. 포지션 관측은 참고자료일 뿐이고 현물가격이나 위험 프리미엄은 투기 방향의 직접 증거가 아니다. 다음 신호는 기관이 포지션과 유가 경로를 함께 검증하는지다.",[]],["geopolitics","M+3월 지정학은 전월보다 완화되지만 호르무즈·홍해의 재중단과 정유시설 복구 지연 위험이 남아 있는 상태다. 사건의 완화는 운송과 시장 접근성을 일부 개선하지만 복구가 지연되면 공급 회복과 재고 재축적의 속도를 제한한다. 다음 신호는 지속 통항과 정유시설 복구가 함께 확인되는지다.",["EIA"]]],["EIA","GS","S&P"]],["M+4","보합","중동 항로·정유시설의 간헐적 공급 제약은 이어지지만 비OPEC 증산과 항로 회복에 따른 부분적 재균형이 공급 손실을 일부 보완한다. 수요는 계절성과 구매력 개선으로 안정화되더라도 중국 EV 확산으로 운송연료의 구조적 약세가 강화된다. 공급 유입이 늘어 재고 인출 속도는 둔화되지만 낮은 재고 완충력은 남아 있다. 금융과 투기는 기관의 직접 근거가 없어 유가나 위험 프리미엄을 금융지표·포지션의 증거로 해석하지 않는다. 지정학적 긴장은 항로 접근성과 정유가동을 여전히 제약하나 회복이 위험을 일부 낮춘다. 전개경로는 항로 회복 → 비OPEC 공급 증가 → 재고 긴축 완화다. 따라서 수요 하방과 공급 개선이 상쇄되어 유가는 보합이다. 다음 전환은 통항 회복의 지속성, 비OPEC 물량 증가, 재고 감소 둔화와 EV 대체의 실제 진행 여부다.",["중동 항로·정유시설의 간헐적 공급 제약 지속","세계 석유수요의 약세 지속과 불균등한 안정화","비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 약세를 벗어나 불균등하게 안정화되지만 운송연료 회복은 제한된다. 세계 수요의 부분 회복과 중국 EV 확산이 함께 작용해 이동성 소비의 증가를 억제하고 회복을 석유화학 원료 쪽으로 치우치게 한다. 다음 신호는 운송연료 감소세 완화와 중국 구매가 실제 최종수요로 이어지는지 여부다.",["S&P"]],["supply","공급은 전월의 제약에서 벗어나 비OPEC 증산과 항로 회복으로 완만하게 개선된다. 통항 신뢰성이 높아지면 원유 도착과 정유소 투입이 늘어 중동·러시아 차질을 일부 보완하지만 잔존 위험은 남는다. 다음에는 주간 도착 안정성과 정유가동 회복이 실제 제품 공급 증가로 이어지는지 확인한다.",["JPM","S&P"]],["inventory","재고는 감소 압력이 약해지고 공급 유입 회복으로 인출 속도가 둔화된다. 항로와 정유가동의 부분 회복이 원유·제품 유입을 늘리지만 수요 약세가 함께 나타나 완전한 재축적까지는 이르지 않는다. 다음 신호는 글로벌 가시재고 감소 둔화와 미국 상업재고의 반등 지속 여부다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 전망이 확인되지 않아 월별 방향을 판단할 근거가 없다. 현물가격이나 위험 프리미엄은 금융지표의 직접 증거로 사용할 수 없으며, 항로 회복의 물리적 효과와도 구분한다. 다음 확인은 유효한 기관 금융 서술이 새로 제시되는지 여부다.",[]],["speculation","투기 축은 기관의 직접 전망과 포지션 근거가 없어 상태를 독립적으로 확정할 수 없다. 유가 움직임이나 공급 위험에 따른 프리미엄을 투기 포지션의 직접 증거로 바꾸지 않고 실물 재균형과 분리한다. 다음 신호는 검증 가능한 기관의 포지션 해석이나 투기 관련 근거가 제시되는지다.",[]],["geopolitics","지정학적 긴장은 항로와 정유시설의 간헐적 차질을 남기면서 전월보다 완화되는 경로다. 통항 회복은 공급 접근성과 도착 신뢰성을 개선하지만 재중단 위험과 정유시설 복구 지연은 물리적 공급 제약을 지속시킨다. 다음에는 호르무즈·홍해 통항과 우회 수송, 정유소 가동 회복이 함께 확인되는지 본다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+5","하락","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 지속되어 공급 유입과 정유소 원료 투입이 개선된다. 중동 항로·정유시설의 간헐적 공급 제약 지속은 이 경로에서 소멸하지만 잔존 차질과 재중단 위험은 남는다. 중국 EV 확산은 운송용 석유수요를 구조적으로 약화시켜 수요 회복을 제한한다. 공급 증가와 수요 약세의 결합으로 재고 인출은 둔화되고 재고 긴축은 완화된다. 금융과 투기는 기관의 직접 근거가 없으므로 현물가격·위험 프리미엄을 금융지표나 포지션의 증거로 해석하지 않는다. 지정학적 위험 완화는 접근성을 높이지만 완전 정상화는 아니다. 전개경로는 공급 회복 → 수요 약화 → 재고 긴축 완화다. 유가는 하락하며 다음 전환은 항로 회복의 지속성과 재고 개선이 실제 재축적으로 이어지는지다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월보다 약화되어 부분 회복의 탄력이 낮아지고 운송연료 부진이 두드러진다. 중국 EV 확산이 휘발유 대체를 확대해 경제활동 회복이 석유소비로 전환되는 강도를 낮춘다. 다음 신호는 중국의 구매 증가가 정유 투입과 최종연료 소비로 이어지는지다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["GS","S&P"]],["supply","공급은 항로 회복과 비OPEC 증산이 이어지며 전월보다 개선된다. 안정적인 도착과 생산 증가는 중동 손실을 일부 보완하고 정유가동을 높이지만 잔존 차질은 완전한 정상화를 막는다. 다음에는 통항 증가가 일시적 반등을 넘어 지속적인 물류 회복이 되는지 확인한다.",["EIA","JPM"]],["inventory","재고는 공급 유입 증가와 수요 약화가 맞물려 인출 압력이 완화되고 개선된다. 원유 도착과 정유제품 공급이 늘면서 재고 감소 속도는 낮아지지만 잔존 차질 때문에 본격적인 재축적은 제한된다. 다음 신호는 미국과 글로벌 재고가 감소에서 안정 또는 증가로 전환하는지다.",["JPM","S&P"]],["financial","금융 축은 여전히 기관의 직접 전망이 없어 방향을 확정할 수 없다. 유가 하락이나 위험 프리미엄 완화는 금융지표의 직접 근거가 아니며 공급·수요 변화의 물리적 결과와 구분해야 한다. 다음 확인은 기관이 환율이나 금리의 시장 전달을 직접 설명하는지 여부다.",[]],["speculation","투기 축은 기관의 직접 포지션 근거가 없어 독립적인 상태 판단이 불가능하다. 유가 하락 전망을 매수 포지션 축소로 단정하지 않으며, 실물 공급 회복과 수요 약화도 투기 증거로 전환하지 않는다. 다음 신호는 검증된 기관의 투기 포지션과 그 해석이 제시되는지다.",[]],["geopolitics","지정학은 항로와 생산 흐름의 부분 정상화로 전월보다 완화되지만 위험이 소멸하지 않는다. 통항 회복은 원유 접근성과 운송 신뢰성을 높여 공급을 개선하나 재중단과 잔존 생산 차질은 물리적 긴축을 남긴다. 다음에는 지속적 통항, 우회 물량, 정유시설 복구가 동시에 확인되는지 본다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+6","하락","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 이어져 공급은 지속적으로 개선되고 중동 차질의 영향은 약해진다. 중국 EV 확산은 운송용 석유수요의 구조적 약화를 강화해 수요 회복의 상방 탄력을 낮춘다. 공급 증가가 약한 수요를 웃돌면서 재고 인출은 멈추고 일부 재축적이 시작된다. 지정학적 긴장은 완화되지만 잔존 차질과 재중단 위험이 접근성과 운송 회복을 제한한다. 금융은 기관의 직접 근거가 없고 투기도 직접 포지션 근거가 없어 유가나 위험 프리미엄을 각각의 증거로 사용할 수 없다. 전개경로는 부분 재균형 → 구조적 수요 약화 → 재고 재축적이다. 물리적 균형 개선과 수요 약세가 겹쳐 유가는 하락한다. 다음 전환은 재고 재축적의 지속성, 항로 정상화의 신뢰성, EV 대체가 수요에 미치는 영향이다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 구조적 약세가 강화되어 운송연료 회복이 계속 제한된다. 중국 EV 확산이 연료 대체를 심화하고 아시아 수요 회복의 구성을 석유화학 원료 쪽으로 이동시켜 총수요의 상방 탄력을 낮춘다. 다음 신호는 EV 비중 상승과 운송연료·석유화학 수요의 차별화가 지속되는지다.",["GS","S&P"]],["supply","공급은 항로 회복과 비OPEC 증산의 누적으로 전월보다 개선된다. 원유 도착과 정유소 투입이 늘어 중동 손실을 일부 상쇄하지만 잔존 차질과 재중단 위험 때문에 완전 정상화는 아니다. 다음에는 생산·교역 회복이 재고 재축적으로 실제 전환되는지 확인한다.",["EIA","JPM"]],["inventory","재고는 공급 개선과 수요 약세가 결합해 인출에서 일부 재축적으로 전환된다. 항로와 정유가동 회복이 유입을 늘리고 EV에 따른 연료수요 제약이 소비를 낮추지만, 낮은 기존 재고는 완전히 회복되지 않는다. 다음 신호는 글로벌 가시재고와 미국 상업재고의 지속적인 증가 여부다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 전망이 없어 월별 변화의 방향을 판단하지 않는다. 유가 하락이나 지정학적 위험 완화를 금융지표의 직접 근거로 해석하지 않고 실물 수급 및 접근성 변화와 분리한다. 다음 확인은 기관이 금융 변수의 전달경로를 직접 제시하는지 여부다.",[]],["speculation","투기 축은 기관의 직접 전망과 포지션 근거가 없어 상태를 확정할 수 없다. 낮은 유가와 수요 전망을 순매수 감소의 직접 증거로 바꾸지 않으며, 재고 재축적도 투기 포지션과 동일시하지 않는다. 다음 신호는 검증 가능한 기관의 포지션 자료와 해석이 새로 확인되는지다.",[]],["geopolitics","지정학은 통항과 생산 흐름이 회복되며 지속적으로 완화되지만 잔존 차질이 위험을 남긴다. 긴장 완화는 공급 접근성과 운송·정유 복구를 개선해 물리적 긴축을 낮추나 재공격이나 재중단은 회복을 되돌릴 수 있다. 다음에는 항로의 지속 운항과 생산·정유시설 복구가 함께 유지되는지 본다.",["EIA"]]],["GS","JPM","S&P"]],["M+7","보합","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 공급 유입을 늘리지만, 중동의 잔존 차질 때문에 완전한 정상화에는 이르지 않는다. 수요는 불균등하게 안정화되며 중국 EV 확산으로 운송연료의 구조적 약세가 이어져 공급 증가를 충분히 흡수하지 못한다. 그 결과 물리적 재고는 완만하게 늘어 낮은 완충력이 일부 개선되고, 현물 긴축과 가격 압력은 전월보다 약해진다. 금융은 기관의 직접 근거가 없어 방향 판단을 보강할 수 없으며, 투기도 기관의 직접 포지션 근거가 없어 공급·수요 논리만으로 해석해야 한다. 지정학적 위험은 항로 회복으로 완화되지만 재중단 가능성이 남아 유가의 하방을 제한한다. 유가는 공급 개선과 수요 약세가 맞물려 보합이다. 전개경로는 항로 회복과 비OPEC 증산 → 재고 완충력 개선 → EV에 따른 수요 약세다. 다음 전환 신호는 통항 회복이 일시적 선적 증가를 넘어 지속되고 정유가동과 재고 흐름에 반영되는지 여부다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월의 약세를 이어가면서도 계절성과 일부 구매력 개선으로 불균등하게 안정화된다. 활성화된 중국 EV 확산은 운송연료 소비를 대체하고, 부분적 수요 회복이 공급 증가를 모두 흡수하지 못하게 한다. 다음 신호는 회복이 실제 연료 소비로 이어지는지와 운송연료 약세가 지속되는지다.",["GS","S&P"]],["supply","공급은 비OPEC 증산과 항로 회복으로 전월보다 개선되지만 중동의 잔존 차질로 완전 정상화는 아니다. 안정적인 통항은 원유 도착과 정유 투입을 늘리고, 비OPEC 물량은 중동 손실을 일부 보완해 물리적 균형을 개선한다. 다음 신호는 회복이 지속적인 도착 안정성과 정유가동 증가로 이어지는지다.",["EIA","JPM"]],["inventory","재고는 공급 유입 개선에 따라 완만하게 증가해 전월의 낮은 완충력이 일부 회복된다. 항로 회복과 비OPEC 증산이 원유 도착을 늘리지만 수요 약세가 함께 나타나 재고 인출 압력을 낮춘다. 다음 신호는 재고 증가가 일시적 반등인지 지속적인 재축적인지다.",["JPM","S&P"]],["financial","금융은 이 달에도 기관의 직접 전망이나 유효한 축별 근거가 확인되지 않는다. 따라서 항로 회복과 수요 약세를 금융지표의 움직임이나 금리 경로로 번역할 수 없으며, 물리적 수급이 해석의 중심이다. 다음 신호도 금융 자체가 아니라 기관의 직접 금융 근거가 새로 제시되는지다.",[]],["speculation","투기는 기관의 직접 포지션 전망이나 유효한 근거가 없어 독립적인 방향을 확인할 수 없다. 공급 회복과 수요 약세가 유가 기대를 제한할 수는 있지만 이를 투기 포지션의 직접 증거로 간주하지 않는다. 다음 신호는 기관이 검증 가능한 포지션 또는 투기 흐름을 직접 제시하는지다.",[]],["geopolitics","지정학은 항로 정상화가 진전되며 전월보다 완화되지만 재중단 위험은 남아 있다. 사건의 완화가 곧바로 공급 정상화를 뜻하지는 않으며, 통항 안정성과 정유시설 복구를 거쳐 시장 접근성이 개선된다. 다음 신호는 주요 항로의 지속 운항과 정유소 가동 회복이 함께 확인되는지다.",["EIA","S&P"]]],["EIA","GS","JPM"]],["M+8","보합","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 지속되어 공급은 점진적으로 개선되지만, 잔존 중동 차질이 회복 속도를 늦춘다. 수요는 일부 안정화되더라도 중국 EV 확산으로 운송용 석유 소비가 약해 공급 증가와 균형을 이룬다. 재고는 증가세가 이어지면서 낮은 완충력이 정상화 방향으로 움직이나 재축적의 속도는 제한적이다. 금융은 기관의 직접 전망이 없어 유가나 위험 프리미엄을 금융 근거로 사용할 수 없고, 투기도 직접 포지션 자료가 없어 방향을 확정할 수 없다. 지정학은 항로 회복으로 완화되지만 완전한 정상화 전의 재중단 위험이 남는다. 유가는 공급 개선과 수요 제약이 상쇄해 보합이다. 전개경로는 부분 정상화 지속 → 재고 증가세 둔화 → EV에 따른 운송수요 제약이다. 다음 전환 신호는 공급 회복이 실제 재고 증가로 이어지는 동시에 중국의 수입 반등이 최종수요를 동반하는지다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월보다 소폭 안정화되지만 운송연료 부문은 중국 EV 확산으로 계속 약하다. 부분적인 중국 구매와 계절적 회복이 나타나도 낮은 최종수요가 수입 증가의 지속성을 제한한다. 다음 신호는 수입 반등이 정유 투입과 실제 내수 소비로 연결되는지다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["GS","S&P"]],["supply","공급은 항로 회복과 비OPEC 물량 증가로 개선세를 이어가지만 잔존 차질로 회복 폭은 제한된다. 원유 도착 안정성이 높아지고 정유 투입이 늘어 제품 공급 압박을 낮추지만, 재중단은 이 균형을 다시 약화시킬 수 있다. 다음 신호는 주간 도착 흐름과 정유가동의 동반 개선이다.",["JPM","S&P"]],["inventory","재고는 증가가 이어지지만 공급 회복 속도가 완만해져 증가세는 둔화된다. 항로와 생산의 개선이 유입을 늘리고 수요의 제한이 인출을 줄여 물리적 완충력을 높이지만, 낮은 출발 수준은 남아 있다. 다음 신호는 증가 흐름이 안정적인 재축적으로 전환되는지다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 없는 상태가 지속되어 축별 방향을 판정할 근거가 없다. 부분 정상화와 수요 약세를 현물가격이나 위험 프리미엄의 움직임으로 금융 신호 또는 직접 증거로 바꾸지 않는다. 다음 확인 사항은 기관의 직접 금융 분석이 새로 축적되는지 여부다.",[]],["speculation","투기는 기관의 직접 전망과 포지션 근거가 없어 보합 여부를 독립적으로 확인할 수 없다. 재균형과 수요 제약은 시장 기대를 제한할 수 있지만, 이를 투기 포지션의 변화로 단정하지 않는다. 다음 신호는 검증 가능한 기관의 포지션 자료가 제시되는지다. 다음 달에는 ICE Brent Managed Money의 실제 포지션 변화를 별도로 확인해야 한다.",[]],["geopolitics","지정학은 항로 회복이 이어지며 완화되지만 완전한 정상화 전까지 위험이 남는다. 사건의 긴장 완화는 통항과 정유시설 복구를 통해서만 공급 접근성과 도착 신뢰성 개선으로 전달된다. 다음 신호는 재개와 재중단의 반복이 줄고 우회 흐름과 정유가동이 함께 회복되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+9","하락","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 지속되면서 공급 증가가 잔존 중동 차질을 더 많이 보완한다. 수요는 세계적으로 약한 안정화에 머물고 중국 EV 확산이 운송연료 소비를 구조적으로 낮춰 공급 초과 압력을 키운다. 재고는 유입 증가와 인출 둔화가 겹쳐 재축적 방향으로 움직이며 물리적 긴축은 완화된다. 금융은 기관의 직접 전망이 없어 금융지표나 위험 프리미엄을 독립적인 근거로 사용할 수 없고, 투기도 직접 포지션 자료가 없어 공급 초과를 포지션 변화로 해석하지 않는다. 지정학적 위험은 항로 회복으로 약해지지만 잔존 차질과 재중단 가능성이 유가 하방의 제한 요인이다. 유가는 공급 증가와 수요 약세로 하락한다. 전개경로는 비OPEC 공급 확대 → 재고 재축적 → EV에 따른 수요 하방 압력이다. 다음 전환 신호는 재고 재축적이 지속되는지와 항로 회복이 잔존 차질을 실제로 줄이는지다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월보다 약화되며 중국 EV 확산이 도로교통용 석유 소비를 계속 대체한다. 아시아 활동이 회복되더라도 수요 증가는 운송연료보다 다른 부문에 치우쳐 공급 증가를 충분히 흡수하지 못한다. 다음 신호는 EV 확산과 운송연료 감소가 계속되는지다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["GS","S&P"]],["supply","공급은 전월보다 강화되어 비OPEC 증산과 항로 회복이 잔존 중동 손실을 보완한다. 생산과 교역 흐름의 개선이 원유 도착과 정유 투입을 늘리고 약한 수요와 맞물려 공급 초과를 만든다. 다음 신호는 증산 지속과 항로의 안정적 운항이 확인되는지다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["EIA","JPM"]],["inventory","재고는 공급 증가와 수요 약세가 겹치며 완만한 재축적 방향으로 전환된다. 유입이 늘고 정유 및 운송연료 수요의 인출 압력이 낮아져 기존의 물리적 긴축이 완화된다. 다음 신호는 재고 증가가 일시적 반등을 넘어 지속되는지다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["JPM"]],["financial","금융은 기관의 직접 전망이 없어 이 달의 하락 방향을 금융 축의 독립 근거로 확인할 수 없다. 유가 하락이나 위험 프리미엄 완화를 금융지표의 직접 증거로 바꾸지 않고 물리적 공급과 수요의 결과로만 해석한다. 다음 신호는 기관의 직접 금융 근거가 새로 제시되는지다.",[]],["speculation","투기는 기관의 직접 포지션 전망이 없어 공급 초과에 따른 약화를 독립적으로 확정할 수 없다. 수급 개선과 가격 하락은 포지션 기대에 영향을 줄 수 있지만 투기 포지션의 직접 증거는 아니다. 다음 신호는 검증 가능한 기관의 투기 흐름 자료가 확인되는지다.",[]],["geopolitics","지정학은 항로 회복과 긴장 완화로 전월보다 약해지지만 잔존 차질은 남는다. 사건의 완화가 운송과 공급 접근성 개선으로 전달되고 정유시설 복구가 뒤따를 때에만 물리적 공급 제약이 실제로 줄어든다. 다음 신호는 통항 안정성과 정유가동 회복이 지속되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+10","하락","비OPEC 증산과 항로 회복에 따른 부분적 재균형이 공급 유입과 정유 원료 접근성을 개선한다. 중국 EV 확산에 따른 운송용 석유수요 구조적 약화로 수요는 전년 추세를 밑돌지만, 계절성과 일부 구매력 개선은 감소 속도를 늦춘다. 공급 증가는 원유와 제품의 도착을 늘리고 낮은 수요와 결합해 재고 재축적과 물리적 완충력 개선으로 이어진다. 전개경로는 공급 회복 → 재고 완충 → 수요 약세다. 금융은 기관의 직접 근거가 없어 현물가격이나 위험 프리미엄을 금융지표의 증거로 해석할 수 없으며, 투기 포지션도 직접 확인되지 않는다. 지정학적 항로 위험은 완화되어 공급 접근성을 높이지만 잔존 차질은 완전한 정상화를 막는다. 공급 정상화와 구조적 수요 약세가 결합해 유가는 하락하며, 다음 전환 신호는 항로 회복과 비OPEC 증산이 실제 도착 물량과 재고 증가로 이어지는지 여부다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월에 이어 약세이며 중국 EV 확산으로 운송연료 회복이 제한된다. 부분적 구매력 개선과 계절성은 감소 속도를 늦추지만, 공급 회복이 수요를 추가로 끌어올린다는 직접 근거는 없다. 다음 확인 신호는 운송연료 약세가 완화되는지와 EV 대체가 계속되는지다.",["GS","S&P"]],["supply","공급은 비OPEC 증산과 항로 회복으로 전월보다 개선되지만 잔존 차질이 남는다. 통항 안정은 원유 도착과 정유소 투입을 늘려 제품 공급과 재고 흐름의 회복으로 전달된다. 다음 신호는 회복이 일시적 선적 증가를 넘어 지속적인 도착 안정성으로 이어지는지다.",["EIA","JPM"]],["inventory","재고는 공급 유입 개선과 낮은 수요의 결합으로 전월보다 증가해 완충력이 높아진다. 항로 회복과 비OPEC 증산은 원유·제품 유입을 늘리지만 정유 투입과 잔존 차질은 재축적 속도를 제한한다. 다음 신호는 가시재고와 상업재고의 감소가 실제 증가로 전환되는지다.",["EIA","JPM"]],["financial","금융은 기관의 직접 전망이나 유효한 직접 근거가 확인되지 않아 방향을 판단할 수 없다. 현물 유가와 위험 프리미엄은 금융지표의 직접 증거가 아니며 물리적 공급·재고 경로와 분리한다. 다음 확인 신호는 금융축을 직접 다루는 기관 근거가 제시되는지다. 다음 달에는 달러 인덱스와 미국 10년물 국채금리의 실제 변화를 별도로 확인해야 한다.",[]],["speculation","투기는 기관의 직접 전망이나 유효한 포지션 근거가 없어 방향을 확정할 수 없다. 낮은 수요와 공급 회복이라는 실물 신호는 존재하지만 이를 관리머니나 선물 포지션의 직접 증거로 해석하지 않는다. 다음 신호는 기관이 투기 포지션 변화를 직접 제시하는지다.",[]],["geopolitics","지정학은 항로 회복으로 전월보다 완화되지만 중동과 주요 수송로의 잔존 차질 위험은 남아 있다. 통항 안정은 공급 접근성과 도착 신뢰성을 개선해 재고 인출 압력을 낮추지만 위험이 재개되면 회복은 약화된다. 다음 신호는 항로 물량과 정유소 가동이 함께 안정되는지다.",["EIA","S&P"]]],["JPM","S&P"]],["M+11","보합","비OPEC 증산과 항로 회복에 따른 부분적 재균형은 지속되지만 공급 개선 속도는 둔화된다. 중국 EV 확산에 따른 운송용 석유수요 구조적 약화는 이어지며, 수요는 부분적으로 안정되어도 전년 추세를 밑돈다. 공급 회복으로 원유와 제품 유입이 늘고 수요 안정과 맞물리면서 재고는 증가하지만 증가세와 완충력 개선은 이전보다 느려진다. 전개경로는 공급 회복 → 재고 증가 → 수요 안정이다. 금융은 기관의 직접 근거가 없으므로 유가나 위험 프리미엄을 금융 경로의 증거로 사용할 수 없고, 투기도 직접 포지션 근거가 없어 방향을 확정할 수 없다. 지정학은 정상 항로가 우세해져 공급 접근성을 높이지만 잔존 차질 위험은 남는다. 물리적 공급 회복과 제한적인 수요 안정이 균형을 이루어 유가는 보합으로 안정되며, 다음 신호는 재고 증가세와 항로 정상화가 계속되는지다.",["비OPEC 증산과 항로 회복에 따른 부분적 재균형","중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월보다 소폭 안정되지만 EV 대체로 전년 추세를 밑돈다. 운송연료 약세가 완화될 수 있어도 중국의 낮은 최종수요와 구조적 연료 대체가 회복 폭을 제한한다. 다음 확인 신호는 수요 격차 축소와 운송연료 소비의 실제 개선이다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["S&P"]],["supply","공급은 항로와 생산 흐름의 회복으로 개선되지만 증산 속도는 전월보다 둔화된다. 안정된 통항과 비OPEC 물량은 정유 투입과 제품 공급을 지지하고 남은 차질은 완전한 정상화를 막는다. 다음 신호는 주간 도착 물량과 정유소 가동률의 동반 개선이다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["JPM"]],["inventory","재고는 공급 회복과 수요 안정의 균형 속에서 증가하지만 증가세는 둔화된다. 원유 유입과 제품 공급이 재고 인출을 줄이는 반면 잔존 차질과 제한된 수요 회복은 재축적 규모를 제한한다. 다음 신호는 재고 증가가 지속되고 완충력이 더 개선되는지다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이나 유효한 직접 근거가 없어 보합을 금융 경로로 설명할 수 없다. 현물가격과 위험 프리미엄은 금융지표의 직접 증거가 아니며 물리적 공급·수요 균형과 구분한다. 다음 확인 신호는 기관의 별도 금융 분석이 제시되는지다. 다음 달에는 달러 인덱스와 미국 10년물 국채금리의 실제 변화를 별도로 확인해야 한다.",[]],["speculation","투기는 기관의 직접 전망이나 포지션 근거가 없어 방향을 확정하지 않는다. 공급 회복과 수요 안정이라는 실물 신호가 균형을 이루지만 이를 투기 매매나 관리머니 변화의 직접 증거로 확대하지 않는다. 다음 신호는 선물 포지션에 대한 기관의 직접 확인이다. 다음 달에는 ICE Brent Managed Money의 실제 포지션 변화를 별도로 확인해야 한다.",[]],["geopolitics","지정학은 정상 항로가 우세해지며 전월보다 완화되지만 잔존 차질 가능성은 유지된다. 통항 안정은 공급 접근성과 운송 신뢰성을 높여 재고 회복을 돕지만 재중단 시 물리적 균형은 다시 약화될 수 있다. 다음 신호는 항로 정상화가 지속되고 정유 복구가 동반되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+12","보합","중국 EV 확산에 따른 운송용 석유수요 구조적 약화가 활성 Event로 남아 수요의 상방 탄력을 낮춘다. 비OPEC 증산과 항로 회복에 따른 부분적 재균형의 영향은 종료되어 공급은 정상화되지만, 제한적인 잔존 차질은 남는다. 공급 유입과 낮은 운송연료 수요가 함께 나타나 재고는 증가하고 물리적 완충력은 개선된다. 전개경로는 공급 정상화 → 재고 완충 → 구조적 수요 약세다. 금융은 기관의 직접 근거가 없으며 투기도 직접 포지션 근거가 없어 현물가격이나 위험 프리미엄으로 판단하지 않는다. 지정학적 항로 위험은 소멸에 가까워져 공급 접근성을 회복시키지만 제한적인 잔존 차질은 남는다. 재고 재축적이 수요 약세를 흡수해 유가는 보합으로 유지되며, 다음 신호는 EV 확산이 운송연료 수요를 계속 낮추는지와 재고 증가가 이어지는지다.",["중국 EV 확산에 따른 운송용 석유수요 구조적 약화"],[["demand","수요는 전월의 부분 안정화 이후에도 구조적으로 약하며 중국 EV 확산이 휘발유 소비를 줄인다. 운송연료 대체가 경제활동 회복의 석유소비 전환을 제한해 공급 정상화에도 수요 상방 압력이 약하다. 다음 확인 신호는 EV 비중 상승과 운송연료 수요의 지속 약세다.",["GS","S&P"]],["supply","공급은 항로 회복과 비OPEC 증산의 영향으로 정상화되고 부분 재균형 Event의 영향은 소멸한다. 접근성 개선과 정유 원료 유입 증가는 제품 공급과 재고 완충을 뒷받침하지만 제한적인 잔존 차질은 남는다. 다음 신호는 생산·교역 흐름과 정유 가동이 안정적으로 유지되는지다.",["JPM","S&P"]],["inventory","재고는 공급 정상화와 구조적 수요 약세가 맞물려 증가하며 시장 완충력이 개선된다. 유입 물량이 늘고 운송연료 소비가 제한되면서 인출 압력이 낮아지지만 재축적의 지속성은 실제 흐름에 달려 있다. 다음 신호는 상업·전략 재고의 증가가 이어지는지다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["S&P"]],["financial","금융은 기관의 직접 전망이나 유효한 직접 근거가 없어 유가 보합을 금융 요인으로 설명하지 않는다. 현물가격과 위험 프리미엄은 금융지표의 직접 증거로 사용할 수 없으며 물리적 수급과 분리된 판단 한계가 계속된다. 다음 확인 신호는 금융축을 직접 다루는 기관 근거의 제시다.",[]],["speculation","투기는 기관의 직접 전망이나 검증된 포지션 근거가 없어 보합 방향을 확정할 수 없다. 공급 정상화와 구조적 수요 약세가 상반된 실물 신호를 만들지만 이를 투기 포지션 변화의 직접 증거로 바꾸지 않는다. 다음 신호는 관리머니와 선물 포지션에 대한 직접 자료다.",[]],["geopolitics","지정학은 항로 위험이 소멸에 가까워지며 전월보다 완화되지만 제한적인 잔존 차질은 남는다. 통항과 생산 흐름의 회복은 공급 접근성과 운송 신뢰성을 정상화하고 재고 증가를 돕지만 위험 재발 시 복구 경로가 흔들릴 수 있다. 다음 신호는 항로와 정유시설의 안정적 운영이다.",["S&P"]]],["GS","S&P"]]]},{"role":"상승 경로","name":"상승 경로 - M월 대비 M+12 유가 보합","probability":13.333333333333334,"seedCount":4,"representativeSeed":1107721,"terminal":"보합","months":[["M","상승","M월은 활성 Event가 없는 확인된 현재 상태로, 중동 항로와 정유시설 차질이 공급 접근성을 낮추고 있다. 낮은 가시재고와 OECD 재고 감소는 유입 부족을 재고 인출과 현물 긴축으로 전달한다. 수요는 저점에서 회복했지만 전년 수준을 밑도는 부분 회복에 그쳐 공급 제약을 상쇄하지 못한다. 금융과 투기는 기관의 직접 내러티브가 없어 유가나 위험 프리미엄을 금융지표·포지션의 증거로 해석할 수 없다. 지정학적 긴장은 약해졌지만 호르무즈와 홍해의 실제 운송 차질 및 정유 복구 지연은 남아 있다. 전개경로는 공급 제약 → 재고 인출 → 수요 약세의 상쇄 → 유가 상승이다. 다음 전환 신호는 항로 통항과 정유가동의 지속적 회복, 그리고 재고 감소 둔화다.",[],[["demand","M월 수요는 전월보다 강화됐지만 전년 수준을 밑도는 부분 회복 상태다. 저점 이후 이동성·구매력 개선은 감소 속도를 늦추지만 운송연료와 석유화학 원료 약세가 공급 긴축을 상쇄하지 못한다. 다음 신호는 회복이 실제 최종소비로 이어지는지와 전년 대비 격차가 좁혀지는지다.",["S&P"]],["supply","M월 공급은 전월보다 약화됐고 호르무즈·홍해 통항 및 중동·러시아 정유가동 차질이 가용 원유와 제품을 제한한다. 비중동 공급과 우회 수송은 일부 보완하지만 도착 시점과 현물 접근성을 정상화하지 못해 재고 인출을 유발한다. 다음 신호는 항로 물량과 정유소 가동률이 함께 회복되는지다.",["GS","S&P"]],["inventory","M월 재고는 전월보다 약화됐으며 글로벌 가시재고와 OECD 상업재고의 감소가 완충력을 낮춘다. 공급 유입 제한과 높은 정유 투입이 재고 인출을 늘리는 반면 단기 미국 재고 반등은 전체 긴축을 되돌릴 직접 근거가 아니다. 다음 신호는 재고 감소가 지속되는지와 수출 도착이 이를 둔화시키는지다.",["GS"]],["financial","M월 금융은 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 따라서 달러나 미국 국채금리의 관측값을 유가 방향의 기관 근거로 합성하지 않으며 금융 경로는 별도 판단으로 제한한다. 다음 신호는 기관이 금융 여건과 원유시장 전달을 직접 연결해 제시하는지다.",[]],["speculation","M월 투기는 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 현물가격이나 위험 프리미엄을 투기 포지션의 직접 증거로 바꾸지 않으며 확보된 포지션 관측도 기관 내러티브를 대신하지 않는다. 다음 신호는 기관이 포지션 변화와 실물 수급의 연결을 명시하는지다.",[]],["geopolitics","M월 지정학은 위험 지표가 약해졌지만 호르무즈·홍해·흑해의 사건과 운송 차질은 지속되는 상태다. 사건 자체가 항로 접근성, 보험, 도착 신뢰성, 정유 복구를 제약해 공급 감소와 재고 인출로 전달된다. 다음 신호는 통항 재개가 일시 반등인지 지속 회복인지다.",["EIA","S&P"]]],["EIA","GS","S&P"]],["M+1","상승","수요는 약세 속에서 안정화를 시작하지만 운송연료와 산업용 소비의 제약이 남아 상승 압력을 일부 상쇄한다. 공급은 호르무즈 통항의 부분 회복으로 이전보다 늘지만 정유 차질과 홍해·흑해 위험이 낮은 수준을 유지시킨다. 재고는 도착 물량으로 감소 속도가 둔화되더라도 정유 투입 부족 때문에 계속 인출된다. 금융은 기관의 직접 전망이 없어 DXY와 장기금리 관측을 유가 방향의 근거로 사용하지 않는다. 투기는 긴축 신호에 반응하는 토론 경로가 있으나 직접 기관 증거는 없다. 지정학은 호르무즈 회복으로 다소 완화되지만 항로 재중단 가능성이 남는다. 전개경로는 부분 통항 회복 → 재고 감소 둔화 → 정유 차질 지속으로 연결되며 유가는 상승한다. 다음 전환 신호는 통항 증가의 안정성과 제품 재고 감소의 둔화다.",["제한된 항로·정유 차질과 재고 인출의 단기 지속","세계 석유수요 약세 속 불균등한 안정화","주요 항로의 간헐적 차질 지속"],[["demand","수요는 약세를 벗어나 불균등한 안정화로 이동하지만 강한 회복은 아니다. 수요 안정화가 공급 차질의 가격 효과를 일부 상쇄하나 운송연료와 석유화학 원료의 약세가 소비 증가를 제한한다. 다음에는 세계 수요 격차와 연료 소비의 안정화가 이어지는지 확인한다.",["EIA","S&P"]],["supply","공급은 호르무즈 통항이 일부 회복되어 이전보다 늘지만 여전히 낮은 수준이다. 부분적인 도착 개선이 원유 투입을 보완해도 정유 차질과 다른 항로의 재중단이 제품 공급의 회복을 막는다. 다음 신호는 통항 물량의 연속성 및 정유소 가동률이다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["EIA"]],["inventory","재고는 도착 물량 유입으로 감소 속도가 둔화되지만 물리적 긴축은 지속된다. 공급 회복이 일부 인출을 줄이는 반면 정유소 투입 부족과 낮은 제품 재고가 전체 완충력을 계속 약화시킨다. 다음에는 미국 원유 재고의 재감소와 제품 재고 압박을 함께 확인한다.",["EIA","GS"]],["financial","금융은 기관의 직접 전망이 없어 유효한 금융 경로가 확인되지 않는다. 대표 금융지표의 관측은 참고점일 뿐이며 현물가격이나 위험 프리미엄을 금융지표의 직접 증거로 전환하지 않는다. 다음 전환 신호는 기관이 달러나 금리의 석유시장 효과를 직접 제시하는지다.",[]],["speculation","투기는 공급 긴축 신호에 반응해 이전의 약세 뒤 소폭 회복하는 토론 경로다. 그러나 기관의 직접 전망이 없으므로 포지션 변화는 사건의 결과를 확인하는 직접 증거가 아니며 현물가격도 이를 대신하지 않는다. 다음에는 최신 포지션 자료와 독립적인 기관 논거를 확인한다. 기관의 직접 근거가 없다는 한계는 유지한다.",[]],["geopolitics","지정학은 호르무즈 통항 증가로 이전보다 완화되지만 홍해와 흑해의 재중단 위험이 남아 있다. 사건의 간헐적 재개는 선적과 도착을 일부 회복시키되 운송 지연과 보험·우회 부담을 없애지 못해 공급으로 전달된다. 다음에는 증가한 통항이 안정적으로 유지되는지 확인한다.",["EIA","GS"]]],["EIA","S&P"]],["M+2","상승","수요는 중국 구매 반등으로 강화되지만 세계 운송연료 약세가 회복 폭을 제한한다. 공급은 항로 회복으로 늘어나나 계절 정비와 정유 차질이 제품 전환 능력을 제약한다. 재고는 중국의 보충 수요와 정유 정비가 동시에 인출을 늘려 제품 부족 압력이 이어진다. 금융은 기관의 직접 근거가 없어 달러와 장기금리의 보합 관측을 가격 방향으로 해석하지 않는다. 투기는 중국 구매와 긴축 재료에 반응하는 경로가 토론됐지만 직접 기관 근거는 없다. 지정학은 간헐적 항로 재개로 약화되지만 정유시설 위험은 남는다. 전개경로는 중국 구매 반등 → 재고 인출 → 제품 부족으로 이어져 유가 상승을 지지한다. 다음 신호는 중국 수입이 정유 처리와 최종소비로 연결되는지다.",["제한된 항로·정유 차질과 재고 인출의 단기 지속","세계 석유수요 약세 속 불균등한 안정화","중국 구매의 단기 반등과 지속성 검증","주요 항로의 간헐적 차질 지속"],[["demand","수요는 중국 구매 반등으로 전월보다 강화되지만 세계적 약세가 회복의 지속성을 제한한다. 재고 보충과 정유 가동 회복이 아시아 원유 수요를 늘리지만 낮은 중국 가동률과 국내 소비가 증가 폭을 억제한다. 다음에는 수입 증가가 실제 처리량과 최종소비로 이어지는지 확인한다.",["GS"]],["supply","공급은 항로 회복으로 증가하지만 계절 정비와 정유 차질이 물량의 제품 전환을 제한한다. 원유 도착 개선은 일부 보완을 제공하나 정유소 가동 저하가 판매 가능한 제품 공급을 줄여 재고 긴축을 남긴다. 다음 신호는 정유소 가동률과 제품 수출의 회복이다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["EIA","GS"]],["inventory","재고는 중국 구매와 정유 정비가 겹치며 원유와 제품의 인출 압력이 커진다. 수입 물량이 늘어도 보충 수요와 낮은 정유 투입이 이를 흡수하고 제품 재고의 부족이 물리적 민감도를 높인다. 다음에는 중국 재고 조정인지 최종수요 회복인지와 제품 재고를 구분한다.",["EIA","GS"]],["financial","금융은 기관의 직접 전망이 없어 금융 요인의 방향을 확인할 수 없다. 달러와 미국 장기금리의 보합권 관측은 참고 정보일 뿐이며 유가나 위험 프리미엄을 금융 충격 또는 금융지표의 직접 증거로 바꾸지 않는다. 다음 신호는 기관의 명시적 금융 전달 경로다. 기관의 직접 근거가 없다는 한계는 유지한다.",[]],["speculation","투기는 중국 구매와 물리적 긴축 재료가 강화되는 토론 경로에서 전월보다 개선된다. 다만 기관의 직접 포지션 전망이 없으므로 이는 수급 사건에 대한 해석일 뿐이며 현물가격 상승을 투기 매수의 직접 증거로 삼지 않는다. 다음에는 실제 포지션 자료와 지속성을 확인한다. 기관의 직접 근거가 없다는 한계는 유지한다.",[]],["geopolitics","지정학은 항로의 간헐적 재개가 이어져 이전보다 완화되지만 정유시설 공격 위험은 남아 있다. 통항 회복은 원유 도착을 늘리지만 재중단은 정유소 투입과 제품 배분을 다시 지연시켜 재고 인출로 전달된다. 다음에는 항로 재개가 안정적인지와 정유시설 복구를 확인한다.",["S&P"]]],["EIA","GS","S&P"]],["M+3","보합","수요는 중국 구매가 이어져 전월 수준을 유지하지만 세계적 약세가 안정화를 제한한다. 공급은 항로 회복과 비중동 물량으로 증가하고 잔존 정유 차질은 완만해진다. 재고는 수입 도착으로 원유 감소세가 약화되지만 제품 재고는 낮아 균형 회복이 완전하지 않다. 금융은 기관의 직접 근거가 없어 DXY와 장기금리의 보합 관측을 유가 방향에 연결하지 않는다. 투기는 공급 회복 신호에 따른 차익실현 경로가 있으나 직접 기관 근거가 없는 해석이다. 지정학은 통항 회복으로 완화되지만 간헐적 재중단 위험이 지속된다. 전개경로는 공급 회복 → 재고 감소 둔화 → 수요 약세로 이어져 상승과 하락 압력이 균형을 이룬다. 유가는 보합이며 다음 신호는 중국 구매의 지속성과 재고 재축적 여부다.",["세계 석유수요 약세 속 불균등한 안정화","중국 구매의 단기 반등과 지속성 검증","주요 항로의 간헐적 차질 지속"],[["demand","수요는 중국 구매가 이어져 전월 수준을 유지하지만 세계 약세로 안정화의 폭은 제한된다. 중국의 수입과 정유 활동이 일부 지지하나 운송연료와 석유화학 원료의 부진이 공급 회복분을 흡수하는 힘을 약하게 한다. 다음에는 중국 구매가 최종소비로 이어지는지 확인한다.",["S&P"]],["supply","공급은 항로 회복과 비중동 물량 유입으로 전월보다 증가하고 정유 차질은 완화된다. 도착 일정과 정유 투입이 개선되면서 제품 공급이 늘지만 간헐적 재중단은 회복을 불규칙하게 만들어 재고 정상화를 지연시킨다. 다음 신호는 공급 회복의 연속성과 정유 가동률이다.",["GS","S&P"]],["inventory","재고는 수입 도착으로 감소세가 약화되지만 제품 재고는 낮아 물리적 완충이 충분하지 않다. 공급 증가가 원유 인출을 줄이는 동시에 중국 구매와 정유 투입 회복이 일부 물량을 흡수해 전체 재축적은 아직 확인되지 않는다. 다음에는 원유와 제품 재고가 함께 늘어나는지 확인한다.",["S&P"]],["financial","금융은 기관의 직접 전망이 없어 월별 방향을 설명할 근거가 없다. 달러와 미국 장기금리의 보합권 상태는 단순 관측으로 남기며 현물가격이나 위험 프리미엄을 금융 신호의 직접 증거로 해석하지 않는다. 다음에는 금융 조건에 대한 명시적 기관 분석이 있는지 본다.",[]],["speculation","투기는 공급 회복 신호가 차익실현을 유도해 전월보다 약화되는 토론 경로다. 그러나 기관의 직접 전망이 없으므로 포지션 변화의 방향은 검증된 사실이 아니며 현물가격도 투기 포지션을 직접 입증하지 않는다. 다음 신호는 최신 포지션과 물리시장 회복의 동시성이다.",[]],["geopolitics","지정학은 통항 회복으로 이전보다 완화되지만 항로의 간헐적 재중단 위험이 남아 있다. 사건의 완화는 선적과 정유 투입을 늘리지만 재중단이 발생하면 운송 지연과 지역별 제품 부족이 재현될 수 있다. 다음에는 안정적 재개와 정유시설 복구가 실제 접근성으로 이어지는지 확인한다.",["GS","S&P"]]],["GS","S&P"]],["M+4","보합","수요는 연말까지 불균등한 안정화를 보이지만 운송연료와 석유화학 원료의 약세가 남아 전년 기준선에는 미달한다. 중국 구매는 재고 보충과 정유 가동 회복으로 단기 반등할 수 있으나 최종소비와 가동률이 함께 개선되는지는 확인이 필요하다. 공급은 주요 항로의 간헐적 차질이 이어지는 가운데 통항과 교역이 일부 회복되어 전월보다 나아지지만, 원유 도착과 제품 생산의 불규칙성은 남는다. 재고는 공급 물량 도착으로 원유 인출이 멈출 수 있으나 낮은 제품 재고와 지역별 접근성 제약 때문에 물리적 완충력은 제한된다. 금융은 기관의 직접 근거가 없어 금융지표로 유가를 설명할 수 없고, 투기 역시 기관의 직접 포지션 근거가 없어 현물가격이나 위험 프리미엄을 투기 증거로 해석하지 않는다. 지정학적 항로 위험은 부분 정상화로 약화되지만 재개와 재중단이 반복될 수 있어 공급 접근성과 운송 회복을 완전한 정상화로 볼 수 없다. 전개경로는 중국 구매 반등 → 항로 부분 회복 → 재고 인출 정지이며, 수요 개선과 잔존 차질이 맞물려 유가는 보합 흐름을 보인다. 다음 전환 신호는 중국 수입과 정유 처리량의 동반 회복, 항로 물량의 안정적 증가, 원유와 제품 재고의 동시 개선이다.",["중국 구매의 단기 반등과 지속성 검증","주요 항로의 간헐적 차질 지속"],[["demand","수요는 연말 안정화로 전월보다 개선되지만 운송연료와 석유화학 원료의 약세가 남아 기준선에는 미달한다. 중국의 재고 보충과 정유 가동 회복이 구매를 늘릴 수 있으나 낮은 내수와 가동률이 지속성을 제한한다. 중국 수입 증가가 실제 처리량과 최종소비로 이어지는지가 다음 확인 신호다.",["GS","S&P"]],["supply","공급은 항로 통항과 비중동 물량의 일부 회복으로 전월보다 강화되지만 주요 항로의 차질은 계속된다. 통항 불확실성이 원유 도착과 정유 투입을 지연시키는 반면 우회 수송과 교역 회복이 일부 손실을 보완한다. 항로 물량 증가가 일시적 반등을 넘어 안정적으로 이어지는지 확인해야 한다.",["EIA","S&P"]],["inventory","재고는 공급 도착으로 원유 인출이 멈추며 전월보다 안정되지만 제품 재고 회복은 지연된다. 항로 회복과 중국 구매가 물량을 보탤 수 있어도 정유 제약과 지역별 도착 편차가 제품 재고의 완충력을 제한한다. 원유 재고 반등 뒤에도 제품 재고 부족과 정제 압박이 남는지가 다음 신호다.",["S&P"]],["financial","금융은 이 달 기관 발행 자료에서 이를 직접 설명하는 유효 근거가 확인되지 않는다. 따라서 현물가격이나 위험 프리미엄을 금융지표의 직접 증거로 바꾸지 않으며 금융 경로를 별도로 합성하지 않는다. 이후에도 기관의 직접 금융 전망이 제시되는지 여부만 확인 신호로 둔다.",[]],["speculation","투기는 기관 자료에서 직접적인 포지션 전망이나 유효한 근거가 확인되지 않아 판단을 유보한다. 중국 구매나 항로 차질에 따른 가격 반응은 실물 수급과 지정학의 결과이지 투기 포지션의 직접 증거가 아니다. 이후 포지션에 관한 기관 근거가 새로 제시되는지 확인해야 한다.",[]],["geopolitics","지정학은 주요 항로의 부분 정상화로 전월보다 약화되지만 군사적 위험과 재중단 가능성은 남는다. 사건 자체의 완화와 달리 호르무즈·홍해 통항, 운송시간, 정유소 투입의 회복은 아직 불완전하다. 통항량이 안정적으로 늘고 도착 및 정유 흐름이 함께 회복되는지가 다음 신호다.",["EIA"]]],["GS","S&P"]],["M+5","하락","수요는 아시아와 석유화학 부문의 회복으로 전월보다 강화되지만 운송연료에서는 전환과 미온적 최종소비의 제약이 남는다. 중국 구매 반등은 단기적으로 가격을 지지할 수 있으나 수입 증가가 재고 조정에 그치는지 실제 소비 회복인지 검증해야 한다. 공급은 역내 생산 회복과 비OPEC 증산이 겹치며 전월보다 개선되고, 항로의 간헐적 차질은 회복 속도를 늦춘다. 재고는 공급 증가가 인출을 멈추게 하면서 재축적 조짐을 보이지만 원유와 제품의 회복 시점은 다를 수 있다. 금융은 기관의 직접 근거가 없어 금융지표를 유가 방향의 증거로 사용하지 않으며, 투기도 기관의 직접 포지션 근거가 없어 현물가격이나 위험 프리미엄으로 판단하지 않는다. 지정학은 생산과 교역의 회복으로 완화되지만 잔여 차질과 항로 재중단 위험이 공급 접근성을 계속 제한한다. 전개경로는 생산 회복 → 재고 인출 중단 → 수요 대비 공급 여유이며, 공급 개선이 수요 회복을 웃돌아 유가 하락 압력이 우세하다. 다음 전환 신호는 비OPEC 선적 증가, 역내 생산과 정유 가동의 회복, 재고의 순증 전환이다.",["중국 구매의 단기 반등과 지속성 검증","주요 항로의 간헐적 차질 지속","비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 부문의 회복으로 전월보다 강화되지만 운송연료 증가는 제한된다. 중국 구매와 정유 가동 회복이 수입을 늘릴 수 있으나 낮은 내수와 전환 추세가 지속성을 약화한다. 수입 증가가 실제 처리량과 최종소비로 연결되는지가 다음 확인 신호다.",["GS"]],["supply","공급은 역내 생산 회복과 비OPEC 증산으로 전월보다 강화되지만 항로의 간헐적 차질이 일부 물량의 도착을 지연시킨다. 생산 증가와 교역 회복이 수요를 웃돌면 물리적 균형이 완화되지만 잔여 운송 제약은 지역별 공급 편차를 만든다. 선적 증가가 실제 도착과 정유 투입 증가로 이어지는지 확인해야 한다.",["EIA","JPM"]],["inventory","재고는 공급 증가가 인출을 멈추게 하면서 전월보다 개선되고 재축적 조짐이 나타난다. 역내 생산과 비OPEC 물량이 원유 공급을 보태도 제품 재고는 정유소 복구와 항로 안정화가 늦으면 회복이 제한된다. 원유와 제품 재고가 함께 순증으로 전환되는지가 다음 신호다.",["JPM","S&P"]],["financial","금융은 기관 발행 자료에서 직접적인 전망이나 유효한 설명 근거가 확인되지 않는다. 따라서 수요·공급 변화에 따른 유가 반응을 금융지표의 움직임으로 해석하거나 금융 경로를 새로 만들지 않는다. 기관의 직접 금융 근거가 이후 확인되는지만 점검 대상으로 둔다.",[]],["speculation","투기는 기관의 직접 포지션 전망이 없어 방향을 독립적으로 판단할 수 없다. 재고 개선과 공급 회복에 따른 유가 하락 압력은 실물 균형의 결과이며 현물가격이나 위험 프리미엄은 투기 증거가 아니다. 포지션 변화에 대한 기관의 직접 근거가 제시되는지가 다음 확인 신호다.",[]],["geopolitics","지정학은 생산과 교역의 회복으로 전월보다 완화되지만 주요 항로의 잔여 차질은 지속된다. 사건의 완화가 곧 공급 접근성 회복을 뜻하지 않으며, 항로 재중단은 선적·운송·정유 투입을 다시 지연시킬 수 있다. 항로 안정화와 정유소 가동 회복이 동시에 확인되는지 살펴야 한다.",["EIA","S&P"]]],["EIA","GS","JPM","S&P"]],["M+6","하락","수요는 아시아와 석유화학 중심의 회복을 이어가지만 운송연료 전환과 최종소비의 제약으로 증가폭은 제한된다. 공급은 비OPEC 증산과 역내 생산 회복이 지속되어 수요보다 빠르게 늘고, 이전의 항로 차질은 물리시장에 잔여 위험으로 남는다. 재고는 공급 초과분이 유입되면서 전월보다 재축적이 강화되고, 원유와 제품 흐름의 회복이 긴축을 완화한다. 중국 구매가 이어지더라도 최종수요가 충분히 확대되지 않으면 추가 물량은 재고로 흡수될 가능성이 크다. 금융은 기관의 직접 근거가 없어 금융지표로 유가 방향을 설명하지 않으며, 투기도 기관의 직접 포지션 전망이 없어 가격 하락을 투기 포지션의 증거로 바꾸지 않는다. 지정학은 통항 정상화 경로로 약화되지만 잔여 차질과 정유시설 위험이 완전히 소멸한 것은 아니어서 회복은 단계적이다. 전개경로는 비OPEC 증산 → 재고 재축적 → 물리적 긴축 완화이며, 공급 증가가 수요 회복을 웃돌아 유가 하락 흐름이 지속된다. 다음 전환 신호는 재고 순증의 지속, 공급 증가의 실제 도착, 잔여 차질의 축소 여부다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 중심의 회복을 이어가지만 운송연료 전환이 증가폭을 제한한다. 중국 구매와 정유 처리 회복이 일부 지지하더라도 최종소비가 공급 증가를 모두 흡수하지는 못한다. 수요 회복이 실제 소비로 지속되는지와 공급 초과가 유지되는지가 다음 신호다.",["S&P"]],["supply","공급은 비OPEC 증산과 역내 생산 회복으로 전월보다 지속적으로 강화된다. 생산 증가가 항로와 교역을 거쳐 소비시장에 도착하면 수요 회복을 웃도는 물량이 재고로 유입되지만 잔여 차질은 속도를 늦춘다. 선적·도착 물량과 정유 투입이 함께 증가하는지 확인해야 한다.",["EIA","JPM"]],["inventory","재고는 공급 초과분의 유입으로 전월보다 재축적이 강화되며 물리적 긴축이 완화된다. 비OPEC 증산과 역내 생산 회복이 수요보다 빠르면 원유 인출이 멈추고 제품 공급도 점차 개선되지만 잔여 운송 제약은 지역별 차이를 남긴다. 원유와 제품 재고의 동시 순증이 지속되는지가 다음 확인 신호다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이나 유효한 근거가 확인되지 않아 이 달에도 별도 방향을 부여하지 않는다. 재고 재축적과 유가 하락은 물리적 수급 경로로 설명하며 현물가격이나 위험 프리미엄을 금융지표의 직접 증거로 사용하지 않는다. 기관의 직접 금융 근거가 새로 나타나는지만 확인한다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 독립적인 방향 판단을 유지하지 않는다. 공급 증가와 재고 재축적에 따른 하방 압력은 실물시장 변화이며 이를 투기 포지션의 변화로 확대 해석하지 않는다. 포지션에 관한 기관 자료가 제시되는지가 이후의 확인 신호다.",[]],["geopolitics","지정학은 통항 정상화와 생산 회복으로 전월보다 약화되지만 잔여 차질과 정유시설 위험은 지속된다. 사건의 완화가 공급 접근성과 운송·복구의 완전한 회복을 의미하지 않으며 재중단은 물량 도착을 다시 늦출 수 있다. 잔여 차질이 축소되고 항로와 정유소 흐름이 안정되는지 확인해야 한다.",["EIA","S&P"]]],["EIA","JPM","S&P"]],["M+7","하락","비OPEC 증산과 역내 생산 회복이 공급을 늘리면서 실물 수급은 전월보다 완화된다. 아시아와 석유화학 중심의 수요 증가가 일부 물량을 흡수하지만 공급 확대를 모두 상쇄하지는 못한다. 그 결과 재고는 순감소에서 재축적으로 전환되고, 유가에는 하방 압력이 강화된다. 금융은 기관의 직접 근거가 없어 금융지표로 방향을 확정할 수 없으며, 투기 역시 공급 과잉 경로 외에 직접 확인된 포지션 근거가 없다. 지정학은 항로 정상화로 차질이 약화되지만 잔여 위험은 공급 접근성과 운송 회복을 늦출 수 있다. 전개경로는 공급 회복 → 재고 재축적 → 유가 하락이며, 다음 달에는 수요 증가가 공급을 얼마나 흡수하는지와 재고 순증의 지속 여부를 확인한다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학을 중심으로 전월보다 완만하게 증가한다. 비OPEC 공급과 역내 생산 회복으로 늘어난 물량을 일부 흡수하지만, 세계 수요의 불완전한 회복은 공급 초과를 모두 없애지 못한다. 다음 확인 신호는 아시아 구매와 석유화학 처리량이 공급 증가를 계속 따라가 재고 축적을 제한하는지 여부다.",["S&P"]],["supply","공급은 비OPEC 증산과 역내 생산·교역 회복으로 전월보다 완만하게 늘어난다. 항로 정상화가 원유 도착과 정유소 투입을 개선하면서 이전의 차질 물량을 일부 되돌리지만, 잔여 지정학적 위험은 회복 속도를 제한한다. 다음 신호는 회복 물량이 실제 선적과 도착으로 이어져 수요를 웃도는지다.",["EIA","JPM"]],["inventory","재고는 공급 증가가 수요 증가를 웃돌면서 재축적 국면으로 이동한다. 회복된 원유와 제품 흐름이 기존 인출을 멈추게 하지만, 낮은 출발 수준과 잔여 운송 차질 때문에 축적 속도는 균일하지 않다. 다음에는 상업·전략 재고가 순증을 이어가며 물리적 긴축 완화를 확인할 수 있는지 살펴야 한다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 전망이 없어 확인된 상태를 넘어선 방향 판단을 제공하지 않는다. 공급 회복과 재고 재축적은 실물 경로의 근거이지만 금융지표의 변화나 가격 움직임을 금융 원인으로 해석할 수는 없다. 다음 신호는 기관이 직접 금융 조건과 유가의 연결을 제시하는지 여부다.",[]],["speculation","투기는 기관의 직접 전망이나 포지션 근거가 없어 독립적인 방향을 확인할 수 없다. 공급 과잉 우려에 따른 약화는 선택된 실물 경로의 해석일 뿐, 현물가격이나 위험 프리미엄을 투기 포지션의 증거로 바꿀 수 없다. 다음에는 직접 포지션 자료가 제시되어 실물 경로와 구분 가능한지 확인한다.",[]],["geopolitics","지정학적 긴장은 항로 정상화로 전월보다 완화되지만 완전히 해소되지는 않는다. 통항 회복은 원유 접근성과 정유소 투입을 개선해 공급과 재고 회복을 돕지만, 잔여 차질은 운송 지연을 남긴다. 다음 신호는 항로가 안정적으로 유지되고 생산·교역 복구가 실제 흐름으로 나타나는지 여부다.",["EIA"]]],["EIA","JPM","S&P"]],["M+8","보합","비OPEC 증산과 역내 회복은 계속되지만 증가폭이 둔화되고, 아시아와 석유화학 수요 회복이 공급 물량을 더 많이 흡수한다. 수요와 공급이 함께 늘면서 물리적 균형은 전월보다 중립에 가까워진다. 재고는 순증을 이어가지만 수요 흡수로 증가폭은 약해져 유가는 보합으로 이동한다. 금융은 기관의 직접 근거가 없으므로 금융지표를 통한 방향 판단을 추가하지 않으며, 투기 또한 수요 회복 기대 외에 직접 포지션 증거가 없다. 지정학은 잔여 차질 축소로 약화되지만 항로의 완전한 정상화 여부가 공급 접근성을 좌우한다. 전개경로는 수요 회복 → 공급 증가 흡수 → 유가 보합이며, 다음 전환 신호는 수요 회복이 재고 증가를 더 줄이는지와 항로 정상화가 지속되는지다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 회복으로 전월보다 강화된다. 회복된 소비가 지속되는 공급 증가를 더 많이 흡수하면서 전월의 공급 초과와 재고 축적 압력을 일부 낮춘다. 다음 신호는 수입 증가가 실제 정유 처리와 최종 소비로 이어져 재고 순증을 계속 줄이는지 여부다.",["S&P"]],["supply","공급은 비OPEC 증산과 역내 회복이 이어지지만 전월보다 증가폭이 약해진다. 항로와 정유 흐름이 개선된 물량은 수요 회복에 흡수되어 재고로 남는 초과분을 줄이고, 잔여 차질은 공급 확대를 제한한다. 다음에는 증산이 실제 도착 물량으로 지속되는지와 잔여 차질이 축소되는지를 확인한다.",["EIA","JPM"]],["inventory","재고는 순증을 유지하지만 수요 회복 때문에 전월보다 증가폭이 둔화된다. 공급 회복 물량이 아시아와 석유화학 수요로 흡수되면서 재축적 속도가 낮아지고, 물리적 균형은 중립에 가까워진다. 다음 신호는 재고 순증이 계속되거나 수요 흡수로 멈추는지, 그리고 공급·수요의 balance가 어느 쪽으로 이동하는지다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 없어 금융지표의 보합이나 변화를 확인된 근거로 사용할 수 없다. 수요와 공급의 실물 균형이 유가 보합을 설명하지만 이를 금융 조건이나 금리·환율의 직접 효과로 확장하지 않는다. 다음에는 기관이 금융 경로를 직접 제시하는지와 실물 신호와 구분 가능한지를 살핀다.",[]],["speculation","투기는 기관의 직접 포지션 전망이 없어 독립적인 강도를 판단할 수 없다. 수요 회복이 공급 과잉 우려를 줄인다는 해석은 실물 수급에서 전달된 것이며 현물가격이나 위험 프리미엄은 투기의 직접 증거가 아니다. 다음 신호는 확인 가능한 포지션 변화가 제시되어 실물 수요 효과와 분리되는지 여부다.",[]],["geopolitics","지정학은 잔여 항로 차질이 축소되면서 전월보다 약화된다. 통항과 생산 복구가 이어지면 원유 도착과 정유 투입의 불규칙성이 줄어 공급 회복과 재고 축적을 돕지만, 완전한 정상화 전에는 지연이 남는다. 다음에는 정상화가 지속되는지, 재중단이 물리 흐름을 다시 제약하는지 확인한다.",["EIA","S&P"]]],["EIA","JPM","S&P"]],["M+9","보합","아시아와 석유화학 수요는 회복을 이어가고, 비OPEC 증산도 공급을 지지하지만 추가 증가폭은 제한적이다. 수요와 공급이 함께 늘면서 공급 초과분의 일부가 소비로 흡수되고 재고 축적은 완만해진다. 물리적 균형이 크게 변하지 않아 유가는 보합을 유지한다. 금융은 기관의 직접 근거가 없어 금융지표나 시장 가격을 별도의 금융 신호로 분류하지 않으며, 투기도 직접 포지션 자료 없이 중립적 재고 흐름으로만 해석한다. 지정학은 항로 정상화가 지속되어 이전 차질의 전달 영향이 작아지지만, 복구의 안정성이 여전히 관건이다. 전개경로는 수요 증가 → 공급 증가 상쇄 → 유가 보합이며, 다음 전환 신호는 재고가 다시 순감소하는지와 항로·생산 회복이 유지되는지다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 회복을 바탕으로 전월보다 지속 강화된다. 증가한 소비가 비OPEC 증산 물량을 일부 흡수해 재고 축적의 추가 확대를 막고 수급을 중립적으로 만든다. 다음 신호는 회복이 최종 소비로 이어져 공급 초과분과 재고 순증을 계속 줄이는지 여부다.",["S&P"]],["supply","공급은 증산 경로가 이어지지만 전월 대비 추가 강화는 제한적이다. 항로 정상화와 역내 생산 회복이 물량을 유지하고, 수요 증가가 이를 흡수하면서 재고로 남는 초과분은 크지 않다. 다음에는 선적·도착 물량이 유지되는지와 잔여 차질이 공급 회복을 다시 늦추는지 확인한다.",["JPM","S&P"]],["inventory","재고는 공급 초과분으로 증가하지만 수요가 이를 흡수해 증가폭은 전월과 비슷하게 완만하다. 공급과 수요가 함께 늘어 순증이 이어지되, 추가적인 긴축이나 과잉 축적은 뚜렷하지 않다. 다음 신호는 수요 회복이 재고 순증을 멈추게 하는지, 또는 공급 회복이 다시 축적을 확대하는지 여부다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 근거가 없어 방향이나 변화를 확인된 금융 신호로 제시하지 않는다. 보합 유가는 실물 수요와 공급의 동행으로 설명되며 금융지표 또는 위험 프리미엄을 원인으로 대체하지 않는다. 다음 확인 사항은 기관의 직접 금융 전망이 새로 제시되어 실물 경로와 연결되는지 여부다.",[]],["speculation","투기는 기관의 직접 포지션 전망이 없어 독립적인 방향을 판단하지 않는다. 중립적인 재고 흐름은 실물 수급의 결과로만 해석해야 하며 현물가격이나 위험 프리미엄을 투기 포지션의 직접 증거로 사용할 수 없다. 다음에는 검증 가능한 포지션 자료가 있는지, 그리고 실물 수요와 별도 움직임이 확인되는지 살핀다.",[]],["geopolitics","지정학은 항로 정상화가 이어지면서 전월 대비 변화가 작고 차질의 영향도 제한된다. 안정된 통항과 생산 복구는 원유 접근성과 정유 투입을 유지해 공급과 재고 균형을 지지하지만, 재중단 시 회복 물량의 도착이 다시 불규칙해질 수 있다. 다음 신호는 정상화가 지속되는지 또는 재중단이 운송·복구를 다시 늦추는지다.",["EIA","S&P"]]],["EIA","JPM","S&P"]],["M+10","보합","비OPEC 증산과 역내 생산 회복이 공급을 늘리면서 수요가 흡수하지 못한 물량이 재고 재축적으로 이어진다. 아시아와 석유화학 중심의 수요 회복은 진행되지만 전면적인 회복은 아니어서 공급 증가를 모두 상쇄하지 못한다. 재고는 인출에서 완만한 재축적으로 전환되며, 잔여 공급 차질은 회복 속도를 제한한다. 금융은 기관의 직접 근거가 없어 금융지표로 방향을 보강할 수 없고, 투기 역시 직접 포지션 근거 없이 수급 경로만으로 판단한다. 지정학적으로 항로 정상화가 진전되지만 잔여 차질은 원유 접근성과 운송 회복을 지연시킨다. 전개경로는 공급 회복 → 재고 재축적 → 유가 보합이다. 다음 전환 신호는 비OPEC 물량과 역내 생산이 실제 도착으로 이어지는지, 그리고 수요가 재고 증가를 얼마나 흡수하는지다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 부문의 회복으로 전월보다 강화되지만 전면적인 정상화에는 이르지 못한다. 비OPEC 공급과 역내 생산 회복이 수요 증가를 웃돌아 잉여 물량이 재고로 유입되는 구조다. 운송연료와 최종소비가 함께 개선되는지 확인해야 공급 증가가 실제 균형 변화를 이루는지 판단할 수 있다.",["S&P"]],["supply","공급은 비OPEC 증산과 역내 생산·교역 회복으로 전월보다 개선된다. 항로 정상화가 원유 도착과 정유 투입을 회복시키지만 잔여 차질은 물량의 시장 접근성을 일부 제한한다. 실제 선적과 도착이 계속 늘고 정유소 복구가 이어지는지가 재고 재축적의 다음 확인 신호다.",["EIA","JPM"]],["inventory","재고는 공급 회복이 수요 증가를 앞서면서 인출에서 완만한 재축적으로 전환된다. 항로와 정유 흐름의 개선이 원유·제품 유입을 늘리지만 잔여 차질과 수요 회복은 축적 속도를 제한한다. 상업·전략 재고가 함께 순증하는지와 제품 재고도 동반 회복되는지를 확인해야 한다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 전망과 유효한 근거가 확인되지 않아 상태를 유지한다. 현물가격이나 위험 프리미엄을 금융지표의 직접 증거로 바꾸지 않으며 공급·수요와 재고의 실물 경로만 참조한다. 이후에도 기관의 금융시장 서술이 새로 확인되는지가 판단을 바꿀 수 있는 유일한 신호다.",[]],["speculation","투기 축은 기관의 직접 전망이나 포지션 근거가 없어 확인된 변화 없이 유지된다. 재고 재축적과 수요 회복은 가격 경로의 배경일 뿐 투기 포지션의 직접 증거로 해석하지 않는다. 향후 기관이 포지션이나 투기 흐름을 직접 제시하는지 확인해야 수급 판단과 구분할 수 있다.",[]],["geopolitics","지정학은 주요 항로의 정상화가 진전되면서 전월보다 압력이 약해지지만 잔여 차질은 남아 있다. 통항 회복은 원유 접근성과 운송 일정을 개선하고 정유 투입을 늘리지만, 재중단 위험은 완전한 복구를 지연시킨다. 안정적 통항과 정유소 가동 회복이 실제 공급 재축적으로 이어지는지 확인해야 한다.",["EIA","S&P"]]],["EIA","JPM","S&P"]],["M+11","상승","비OPEC 증산은 계속되지만 잔여 공급 차질로 증가폭이 둔화되고, 강화된 수요가 회복 물량을 더 많이 흡수한다. 아시아와 석유화학 수요의 개선은 재고 축적을 약화시켜 물리시장의 긴축 민감도를 다시 높인다. 재고는 여전히 증가할 수 있으나 전월보다 축적 속도가 느려져 공급 여유가 제한된다. 금융은 기관의 직접 근거가 없으므로 금융지표를 통해 유가 방향을 설명하지 않으며, 투기도 직접 포지션 근거 없이 수급 변화와 분리해 둔다. 지정학은 항로 정상화와 잔여 차질이 공존해 운송과 공급 접근성의 회복을 불완전하게 만든다. 전개경로는 수요 강화 → 재고 축적 둔화 → 유가 상승이다. 다음 신호는 수요 증가가 실제 정유 처리와 소비로 이어지는지, 잔여 차질이 계속되는지다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학 회복이 이어지며 전월보다 강화되고, 공급 증가분을 더 많이 흡수한다. 정유 처리와 최종소비가 개선되면 수입과 실물 인도가 늘어 재고 재축적의 속도가 낮아진다. 회복이 일시적인 구매인지 지속적인 소비 증가인지 확인해야 수요 강화의 지속성을 판단할 수 있다.",["S&P"]],["supply","공급은 증산과 역내 회복이 이어지지만 잔여 차질 때문에 전월보다 증가폭이 둔화된다. 항로와 정유 흐름이 개선되어도 운송 불확실성과 미복구 시설이 실제 도착·제품 공급을 제약한다. 선적 증가가 유지되는지와 잔여 차질이 공급 균형을 얼마나 잠식하는지가 다음 신호다.",["EIA","JPM"]],["inventory","재고는 공급 회복으로 증가세를 유지할 수 있지만 강화된 수요가 유입 물량을 흡수해 증가폭은 전월보다 제한된다. 원유와 제품의 도착이 늘어도 정유 투입과 소비가 함께 증가하면 재고 완충력은 빠르게 커지지 않는다. 원유·제품 재고의 동시 증감과 축적 속도 둔화를 확인해야 긴축 민감도를 평가할 수 있다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 확인되지 않아 전월과 같이 직접 판단 근거가 없다. 현물가격의 상승이나 위험 프리미엄을 금융지표로 분류하지 않고, 실물 수요 강화와 재고 축적 둔화의 결과로만 다룬다. 기관이 금융 여건이나 시장금리의 영향을 직접 제시하는지가 이후 판단의 확인 신호다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없지만 수요 강화와 재고 증가 둔화가 가격 민감도를 높이는 배경이 된다. 그러나 이러한 실물 수급 변화만으로 투기 포지션의 방향이나 규모를 추론하지 않는다. 포지션 자료가 직접 제시되는지와 실물 강세가 실제 거래 흐름으로 확인되는지를 구분해 살펴야 한다.",[]],["geopolitics","지정학은 항로 정상화가 이어지면서 유지되지만 잔여 차질이 시장의 공급 접근성을 계속 제한한다. 통항이 늘면 원유 도착과 정유 투입은 개선되지만 재중단과 미복구 시설은 제품 공급 회복을 늦춘다. 안정적인 수송과 정유소 복구가 함께 지속되는지가 긴축 완화 여부를 가를 신호다.",["EIA"]]],["EIA","JPM","S&P"]],["M+12","보합","비OPEC 증산과 역내 생산 회복이 이어지는 가운데 아시아·석유화학 수요도 완만히 강화되어 공급과 수요가 다시 균형에 접근한다. 수요는 전면 회복이 아니지만 증가분을 흡수해 재고 재축적의 폭을 제한한다. 재고는 축적을 이어가되 잔여 차질과 수요 증가 때문에 증가 속도는 완만하다. 금융은 기관의 직접 근거가 없으므로 금융지표를 유가 방향의 증거로 사용하지 않고, 투기도 직접 포지션 근거 없이 중립으로 둔다. 지정학적으로 항로 정상화는 계속되지만 잔여 차질이 남아 공급 접근성과 복구의 완전한 회복을 지연시킨다. 전개경로는 공급·수요 균형 → 완만한 재고 축적 → 유가 보합이다. 다음 전환 신호는 수요 증가가 지속되는지, 회복 공급이 실제 물량으로 도착하는지, 잔여 차질이 축소되는지다.",["비OPEC 증산·역내 생산 회복에 따른 재고 재축적"],[["demand","수요는 아시아와 석유화학을 중심으로 전월보다 강화되지만 전면적인 회복에는 미치지 못한다. 수요 증가가 비OPEC 공급과 역내 생산 회복 물량을 흡수해 재고가 빠르게 늘어나는 것을 막는다. 최종소비와 정유 처리량이 함께 개선되는지가 불완전한 회복이 지속되는지 확인할 신호다.",["S&P"]],["supply","공급은 비OPEC 증산과 역내 생산·교역 회복으로 전월보다 개선되며 물리적 긴축을 완화한다. 항로 정상화와 정유소 복구가 원유 도착과 제품 공급을 늘리지만 잔여 차질은 완전한 공급 회복을 막는다. 실제 선적·도착 물량과 정유 가동 회복이 동시에 유지되는지 확인해야 한다.",["EIA","JPM"]],["inventory","재고는 공급 회복이 계속되면서 재축적되지만 수요 증가와 잔여 차질로 증가폭은 완만하게 제한된다. 원유와 제품 유입이 늘어도 아시아 수요와 정유 처리 회복이 일부 물량을 흡수해 재고 완충력의 확대가 느리다. 상업·전략 재고와 제품 재고가 함께 증가하는지가 균형 회복의 확인 신호다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 서술이 확인되지 않아 월별 상태를 유지하며 별도의 금융 방향을 부여하지 않는다. 현물가격이나 위험 프리미엄은 금융지표의 직접 증거가 아니므로 공급·수요 균형의 결과와 금융 요인을 혼동하지 않는다. 새 기관 근거가 금융 여건을 직접 설명하는지 계속 확인해야 한다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 전월의 강화가 지속된다고 단정하지 않고 중립 상태로 둔다. 공급과 수요의 균형 및 재고 재축적은 실물시장 설명이며 투기 흐름의 직접 증거로 전환하지 않는다. 향후 포지션 자료가 제시되는지와 실물 균형 변화가 별도로 확인되는지를 살펴야 한다.",[]],["geopolitics","지정학은 항로 정상화가 지속되지만 잔여 차질 때문에 완전한 정상화는 지연된다. 통항 회복은 공급 접근성과 운송 일정을 개선하고 정유 복구를 가능하게 하지만, 재중단 위험은 물량 도착의 불확실성을 남긴다. 항로 안정과 정유소 복구가 재고의 지속적인 재축적으로 이어지는지가 다음 신호다.",["EIA","S&P"]]],["EIA","JPM","S&P"]]]},{"role":"대안 경로","name":"대안 경로 - M월 대비 M+12 유가 보합","probability":33.33333333333333,"seedCount":10,"representativeSeed":713681,"terminal":"보합","months":[["M","상승","M월은 활성 Event가 없는 확인된 현재 상태로, 중동 항로와 정유시설 차질이 공급 접근성을 낮추고 있다. 낮은 가시재고와 OECD 재고 감소는 유입 부족을 재고 인출과 현물 긴축으로 전달한다. 수요는 저점에서 회복했지만 전년 수준을 밑도는 부분 회복에 그쳐 공급 제약을 상쇄하지 못한다. 금융과 투기는 기관의 직접 내러티브가 없어 유가나 위험 프리미엄을 금융지표·포지션의 증거로 해석할 수 없다. 지정학적 긴장은 약해졌지만 호르무즈와 홍해의 실제 운송 차질 및 정유 복구 지연은 남아 있다. 전개경로는 공급 제약 → 재고 인출 → 수요 약세의 상쇄 → 유가 상승이다. 다음 전환 신호는 항로 통항과 정유가동의 지속적 회복, 그리고 재고 감소 둔화다.",[],[["demand","M월 수요는 전월보다 강화됐지만 전년 수준을 밑도는 부분 회복 상태다. 저점 이후 이동성·구매력 개선은 감소 속도를 늦추지만 운송연료와 석유화학 원료 약세가 공급 긴축을 상쇄하지 못한다. 다음 신호는 회복이 실제 최종소비로 이어지는지와 전년 대비 격차가 좁혀지는지다.",["S&P"]],["supply","M월 공급은 전월보다 약화됐고 호르무즈·홍해 통항 및 중동·러시아 정유가동 차질이 가용 원유와 제품을 제한한다. 비중동 공급과 우회 수송은 일부 보완하지만 도착 시점과 현물 접근성을 정상화하지 못해 재고 인출을 유발한다. 다음 신호는 항로 물량과 정유소 가동률이 함께 회복되는지다.",["GS","S&P"]],["inventory","M월 재고는 전월보다 약화됐으며 글로벌 가시재고와 OECD 상업재고의 감소가 완충력을 낮춘다. 공급 유입 제한과 높은 정유 투입이 재고 인출을 늘리는 반면 단기 미국 재고 반등은 전체 긴축을 되돌릴 직접 근거가 아니다. 다음 신호는 재고 감소가 지속되는지와 수출 도착이 이를 둔화시키는지다.",["GS"]],["financial","M월 금융은 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 따라서 달러나 미국 국채금리의 관측값을 유가 방향의 기관 근거로 합성하지 않으며 금융 경로는 별도 판단으로 제한한다. 다음 신호는 기관이 금융 여건과 원유시장 전달을 직접 연결해 제시하는지다.",[]],["speculation","M월 투기는 기관 발행 자료에서 직접 설명된 상태가 확인되지 않았다. 현물가격이나 위험 프리미엄을 투기 포지션의 직접 증거로 바꾸지 않으며 확보된 포지션 관측도 기관 내러티브를 대신하지 않는다. 다음 신호는 기관이 포지션 변화와 실물 수급의 연결을 명시하는지다.",[]],["geopolitics","M월 지정학은 위험 지표가 약해졌지만 호르무즈·홍해·흑해의 사건과 운송 차질은 지속되는 상태다. 사건 자체가 항로 접근성, 보험, 도착 신뢰성, 정유 복구를 제약해 공급 감소와 재고 인출로 전달된다. 다음 신호는 통항 재개가 일시 반등인지 지속 회복인지다.",["EIA","S&P"]]],["EIA","GS","S&P"]],["M+1","상승","중동 수송 및 정유 공급의 간헐적 차질이 지속되고 낮은 글로벌 가시 재고와 미국 상업재고 압박이 겹친다. 공급 손실은 재고 인출로 보충되지만 수요는 운송연료와 석유화학 원료의 약세 속에 불완전하게 회복한다. 따라서 실물 긴축은 유지되며 수요 약세가 상승폭을 일부 제한한다. 금융과 투기는 기관의 직접 근거가 없어 대표 관측이나 가격 움직임을 독립적인 증거로 확대하지 않는다. 지정학적 항로 재개와 재중단은 운송 접근성과 공급 신뢰성을 낮춘다. 전개경로는 항로 차질 → 재고 인출 → 수요 약세의 상쇄 → 유가 상승이다. 유가는 상승 방향이며, 다음 전환 신호는 수송 회복의 연속성과 재고 재감소 여부다. 다음 달에는 활성 Event의 지속 여부와 수급·재고 완충력의 실제 변화를 함께 확인한다.",["중동 수송 및 정유 공급의 간헐적 차질 지속","낮은 글로벌 가시 재고와 미국 상업재고의 추가 압박","세계 석유수요의 불완전한 회복과 약세 지속"],[["demand","수요는 약한 운송연료 소비가 이어져 부분 회복이 중단된 상태다. 수요 약세가 공급 차질로 인한 현물 부족의 가격 전달을 일부 흡수하지만 재고 인출 자체를 멈추지는 못한다. 다음 신호는 수요 안정화와 정유 투입의 동행 여부다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["EIA","S&P"]],["supply","공급은 호르무즈 흐름의 느린 회복에도 재중단과 정유 차질이 남아 부족한 상태다. 항로 불확실성이 실제 도착 물량과 제품 생산을 줄여 낮은 재고에 추가 부담을 준다. 다음 신호는 수송 증가가 일시 현상이 아닌 연속 회복인지다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["EIA","S&P"]],["inventory","재고는 수출 물량의 일시 도착보다 공급 손실이 커져 감소 압력이 강화된다. 부족한 원유와 제품을 상업·가시 재고에서 인출하면서 공급 제약이 현물 긴축으로 전달된다. 다음 신호는 미국 재고의 단기 반등 뒤 재감소 여부다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["EIA","GS"]],["financial","금융은 기관의 직접 전망이 없어 금융 방향을 확인할 수 없는 상태다. 항로 차질과 유가 상승은 금융지표의 직접 증거가 아니므로 물리적 공급 사건과 분리해 기록한다. 다음 확인 신호는 금융에 관한 유효한 기관 근거가 나타나는지다. 다음 달에는 달러 인덱스와 미국 10년물 국채금리의 실제 변화를 별도로 확인해야 한다.",[]],["speculation","투기는 기관의 직접 전망이 없어 포지션 변화의 방향을 판단하지 않는다. 공급 충격과 현물 긴축이 존재해도 이를 투기 참여의 직접 증거로 바꾸지 않으며 별도 축으로 제한한다. 다음 신호는 기관이 직접적인 포지션 설명을 제공하는지다. 다음 달에는 ICE Brent Managed Money의 실제 포지션 변화를 별도로 확인해야 한다. 기관의 직접 근거가 없다는 한계는 유지한다.",[]],["geopolitics","지정학은 항로의 재개와 재중단이 반복되어 위험이 지속되는 상태다. 군사적 사건은 선적 지연, 우회 운송, 정유 차질로 전달되어 지역별 공급 접근성과 신뢰성을 낮춘다. 다음 신호는 주요 항로 물량과 정유소 회복이 함께 확인되는지다. 다음 달에는 GPR 지수와 실제 물류 차질의 동행 여부를 구분해 확인해야 한다.",["GS","S&P"]]],["EIA","GS","S&P"]],["M+2","상승","중동 수송 및 정유 공급 차질이 이어지고 낮은 글로벌 가시 재고와 미국 상업재고 압박이 재고 저점 경로를 강화한다. 공급 부족은 제품과 원유의 현물 가용성을 낮추지만, 세계 수요는 운송연료와 석유화학 원료의 약세로 여전히 제한된다. 재고 인출과 정유 차질이 맞물려 실물 긴축을 키우므로 유가 상승 방향이 유지된다. 금융과 투기는 기관의 직접 근거가 없으며 가격이나 위험 프리미엄을 각각의 직접 증거로 해석하지 않는다. 지정학적 공격과 우회 수송의 교차는 정상화 신뢰를 떨어뜨린다. 전개경로는 정유 차질 → 재고 저점 → 약한 수요의 완충 → 유가 상승이다. 다음 전환 신호는 재고 감소가 멈추고 항로와 정유 회복이 지속되는지다.",["중동 수송 및 정유 공급의 간헐적 차질 지속","낮은 글로벌 가시 재고와 미국 상업재고의 추가 압박","세계 석유수요의 불완전한 회복과 약세 지속"],[["demand","수요는 전월의 약세가 이어져 소폭 약화된 상태다. 낮은 소비가 공급 부족의 가격 효과를 일부 흡수하지만 정유·수송 차질로 인한 재고 인출은 계속된다. 다음 신호는 중국 구매와 정유가동이 최종소비로 이어지는지다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["EIA","GS"]],["supply","공급은 정유소 복구 지연과 항로 불안으로 제한되며 제품 부족이 강화된다. 도착 물량의 불확실성과 정유 투입 감소가 재고 인출을 통해 원유와 제품 시장에 함께 전달된다. 다음 신호는 정유소 복구와 항로 정상화가 동반되는지다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["EIA"]],["inventory","재고는 구월과 시월의 저점 형성 경로가 반영되어 감소 압력이 강한 상태다. 공급 부족을 재고가 조정하지만 낮은 절대 수준 때문에 추가 충격을 흡수할 여력이 줄어든다. 다음 신호는 재고 감소 속도 둔화와 재축적 전환이다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["EIA","GS"]],["financial","금융은 기관의 직접 전망이 없어 현재와 미래의 금융 방향을 합성하지 않는다. 유가 상승이나 위험 프리미엄은 금융지표 또는 금융 전달의 직접 증거가 아니며 물리적 균형과 구분한다. 다음 확인 신호는 기관의 직접 금융 내러티브 출현이다. 다음 달에는 달러 인덱스와 미국 10년물 국채금리의 실제 변화를 별도로 확인해야 한다.",[]],["speculation","투기는 기관의 직접 전망이 없어 상승한 포지션을 확인된 상태로 서술하지 않는다. 가격 상승과 공급 긴축은 투기 포지션의 직접 근거가 아니므로 물리적 사건에 한정해 해석한다. 다음 신호는 기관이 포지션 변화의 원인과 방향을 직접 제시하는지다. 다음 달에는 ICE Brent Managed Money의 실제 포지션 변화를 별도로 확인해야 한다.",[]],["geopolitics","지정학은 공격과 우회 수송이 교차해 항로 정상화의 신뢰가 낮은 상태다. 사건은 선적 지연과 정유시설 접근 제한으로 전달되어 지역별 도착량과 제품 공급을 약화시킨다. 다음 신호는 우회 물량과 주요 항로의 연속 회복이다. 다음 달에는 GPR 지수와 실제 물류 차질의 동행 여부를 구분해 확인해야 한다.",["EIA","S&P"]]],["EIA","GS","S&P"]],["M+3","상승","중동 수송 및 정유 공급의 간헐적 차질은 일부 완화되지만 정상화 전까지 공급 제약이 남는다. 비중동 물량 도착으로 공급 부족의 강도는 낮아지고 재고 감소 속도도 둔화되지만, 낮은 재고 수준은 여전히 현물 긴축을 지지한다. 세계 수요는 급락을 멈추나 약세가 지속되어 공급 충격의 상승폭을 제한한다. 금융과 투기는 기관의 직접 근거가 없으므로 금융지표나 포지션의 방향을 물리적 결과에서 추론하지 않는다. 지정학적 위험은 약화되지만 항로 접근성과 정유 복구가 완전히 확인되지 않았다. 전개경로는 부분 공급 회복 → 재고 감소 둔화 → 약한 수요 지속 → 유가 상승이다. 유가는 상승 방향이며, 다음 전환 신호는 항로의 신뢰성 있는 재개와 실제 재고 재축적이다.",["중동 수송 및 정유 공급의 간헐적 차질 지속","세계 석유수요의 불완전한 회복과 약세 지속"],[["demand","수요는 약세가 지속되지만 급락은 멈춘 상태다. 수요의 정체가 공급 회복으로 완화되는 긴축을 일부 상쇄해 유가 상승폭을 제한한다. 다음 신호는 운송연료와 산업용 소비가 안정화되는지다. 다음 달에는 실제 수요지표와 소비 회복의 지속 여부를 함께 확인해야 한다.",["EIA","S&P"]],["supply","공급은 비중동 물량 일부가 도착해 부족이 전월보다 약화되지만 중동 정유 차질이 남아 있다. 실제 공급 접근성의 개선이 재고 인출 속도를 낮추지만 완전한 정상화에는 이르지 못한다. 다음 신호는 항로 회복과 정유 투입 증가의 지속성이다. 다음 달에는 실제 공급지표와 도착 물량의 회복 여부를 함께 확인해야 한다.",["S&P"]],["inventory","재고는 저점 이후 감소 속도가 둔화되지만 절대 수준은 낮아 긴축이 지속된다. 일부 공급 회복이 인출을 줄여도 수요와 정유 투입이 함께 개선되지 않으면 재축적으로 전환되지 않는다. 다음 신호는 감소 중단 뒤 실제 재고 증가다. 다음 달에는 OECD 재고지표와 실제 인출·재축적 전환 여부를 함께 확인해야 한다.",["S&P"]],["financial","금융은 기관의 직접 전망이 없어 전월보다 약화되었다고 금융 축에서 단정하지 않는다. 물리적 공급 회복과 가격 변동은 금융지표의 직접 근거가 아니므로 각각의 전달 경로를 분리한다. 다음 확인 신호는 기관의 유효한 금융 설명이다. 다음 달에는 달러 인덱스와 미국 10년물 국채금리의 실제 변화를 별도로 확인해야 한다.",[]],["speculation","투기는 기관의 직접 전망이 없어 보합 또는 추종 방향을 확정하지 않는다. 가격 상승이 제한되거나 공급이 회복되는 현상도 투기 포지션의 직접 증거로 사용할 수 없다. 다음 신호는 직접 포지션 자료와 기관 해석의 결합이다. 다음 달에는 ICE Brent Managed Money의 실제 포지션 변화를 별도로 확인해야 한다. 기관의 직접 근거가 없다는 한계는 유지한다.",[]],["geopolitics","지정학적 간헐적 차질은 전월보다 약화되지만 항로 정상화 전까지 위험이 남는다. 사건의 완화가 우회 운송과 정유 복구로 이어질 때에만 공급 접근성과 도착 신뢰성이 회복된다. 다음 신호는 재중단 없는 항로 운항과 정유소 복구다. 다음 달에는 GPR 지수와 실제 물류 차질의 동행 여부를 구분해 확인해야 한다.",["S&P"]]],["GS","S&P"]],["M+4","보합","비OPEC 증산과 부분적 항로 회복이 중동 수송·정유 차질을 일부 보완하지만, 잔여 위험으로 공급 신뢰성은 완전히 회복되지 않는다. 물량 도착이 늘어 재고 인출 압력은 둔화되지만, 낮은 글로벌 및 제품 재고는 추가 충격의 완충력을 제한한다. 세계 수요는 약세를 이어가고 중국 구매는 제한적으로 재개되어 정유 투입과 최종소비의 회복이 서로 다르게 나타난다. 금융과 투기는 기관의 직접 근거가 없어 현물가격이나 위험 프리미엄을 금융지표 또는 포지션의 증거로 해석하지 않는다. 지정학적으로 항로는 부분 회복되지만 호르무즈·홍해·흑해의 재중단 위험이 공급 접근성과 운송 속도를 계속 제약한다. 전개경로는 항로 부분 회복 → 재고 인출 둔화 → 수요 약세 지속이다. 따라서 실물 긴축 완화와 수요 제약이 맞물려 유가는 보합이며, 다음 전환은 항로 회복의 연속성, 정유소 복구, 중국 구매가 최종소비로 이어지는지에서 확인된다.",["중동 수송 및 정유 공급의 간헐적 차질 지속","비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 원유 구매의 제한적 재개와 최종수요 회복 지연"],[["demand","수요는 전월의 약세를 이어가면서도 중국 원유 구매의 제한적 재개로 부분적인 회복 신호가 나타난다. 항로와 재고 여건의 개선은 정유 투입을 돕지만 낮은 정유가동과 운송연료·석유화학 원료의 약세가 최종소비 전달을 지연한다. 다음 신호는 중국 구매 증가가 제품 판매와 국내 소비로 이어지는지, 세계 수요의 기준선 하회가 완화되는지다.",["GS","S&P"]],["supply","공급은 비OPEC 생산 증가와 부분적 항로 회복으로 전월보다 개선되지만 중동·러시아의 정유 및 운송 차질이 남아 있다. 실제 도착 물량과 정유 투입이 늘어 재고 인출을 줄이지만, 항로 재중단과 잔여 차질은 지역별 공급 신뢰성을 제한한다. 다음 확인 신호는 회복이 일시적 선적 증가를 넘어 연속적인 물량 도착과 정유소 복구로 이어지는지다.",["EIA","JPM"]],["inventory","재고는 공급 물량 도착으로 감소 압력이 멈추며 낮은 수준에서 대체로 보합을 보인다. 항로 회복과 제한적 중국 구매가 원유 흐름을 보완하지만, 기존 인출로 약해진 글로벌·제품 재고의 완충력은 충분히 회복되지 않는다. 다음 신호는 미국 재고의 일시 반등이 글로벌 재축적으로 확산되는지와 가시 재고 감소가 실제로 둔화되는지다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 확인되지 않아 방향을 독립적으로 판정할 근거가 없다. 항로 차질과 재고 수준은 실물 공급과 현물 긴축의 설명이지만 금융지표나 금융 조건의 직접 증거로 전환하지 않는다. 다음 확인 신호도 금융시장의 별도 기관 근거가 제시되는지에 한정하며, 없을 경우 실물 Event와 분리해 둔다.",[]],["speculation","투기는 기관의 직접 전망이나 검증된 포지션 근거가 없어 상태를 독립적으로 확인할 수 없다. 공급 회복과 재고 인출 둔화는 실물 균형의 변화일 뿐 투기 포지션의 직접 증거가 아니며, 현물가격이나 위험 프리미엄으로 대체하지 않는다. 다음 신호는 관리 포지션에 관한 기관 근거가 새로 제시되는지이며 그 전까지는 추정과 확인을 구분한다.",[]],["geopolitics","지정학은 호르무즈·홍해·흑해의 통항 위험이 부분적으로 완화되지만 공격과 재중단 가능성이 남아 있는 상태다. 사건 자체의 완화가 선적 지연과 우회 운송을 줄여 공급 접근성을 높일 수 있으나, 정유시설 복구와 지역별 도착 정상화는 별도로 확인해야 한다. 다음 신호는 통항 회복이 연속되는지, 정유소 가동과 실제 수출 물량으로 연결되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+5","보합","비OPEC 증산과 항로 회복이 주된 공급 차질의 영향을 계속 줄여 시장 접근 가능한 물량을 늘린다. 공급 개선은 재고 인출을 완화하고 일부 재축적을 가능하게 하지만, 잔여 차질과 낮은 출발 재고는 균형 완화를 제한한다. 세계 수요는 소폭 회복해도 운송연료 약세가 남고, 중국의 구매 재개는 재고 보충과 정유 투입에 먼저 나타나 최종소비 회복은 지연된다. 금융과 투기는 기관의 직접 근거가 없으므로 실물 Event를 금융지표나 투기 포지션의 증거로 바꾸지 않는다. 지정학적 통항은 개선되어 공급 접근성이 높아지지만, 항로의 재중단과 정유 복구 지연은 계속된 위험이다. 전개경로는 공급 회복 → 재고 인출 완화 → 수요 회복 지연이다. 이 조합으로 유가는 보합이며, 다음 전환은 재고가 일시 반등을 넘어 지속 재축적으로 바뀌는지와 항로·정유 회복이 동행하는지에 달려 있다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 원유 구매의 제한적 재개와 최종수요 회복 지연"],[["demand","수요는 전월보다 소폭 회복하지만 세계 운송연료와 석유화학 원료의 약세로 기준선 아래에 머문다. 비OPEC 공급과 항로 회복은 정유 투입을 뒷받침하고 중국 구매를 늘릴 수 있으나, 낮은 가동률과 미온적 내수가 최종소비 전달을 늦춘다. 다음 신호는 중국 수입 반등이 제품 판매와 소비 증가로 이어지는지, 세계 수요의 불균등한 안정화가 지속되는지다.",["GS","S&P"]],["supply","공급은 비OPEC 증산과 통항 개선이 누적되어 전월보다 강화되지만 잔여 차질이 완전히 사라지지는 않는다. 실제 도착 물량과 정유 투입 증가가 공급 부족을 보완해 재고 인출을 줄이지만, 지역 병목과 재중단 위험이 회복 폭을 제한한다. 다음 신호는 생산 증가가 계획이 아니라 실제 수출로 전환되고 항로 회복이 연속성을 보이는지다.",["GS","JPM"]],["inventory","재고는 공급 회복이 전달되면서 전월보다 소폭 증가하고, 추가 인출에 대한 압박은 약해진다. 수출 물량 도착과 정유가동 개선이 원유·제품 부족분을 보충하지만, 낮은 글로벌 가시 재고는 아직 충분한 완충력을 제공하지 못한다. 다음 신호는 미국 재고의 반등이 일시 현상에 그치지 않고 세계 재고 재축적으로 이어지는지다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 없어 금융 여건의 방향을 확인할 수 없다. 공급 회복과 재고 증가 가능성은 물리적 균형의 근거이며 금융지표의 변화나 가격 움직임을 금융의 직접 증거로 해석하지 않는다. 다음 확인 신호는 기관이 금융 경로를 직접 제시하는지이며, 그 전까지 금융 축은 실물 분석과 분리된다.",[]],["speculation","투기는 기관의 직접 전망과 포지션 근거가 없어 확인된 상태를 부여하지 않는다. 실물 공급 증가와 긴축 완화는 투기 포지션의 원인이나 증거로 단정할 수 없고, 현물가격과 위험 프리미엄도 이를 대신하지 않는다. 다음 신호는 기관이 관리 포지션의 변화를 직접 설명하는지이며 그때까지는 실물 흐름만 판단 근거로 유지한다.",[]],["geopolitics","지정학은 항로 통항이 전월보다 개선되어 위험이 완화되지만 중동·흑해의 잔여 차질은 지속된다. 사건의 완화는 선적 지연과 우회 운송을 줄여 공급 접근성을 높이지만, 정유시설 복구와 실제 도착 물량 증가는 별도의 전달 단계다. 다음 신호는 항로 정상화가 이어지고 정유소 가동과 제품 공급 회복으로 연결되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+6","하락","비OPEC 증산과 항로 정상화가 누적되면서 공급 회복이 중동 손실을 더 크게 보완하고 실물 균형을 완화한다. 공급 초과가 일부 지역에 전달되면 재고 인출은 줄고 재축적 가능성이 높아지지만, 잔여 차질과 정유 복구 지연은 완전한 정상화를 막는다. 수요는 부분 회복을 이어가도 EV 확산과 운송연료 약세로 공급 증가를 모두 흡수하지 못한다. 금융과 투기는 기관의 직접 근거가 없으므로 물리적 Event를 금융지표나 포지션 변화의 직접 증거로 간주하지 않는다. 지정학은 통항 정상화가 진전되지만 재중단 위험이 남아 공급 접근성과 운송 신뢰성을 완전히 회복시키지는 못한다. 전개경로는 증산·항로 정상화 → 재고 축적 → 수요 흡수 부족이다. 실물 공급과 재고의 개선이 수요 약세를 상회해 유가는 하락하며, 다음 전환은 재고 축적의 지속성과 잔여 차질·정유 복구의 실제 해소 여부다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 원유 구매의 제한적 재개와 최종수요 회복 지연"],[["demand","수요는 부분 회복을 이어가지만 EV 확산과 운송연료 약세로 공급 증가를 충분히 흡수하지 못한다. 중국 구매와 정유 투입이 회복되어도 최종소비의 전달이 제한되어 아시아와 석유화학 원료 중심의 회복에 머문다. 다음 신호는 중국 휘발유 소비가 수입 증가와 동행하는지, 세계 수요가 공급 회복을 따라가는지다.",["GS","S&P"]],["supply","공급은 비OPEC 증산과 항로 정상화가 누적되어 전월보다 강화되고, 중동 손실을 보완하는 물량 도착이 늘어난다. 공급 증가가 수요 증가를 웃돌면 재고 인출이 멈추지만 잔여 차질과 정유시설 복구 지연이 지역별 회복을 제한한다. 다음 신호는 실제 생산·수송 증가가 정유 투입과 제품 공급으로 지속 연결되는지다.",["JPM"]],["inventory","재고는 공급 회복이 수요를 웃돌면서 전월보다 증가하고 재고 완충력이 개선된다. 항로 정상화와 비OPEC 물량 도착이 원유 및 제품 인출을 줄여 재축적을 돕지만, 낮은 초기 재고와 잔여 차질은 회복 속도를 늦춘다. 다음 신호는 재고 증가가 일시 반등을 넘어 지속되는지와 글로벌 가시 재고가 함께 회복되는지다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 확인되지 않아 유가 하락을 금융 경로로 설명할 수 없다. 공급 증가와 재고 축적은 물리적 수급의 결과이며 금융지표, 현물가격 또는 위험 프리미엄을 금융의 직접 증거로 전환하지 않는다. 다음 신호는 금융 여건에 대한 기관의 별도 근거가 제시되는지이며, 없으면 실물 경로와 구분한다.",[]],["speculation","투기는 기관의 직접 전망이 없어 포지션 방향을 확인된 사실로 서술할 수 없다. 공급 회복과 가격 하락은 실물 균형의 변화로 설명되지만 투기 포지션의 직접 증거가 아니며, 현물가격이나 위험 프리미엄도 대체 근거가 아니다. 다음 신호는 관리 포지션에 대한 기관 설명이 새로 확인되는지다.",[]],["geopolitics","지정학은 호르무즈와 주요 항로의 통항 정상화가 진전되지만 공격과 재중단 위험이 남아 있는 상태다. 사건의 완화는 운송 지연과 공급 접근성 제약을 줄이지만 정유소 복구와 물량의 실제 도착은 별도의 물리적 전달 과정이다. 다음 신호는 정상화가 연속적으로 유지되고 정유가동·제품 수출 회복으로 이어지는지다.",["EIA","S&P"]]],["EIA","JPM","S&P"]],["M+7","하락","비OPEC 증산과 부분적 항로 회복이 실물 공급 접근성을 높이는 가운데, 세계 수요는 불완전한 회복에 머물고 중국 구매 재개도 재고 보충 성격이 강하다. 중국 EV 확산은 운송연료 수요의 회복을 더 제약해 공급 증가가 수요를 웃도는 균형을 만든다. 재고는 인출 압력이 완화되고 재축적 가능성이 커지지만, 지역별 정유·운송 복구가 고르지 않아 완충력 개선은 제한적이다. 금융과 투기는 직접 기관 근거가 없어 유가 방향의 독립 근거로 사용할 수 없다. 지정학적으로 항로는 일부 회복되지만 잔여 차질과 재중단 위험이 공급 접근성과 정유 투입을 계속 제약한다. 유가는 실물 균형 완화와 수요 약세의 영향으로 하락한다. 전개경로는 비OPEC 증산 → 항로 부분 회복 → 수요 약세·EV 억제 → 실물 균형 완화다. 다음 전환 신호는 수송 회복이 지속되고 중국 구매가 최종소비로 이어지는지 여부다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 원유 구매의 제한적 재개와 최종수요 회복 지연","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 중국의 제한적 구매 재개에도 세계적 약세와 EV 확산으로 전월보다 회복 탄력이 약하다. 비OPEC 공급 확대가 가격 압박을 낮추더라도 운송연료와 미온적 최종소비가 정유 투입과 구매의 전달을 늦춘다. 다음 신호는 중국 수입과 정유가동 반등이 실제 제품 판매로 이어지는지, 운송연료 약세가 완화되는지다.",["S&P"]],["supply","공급은 비OPEC 증산과 부분적 항로 회복으로 전월보다 강화되지만 완전한 정상화는 아니다. 항로 접근성이 높아져 원유 도착과 정유 투입이 늘고, 수요 약세가 추가 물량을 흡수하지 못해 실물 균형 완화로 연결된다. 다음 신호는 회복된 수송이 일시적이지 않은지와 잔여 정유·물류 차질이 줄어드는지다.",["JPM"]],["inventory","재고는 공급 회복과 제한된 수요가 맞물려 인출 압력이 낮아지고 재축적 쪽으로 기운다. 다만 항로와 정유시설의 지역별 복구가 고르지 않아 도착 물량이 즉시 가시 재고와 제품 재고로 전환되지는 않는다. 다음 신호는 재고 감소가 실제로 멈추고 여러 지역에서 재축적이 이어지는지다.",["JPM","S&P"]],["financial","금융 축은 기관의 직접 전망이 확인되지 않아 이번 달 상태를 독립적으로 판정할 근거가 없다. 공급 회복과 수요 약세는 실물 경로이지만 현물가격이나 위험 프리미엄을 금융지표로 해석하거나 대체할 수 없다. 다음 신호도 금융기관의 직접적인 통화·금리 경로 제시가 확인되는지로 제한한다.",[]],["speculation","투기 축은 기관의 직접 포지션 근거가 없어 방향을 독립적으로 확정할 수 없다. 유가 하락은 공급 증가와 수요 제약의 물리적 균형에서 나오며, 이를 투기 포지션의 증거로 바꾸지 않는다. 다음 신호는 기관이 관리형 자금이나 포지션 변화를 직접 제시하는지로 한정한다.",[]],["geopolitics","지정학은 호르무즈·홍해·흑해의 위험이 완화되는 쪽이지만 잔여 차질은 남아 있다. 부분적 항로 회복은 선적 지연과 지역별 도착량을 개선해 공급 접근성을 높이지만, 사건 자체의 재개·재중단 가능성과 정유 복구는 별도로 남는다. 다음 신호는 수송 회복의 지속성과 정유시설 가동 정상화가 함께 확인되는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+8","하락","비OPEC 증산과 물류 회복이 이어지면서 시장 접근 가능한 공급은 전월보다 더 개선되지만, 일부 항로와 정유시설에는 잔여 제약이 남는다. 세계 수요는 운송연료 약세가 지속되고 중국 EV 확산이 구조적 억제를 강화해 공급 증가를 충분히 흡수하지 못한다. 중국 구매가 회복되더라도 최종소비보다 재고 보충과 정유 투입의 성격이 앞선다. 재고는 공급 초과가 전달되며 인출 압력이 약해지고 재축적 가능성이 높아진다. 금융과 투기는 직접 기관 근거가 없으므로 실물 사건의 결과를 금융지표나 포지션 변화로 확대 해석하지 않는다. 지정학적 정상화는 위험 프리미엄을 낮추지만 재중단 위험 때문에 공급 접근성의 회복은 비대칭적이다. 유가는 하락한다. 전개경로는 항로 회복 지속 → 공급 증가 → EV에 따른 수요 제약 → 재고 완충이다. 다음 전환 신호는 공급 물량이 실제 재고 재축적으로 이어지는지와 잔여 차질이 축소되는지다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 운송연료 약세와 중국 EV 확산이 이어져 전월의 제약이 지속되며, 부분 회복은 석유화학과 아시아 구매에 치우친다. 공급 회복은 가격 부담을 낮추지만 최종소비가 약해 정유 투입 증가가 세계 수요 확대로 충분히 전달되지 않는다. 다음 신호는 중국 구매 반등과 제품 판매가 함께 회복되는지다.",["S&P"]],["supply","공급은 비OPEC 생산 증가와 물류 회복이 지속되어 전월보다 강화된다. 실제 도착 물량과 정유 투입이 늘면서 제한된 수요를 상회하는 공급이 재고 인출을 줄이고 균형을 완화한다. 다음 신호는 항로 정상화가 연속적으로 유지되고 정유시설 복구가 동반되는지다.",["JPM"]],["inventory","재고는 공급 초과와 수요 제약의 전달로 인출 압력이 낮아져 전월의 재축적 흐름이 이어진다. 그러나 지역별 도착량과 제품 생산의 회복 속도가 달라 글로벌 재고와 특정 지역 재고의 개선은 일치하지 않을 수 있다. 다음 신호는 원유와 제품 재고가 함께 증가하는지다.",["JPM","S&P"]],["financial","금융은 기관의 직접 전망이 없어 전월과 마찬가지로 독립적인 상태 판단을 확정할 수 없다. 공급 회복에 따른 유가 하락은 물리적 수급의 결과이며 이를 통화, 금리 또는 금융시장 신호로 분류할 직접 근거는 없다. 다음 확인은 기관의 명시적 금융 경로가 새로 제시되는지다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 전월 대비 방향을 판단할 수 없는 상태다. 실물 공급 증가와 수요 약세가 유가 하락을 설명하지만, 가격 움직임을 투기 참여자의 포지션 변화로 전환해 해석하지 않는다. 다음 신호는 관리형 자금과 선물 포지션에 대한 직접 기관 서술이다.",[]],["geopolitics","지정학은 항로 정상화가 이어져 위험이 낮아지는 흐름이지만, 공격과 재중단 가능성이 완전히 사라진 것은 아니다. 회복된 통항은 선적 지연을 줄여 공급 접근성과 정유 투입을 개선하며 사건 자체의 완화와 물류 전달을 구분해야 한다. 다음 신호는 통항의 지속성과 정유소 복구의 실제 물량 전환이다.",["EIA"]]],["GS","JPM","S&P"]],["M+9","보합","비OPEC 공급 증가와 항로 회복은 지속되지만, 수요 회복도 일부 진행되어 전월처럼 공급 초과가 일방적으로 확대되지는 않는다. 중국과 아시아의 구매가 늘어도 EV 확산과 운송연료 약세로 최종소비 전달은 제한되고, 회복의 구성은 석유화학 원료에 기울어진다. 재고는 완만한 재축적을 유지해 물리적 완충력을 높이지만 공급 회복과 수요 흡수가 균형을 이룬다. 금융과 투기는 직접 기관 근거가 없으므로 유가 흐름을 설명하는 독립 변수로 사용하지 않는다. 지정학은 잔여 차질이 약화되어 위험 프리미엄이 낮은 수준을 유지하나, 항로의 완전한 정상화와 정유 복구는 별도로 확인해야 한다. 유가는 보합이다. 전개경로는 공급 회복 → 수요 구성의 비대칭 → 재고 완충 → 유가 보합이다. 다음 전환 신호는 수요 회복이 운송연료로 확산되는지와 잔여 차질이 재확대되는지다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 아시아와 석유화학 원료 중심의 부분 회복이 이어지지만 운송연료 약세와 EV 대체로 전반적 확장은 제한된다. 공급 회복이 구매 여력을 높여도 최종소비가 충분히 따라오지 않아 실물 균형은 중립에 가까워진다. 다음 신호는 수입 증가가 운송연료 소비와 동행하는지다.",["S&P"]],["supply","공급은 비OPEC 증산과 항로 회복이 지속되어 시장 접근성이 개선된 상태를 유지한다. 늘어난 도착 물량은 일부 수요 회복으로 흡수되지만 잔여 차질이 남아 공급 여유가 과도하게 확대되지는 않는다. 다음 신호는 생산·수송 증가가 재고 재축적을 계속 지지하는지다.",["EIA","JPM"]],["inventory","재고는 공급 증가와 제한적인 수요 회복이 맞물려 완만한 재축적을 유지하며 완충력을 높인다. 다만 제품별 수요와 지역별 물류가 다르므로 전체 재고 개선이 모든 현물시장의 여유를 뜻하지는 않는다. 다음 신호는 원유와 정제제품 재고의 동반 증가가 지속되는지다.",["JPM","S&P"]],["financial","금융은 여전히 기관의 직접 전망이 확인되지 않아 방향과 전이를 독립적으로 판정할 수 없다. 보합 유가는 공급 회복과 수요 회복이 맞서는 실물 결과이며 금융지표나 위험 프리미엄의 직접 증거로 볼 수 없다. 다음 신호는 기관이 통화와 금리의 석유시장 전달을 명시하는지다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 전월과 같이 방향을 확정할 수 없다. 유가 보합은 물리적 공급 증가가 부분 수요 회복으로 흡수되는 균형을 반영할 뿐 투기 포지션의 안정이나 전환을 입증하지 않는다. 다음 신호는 기관의 직접적인 포지션 자료 제시다.",[]],["geopolitics","지정학은 잔여 수송·정유 차질이 약화되면서 전월보다 안정된 상태를 유지한다. 항로 접근성 개선은 도착 물량과 정유 투입을 늘리지만, 사건의 재개·재중단과 시설 복구 속도는 서로 다른 전달 단계로 남는다. 다음 신호는 통항 안정과 정유 가동 회복이 동시에 지속되는지다.",["EIA"]]],["JPM","S&P"]],["M+10","보합","비OPEC 증산과 부분적 항로 회복이 진행되는 가운데 세계 석유수요는 불완전한 회복과 약세를 함께 보인다. 중국의 EV 확산은 운송연료 수요의 상단을 제한해 공급 증가가 가격에 전달되는 폭을 줄인다. 실물 공급이 수요를 소폭 웃돌면 재고 인출 압력은 완화되지만, 잔여 차질로 완충력 회복은 제한된다. 전개경로는 비OPEC 증산 → 항로 부분 회복 → 재고 감소 압력 완화다. 금융과 투기는 기관의 직접 근거가 없어 현물가격이나 위험 프리미엄을 금융지표와 포지션의 증거로 해석할 수 없다. 지정학적 위험은 약화되지만 항로 재중단 가능성이 공급 접근성과 운송 신뢰성을 제약한다. 따라서 유가는 보합이며, 다음 전환은 실제 물량 도착과 재고 감소 둔화가 함께 확인되는지에 달려 있다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 석유화학과 아시아 중심의 부분 회복이 이어지지만 운송연료 약세와 EV 확산으로 상단이 제한된다. 비OPEC 공급 증가와 항로 회복은 구매 가능 물량을 늘리지만 최종소비 회복이 약해 수요가 이를 모두 흡수하지는 못한다. 다음 신호는 운송연료 소비와 중국의 구매·정유가동이 함께 개선되는지 여부다.",["S&P"]],["supply","공급은 비OPEC 생산 증가와 부분적 항로 회복으로 전월보다 완화되지만 잔여 차질이 남아 완전한 정상화는 아니다. 도착 물량과 정유 투입이 늘어 수요를 웃돌면 재고 인출이 둔화되지만, 항로 재중단은 지역별 공급 압박을 되살릴 수 있다. 다음 신호는 회복이 일시적 선적 증가를 넘어 연속적인 물량 도착으로 이어지는지다.",["EIA","JPM"]],["inventory","재고는 공급 회복으로 감소 압력이 약해지지만 낮은 글로벌 가시 재고의 완충력은 아직 충분히 회복되지 않는다. 수요가 약한 가운데 도착 물량과 정유 투입이 늘면 인출 속도가 낮아지지만, 잔여 차질이 지속되면 지역 재고가 다시 사용된다. 다음 신호는 세계 재고 감소 둔화와 미국 재고의 재감소 여부를 함께 확인하는 것이다.",["JPM","S&P"]],["financial","금융은 이 기간 기관의 직접 전망이나 유효한 금융 축 근거가 없어 판단을 확정할 수 없다. 실물 공급과 재고 변화는 유가와 위험 프리미엄에 영향을 줄 수 있지만 이를 금융지표의 직접 신호로 바꿀 근거는 없다. 다음 확인은 별도의 기관 금융 근거가 제시되는지이며, 그 전에는 실물 경로와 분리해 둔다.",[]],["speculation","투기는 기관의 직접 전망이나 포지션에 관한 유효 근거가 없어 방향을 판정하지 않는다. 공급 회복과 수요 약세가 현물시장의 긴축을 완화할 수 있지만 현물가격이나 위험 프리미엄을 투기 포지션의 직접 증거로 볼 수 없다. 다음 신호는 기관이 명시한 포지션 자료가 새로 확인되는지 여부다.",[]],["geopolitics","지정학은 호르무즈·홍해·흑해의 잔여 위험이 약화되는 단계지만 항로 재중단 가능성은 남아 있다. 사건의 완화가 곧바로 정상 운송을 뜻하지 않으며, 실제 접근성은 선적 재개와 정유시설 복구를 거쳐야 공급으로 전달된다. 다음 신호는 항로 회복이 연속성을 확보하고 정유 투입 증가로 이어지는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+11","보합","비OPEC 생산 증가와 항로 회복이 누적되면서 시장 접근 가능한 공급은 계속 늘어난다. 세계 수요는 아시아와 석유화학 중심으로 일부 회복되지만 운송연료 약세가 지속되어 공급 증가를 완전히 흡수하지 못한다. 그 결과 재고 인출 압력은 낮아지고 일부 지역에서는 재고가 늘어 실물 긴축이 완화된다. 전개경로는 공급 증가 → 수요의 제한적 흡수 → 재고 완화다. 금융은 기관의 직접 근거가 없으므로 현물가격과 위험 프리미엄을 금융 조건의 증거로 사용하지 않는다. 투기도 직접 기관 근거가 없어 실물 균형 변화와 분리해 판단한다. 지정학은 제한적 잔여 차질로 약화되어 유가는 보합을 유지하며, 다음 전환은 공급 회복과 재고 증가가 실제로 지속되는지다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 아시아와 석유화학 원료를 중심으로 소폭 회복되지만 운송연료와 최종소비의 약세가 남아 있다. 공급과 항로가 개선되어 구매 가능 물량이 늘어도 제한적인 수요 회복이 증가분을 일부만 흡수해 균형 완화를 만든다. 다음 신호는 수입 증가가 실제 제품 판매와 최종소비로 이어지는지다.",["S&P"]],["supply","공급은 비OPEC 증산과 신뢰성 높은 항로 회복이 누적되어 전월보다 개선된다. 도착 물량과 정유가동이 늘어 약한 수요를 상회하면 재고 재축적이 시작되지만 잔여 차질은 회복 속도를 늦춘다. 다음 신호는 생산 증가가 실제 선적과 제품 공급으로 지속 전환되는지다.",["JPM","S&P"]],["inventory","재고는 공급 증가가 수요 증가를 웃돌면서 감소 압력이 약해지고 일부 재축적이 나타난다. 낮은 수요와 개선된 도착 물량이 인출을 줄이지만, 정유시설 복구가 지연되면 제품 재고의 회복은 원유보다 느릴 수 있다. 다음 신호는 글로벌 가시 재고와 정제제품 재고가 함께 늘어나는지다.",["GS","JPM"]],["financial","금융은 기관의 직접 전망이 없어 금융 조건의 방향을 확인할 수 없는 상태다. 실물 균형 완화가 유가 변동을 낮출 가능성은 있으나, 현물가격이나 위험 프리미엄을 금융지표로 분류할 직접 근거는 없다. 다음 확인은 기관이 금융 변수나 시장 전달을 직접 설명하는지 여부다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 방향이나 강도를 확정하지 않는다. 공급 회복과 재고 개선은 실물 긴축을 완화하지만, 그 자체가 투기 포지션 변화의 증거가 되지는 않는다. 다음 신호는 검증 가능한 기관 포지션 자료가 제시되는지이며 그 전까지는 실물 축과 분리한다.",[]],["geopolitics","지정학은 항로와 생산시설의 잔여 차질이 제한적으로 남아 전월보다 약화된다. 사건 위험이 낮아져도 운송 정상화는 선적의 연속성과 정유시설 복구가 확인될 때에만 시장 접근성으로 전달된다. 다음 신호는 재개와 재중단의 반복이 줄고 안정적인 물량 도착이 이어지는지다.",["EIA","S&P"]]],["GS","JPM","S&P"]],["M+12","보합","비OPEC 증산과 부분적 항로 회복은 지속되지만 잔여 차질이 남아 공급의 완전한 정상화는 아니다. 세계 수요는 아시아와 석유화학 중심의 회복을 이어가도 EV 확산으로 운송연료 수요가 구조적으로 억제된다. 공급이 제한적인 수요 증가를 웃돌면서 재고는 완만하게 재축적되고 추가 충격에 대한 완충력은 높아진다. 전개경로는 항로 회복 → 공급 균형 완화 → 재고 재축적이다. 금융과 투기는 기관의 직접 근거가 없으므로 유가나 위험 프리미엄에서 금융 조건과 포지션을 추론하지 않는다. 지정학적 잔여 차질과 항로 재중단 위험은 하방을 제한하지만 공급 접근성은 개선된다. 따라서 유가는 보합이며, 다음 전환은 재고 재축적의 지속과 잔여 차질의 해소 여부다.",["비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화","세계 석유수요의 불완전한 회복과 약세 지속","중국 EV 확산에 따른 석유수요 구조적 억제 강화"],[["demand","수요는 아시아와 석유화학 중심의 회복을 지속하지만 EV 확산으로 운송연료의 증가 폭은 제한된다. 중국 구매나 정유가동이 개선되어도 구조적 연료 대체가 최종소비 전달을 약화해 공급 증가를 모두 흡수하지 않는다. 다음 신호는 원유 구매 반등이 휘발유 소비와 실제 국내 수요로 이어지는지다.",["EIA","S&P"]],["supply","공급은 비OPEC 증산과 부분적 항로 회복이 이어져 실물 균형을 완화하지만 잔여 차질과 정유 복구 지연이 남는다. 시장 접근 물량이 제한적인 수요 증가를 웃돌면 재고가 재축적되지만 항로가 다시 막히면 이 완화는 되돌려질 수 있다. 다음 신호는 항로 회복의 연속성과 정유시설 가동 정상화다.",["JPM","S&P"]],["inventory","재고는 공급 회복과 제한적인 수요 증가의 조합으로 완만한 재축적을 보이며 완충력이 개선된다. 원유 도착과 정유 투입이 꾸준하면 인출 압력이 줄지만 잔여 차질이나 제품 공급 병목은 재고 범주별 회복을 다르게 만든다. 다음 신호는 글로벌·제품 재고 증가가 일시적 반등을 넘어 지속되는지다.",["JPM","S&P"]],["financial","금융은 여전히 기관의 직접 전망이 없어 금융 축의 상태를 새로 합성하지 않는다. 실물 공급 회복과 재고 재축적은 유가 방향에 영향을 줄 수 있지만 현물가격과 위험 프리미엄은 금융지표의 직접 증거가 아니다. 다음 확인은 기관의 직접 금융 근거가 추가되는지 여부다.",[]],["speculation","투기는 기관의 직접 포지션 근거가 없어 전월의 판단 한계를 유지한다. 수급 완화가 시장 심리에 영향을 줄 수 있어도 현물가격이나 위험 프리미엄을 투기 활동으로 전환해 해석할 수는 없다. 다음 신호는 기관이 확인 가능한 포지션 변화와 그 메커니즘을 직접 제시하는지다.",[]],["geopolitics","지정학은 잔여 차질과 항로 재중단 위험이 남아 있지만 전반적인 운송 접근성은 개선된 상태다. 사건 자체의 완화와 실제 공급 전달은 구분해야 하며, 선적의 연속성과 정유시설 복구가 확인되어야 지역 공급 신뢰성이 높아진다. 다음 신호는 잔여 차질이 줄고 교역 흐름이 분쟁 전 경로에 가까워지는지다.",["EIA"]]],["JPM","S&P"]]]}];
@@ -2493,46 +2617,97 @@
           }));
       }
 
-      const scenarioAssumptions = [
-        { key: "공급 차질 지속 기간",
-          cells: [ ["dir-up", "중기까지 지속 뒤 M+4~5부터 비OPEC 증산·항로 회복으로 재균형"],
-                   ["dir-flat", "제한적·단기 차질. 이른 시점부터 정유 복구·재고 재축적"],
-                   ["dir-down", "가장 오래 지속(M+8 전후까지). 잔여 차질이 끝까지 남음"] ], hot: [2] },
-        { key: "결정적 수요 가정",
-          cells: [ ["dir-down", "중국 EV 확산發 운송연료 수요의 구조적 약화가 후반을 지배"],
-                   ["dir-up", "아시아·석유화학 수요가 완만히 강화되며 증가분을 흡수"],
-                   ["dir-flat", "EV 억제와 불완전 회복이 병존 — 증가분을 일부만 흡수"] ], hot: [0, 1] },
-        { key: "재고 재축적",
-          cells: [ ["dir-down", "강한 재축적(공급 정상화 + 수요 약세) → 완충력 급개선"],
-                   ["dir-flat", "완만 — 수요 증가가 물량 흡수해 축적 속도 제한"],
-                   ["dir-flat", "완만 — 잔여 차질·제품 병목으로 범주별 회복 차이"] ], hot: [0] },
-        { key: "최종(M+12) 방향",
-          cells: [ ["dir-down", "하락 — 공급 정상화 + 구조적 수요 약세"],
-                   ["dir-flat", "보합 — 공급·수요 재균형"],
-                   ["dir-flat", "보합 — 항로 회복 뒤 균형 완화"] ], hot: [] },
-        { key: "발생 확률 · seeds",
-          cells: [ ["plain", "53.3% · 16 seeds (대표 512041)"],
-                   ["plain", "13.3% · 4 seeds (대표 1107721)"],
-                   ["plain", "33.3% · 10 seeds (대표 713681)"] ], hot: [] },
+      /* ---- event -> assumption category (explicit map; no fuzzy matching) ---- */
+      const EVENT_CATEGORY = {
+        "중동 항로·정유시설의 간헐적 공급 제약 지속": "supply",
+        "제한된 항로·정유 차질과 재고 인출의 단기 지속": "supply",
+        "주요 항로의 간헐적 차질 지속": "supply",
+        "중동 수송 및 정유 공급의 간헐적 차질 지속": "supply",
+        "낮은 글로벌 가시재고와 미국 상업재고의 추가 긴축": "invTight",
+        "낮은 글로벌 가시 재고와 미국 상업재고의 추가 압박": "invTight",
+        "세계 석유수요의 약세 지속과 불균등한 안정화": "demandWeak",
+        "세계 석유수요 약세 속 불균등한 안정화": "demandWeak",
+        "세계 석유수요의 불완전한 회복과 약세 지속": "demandWeak",
+        "중국 원유 구매의 제한적 반등과 최종수요 제약": "china",
+        "중국 구매의 단기 반등과 지속성 검증": "china",
+        "중국 원유 구매의 제한적 재개와 최종수요 회복 지연": "china",
+        "비OPEC 증산과 항로 회복에 따른 부분적 재균형": "easing",
+        "비OPEC 증산·역내 생산 회복에 따른 재고 재축적": "easing",
+        "비OPEC 증산과 부분적 항로 회복에 따른 실물 균형 완화": "easing",
+        "중국 EV 확산에 따른 운송용 석유수요 구조적 약화": "ev",
+        "중국 EV 확산에 따른 석유수요 구조적 억제 강화": "ev"
+      };
+      const CATEGORY_META = [
+        { key: "supply", label: "공급 차질 (항로·정유)", factor: "up", tone: "up" },
+        { key: "invTight", label: "재고 긴축 (가시·상업재고 인출)", factor: "up", tone: "up" },
+        { key: "china", label: "중국 구매 반등 (지속성 미검증)", factor: "mixed", tone: "mixed" },
+        { key: "easing", label: "비OPEC 증산·항로 회복 (재균형)", factor: "down", tone: "down" },
+        { key: "ev", label: "중국 EV 구조적 수요 약화", factor: "down", tone: "down" },
+        { key: "demandWeak", label: "세계 석유수요 약세 지속", factor: "down", tone: "down" }
       ];
+      const FACTOR_LABEL = { up: "유가 상승요인", down: "유가 하락요인", mixed: "양방향" };
+      const PATH_NOTE = {
+        "Base 경로": "항로 회복(M+4~)과 중국 EV 수요약화(M+4~)가 9개월 겹쳐 재고가 쌓임 → 세 경로 중 유일한 하락.",
+        "상승 경로": "EV 구조적 수요약화 이벤트가 없고 아시아·석유화학 수요가 공급 증가분을 흡수 → 보합.",
+        "대안 경로": "수요 약세가 전 구간(12개월) 이어지나 잔여 차질도 끝까지 남아 상·하방이 상쇄 → 보합."
+      };
+
+      function categoryMonths(path, catKey) {
+        const out = [];
+        path.months.forEach((m, idx) => {
+          if (m[3].some((name) => EVENT_CATEGORY[name] === catKey)) out.push(idx);
+        });
+        return out;
+      }
 
       function renderScenarioCompare() {
         const strip = document.getElementById("trajStrip");
         if (!strip) return;
-        const headCells = document.getElementById("trajHeadCells");
-        headCells.replaceChildren(...scenarioData[0].months.map((m) => {
-          const s = document.createElement("span"); s.textContent = m[0]; return s;
+        const labels = scenarioData[0].months.map((m) => m[0]);
+
+        // month header cells (trajectory + gantt)
+        ["trajHeadCells", "ganttHeadCells"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.replaceChildren(...labels.map((l) => {
+            const s = document.createElement("span"); s.textContent = l; return s;
+          }));
+        });
+
+        // ---- path summary cards ----
+        const cards = document.getElementById("pathCards");
+        cards.replaceChildren(...scenarioData.map((path) => {
+          const card = document.createElement("article");
+          card.className = `path-card ${dirClass(path.terminal)}`;
+          const top = document.createElement("div"); top.className = "pc-top";
+          const nm = document.createElement("span"); nm.className = "pc-name"; nm.textContent = path.role;
+          const tm = document.createElement("span");
+          tm.className = `pc-term ${dirClass(path.terminal)}`;
+          tm.textContent = `M+12 ${path.terminal}`;
+          top.append(nm, tm);
+          const meta = document.createElement("p"); meta.className = "pc-meta";
+          meta.append(document.createTextNode("발생 확률 "));
+          const b = document.createElement("b"); b.textContent = `${path.probability.toFixed(1)}%`;
+          meta.append(b, document.createTextNode(` · ${path.seedCount} seeds · 대표 ${path.representativeSeed}`));
+          const note = document.createElement("p"); note.className = "pc-note";
+          note.textContent = PATH_NOTE[path.role] || "";
+          card.append(top, meta, note);
+          return card;
         }));
+
+        // ---- month-over-month direction trajectory ----
         strip.replaceChildren(...scenarioData.map((path) => {
           const row = document.createElement("div"); row.className = "traj-row";
           const label = document.createElement("div"); label.className = "traj-label";
           const name = document.createElement("span"); name.className = "tl-name";
-          const term = document.createElement("span");
-          term.className = `traj-term ${dirClass(path.terminal)}`; term.textContent = `M+12 ${path.terminal}`;
           name.append(document.createTextNode(path.role + " "));
-          const prob = document.createElement("span"); prob.className = "prob"; prob.textContent = `${path.probability.toFixed(1)}%`;
+          const prob = document.createElement("span"); prob.className = "prob";
+          prob.textContent = `${path.probability.toFixed(1)}%`;
+          const term = document.createElement("span");
+          term.className = `traj-term ${dirClass(path.terminal)}`;
+          term.textContent = `M+12 ${path.terminal}`;
           name.append(prob, term);
-          const sub = document.createElement("span"); sub.className = "tl-sub"; sub.textContent = `${path.seedCount} seeds`;
+          const sub = document.createElement("span"); sub.className = "tl-sub";
+          sub.textContent = "월별 전월 대비 방향";
           label.append(name, sub);
           const cells = document.createElement("div"); cells.className = "traj-cells";
           path.months.forEach((m) => {
@@ -2546,28 +2721,141 @@
           return row;
         }));
 
-        const grid = document.getElementById("assumeGrid");
-        const head = document.createElement("div"); head.className = "ag-head";
-        ["비교 가정", "Base 경로 · 하락", "상승 경로 · 보합", "대안 경로 · 보합"].forEach((h, i) => {
-          const s = document.createElement("span"); if (i === 1) s.className = "col-base"; s.textContent = h; head.append(s);
-        });
-        const cols = ["Base", "상승", "대안"];
-        const rows = scenarioAssumptions.map((r) => {
-          const row = document.createElement("div"); row.className = "ag-row";
-          const key = document.createElement("div"); key.className = "ag-key"; key.textContent = r.key; row.append(key);
-          r.cells.forEach(([tone, text], ci) => {
-            const cell = document.createElement("div");
-            cell.className = "ag-cell" + (r.hot.includes(ci) ? " hot" : "");
-            cell.setAttribute("data-col", cols[ci] + " 경로");
-            const pill = document.createElement("span");
-            pill.className = "pill " + (tone === "plain" ? "plain" : tone);
-            pill.textContent = tone === "dir-up" ? "상승" : tone === "dir-down" ? "하락" : tone === "dir-flat" ? "보합" : "요약";
-            cell.append(pill, document.createTextNode(" " + text));
-            row.append(cell);
+        // ---- assumption gantt ----
+        const body = document.getElementById("ganttBody");
+        const blocks = [];
+        CATEGORY_META.forEach((cat) => {
+          const per = scenarioData.map((p) => categoryMonths(p, cat.key));
+          if (!per.some((a) => a.length)) return;
+          const durations = per.map((a) => a.length);
+          const spread = Math.max(...durations) - Math.min(...durations);
+          const block = document.createElement("section");
+          block.className = "gantt-cat" + (spread >= 4 ? " spread-hi" : "");
+          const head = document.createElement("div"); head.className = "gantt-cat-head";
+          const h5 = document.createElement("h5"); h5.textContent = cat.label;
+          const f = document.createElement("span");
+          f.className = `factor ${cat.factor}`; f.textContent = FACTOR_LABEL[cat.factor];
+          head.append(h5, f);
+          if (spread >= 4) {
+            const tag = document.createElement("span");
+            tag.className = "spread-tag";
+            tag.textContent = `경로 간 차이 큼 · 최대 ${spread}개월`;
+            head.append(tag);
+          }
+          block.append(head);
+          scenarioData.forEach((p, pi) => {
+            const row = document.createElement("div"); row.className = "gantt-row";
+            const nm = document.createElement("span"); nm.className = "gr-name"; nm.textContent = p.role;
+            const cells = document.createElement("div"); cells.className = "gantt-cells";
+            const active = new Set(per[pi]);
+            p.months.forEach((m, idx) => {
+              const c = document.createElement("div");
+              c.className = "gantt-cell" + (active.has(idx) ? ` on-${cat.tone}` : "");
+              c.title = `${p.role} · ${m[0]} · ${active.has(idx) ? "활성" : "비활성"}`;
+              cells.append(c);
+            });
+            const win = document.createElement("span");
+            const a = per[pi];
+            if (!a.length) { win.className = "gr-win none"; win.textContent = "없음"; }
+            else { win.className = "gr-win"; win.textContent = `${labels[a[0]]}~${labels[a[a.length - 1]]} · ${a.length}개월`; }
+            row.append(nm, cells, win);
+            block.append(row);
           });
-          return row;
+          blocks.push(block);
         });
-        grid.replaceChildren(head, ...rows);
+        body.replaceChildren(...blocks);
+      }
+
+      /* ================= institution disagreement, axis by axis ================= */
+      const disagreementAxes = [
+        { axis: "정상화 속도 · 항로/수출 회복 시점", factor: "down",
+          why: "정상화가 빠를수록 공급이 돌아와 유가 하방. 기관이 ‘언제부터 회복’을 어디에 두는지가 가격 경로를 가릅니다.",
+          rows: [
+            { inst: "Goldman Sachs", dir: "up", s: 3, key: "긴장 완화 ≠ 정유소 정지 감소", detail: "새 미·이란 합의 확인 또는 공격 확대 전까지 차질이 빠르게 줄지 않는다고 봄" },
+            { inst: "S&P Global", dir: "down", s: 2, key: "8월 <em>10mb/d</em> → 9월 <em>11~12mb/d</em>", detail: "해협이 신뢰성 있게 열리면 30일 내 정유가동 회복. 재개·중단 반복 시 기준경로 미적용" },
+            { inst: "EIA", dir: "down", s: 3, key: "<em>9월</em> 회복 개시 → <em>2027년 초</em> 대부분 정상화", detail: "단 2027년 말까지 약 0.6mb/d 폐쇄 관련 차질 잔존 가정" },
+            { inst: "JPMorgan", dir: "neutral", s: 0, key: "정상화 시점 직접 제시 없음", detail: "중동 손실의 종료 시점을 공급 완충 지표와 함께 점검하라는 서술에 그침" }
+          ] },
+        { axis: "공급 완충력 · 비OPEC 증산", factor: "down",
+          why: "중동 손실을 비OPEC 물량이 얼마나 메우는가. 완충력을 크게 볼수록 유가 하방.",
+          rows: [
+            { inst: "Goldman Sachs", dir: "up", s: 3, key: "제한적 증산으로는 차질 보전 불가", detail: "정유시설 공격이 이어지면 발표된 증산량으로 차질을 메우기 어렵다고 판단" },
+            { inst: "S&P Global", dir: "neutral", s: 1, key: "생산능력보다 ‘도달’ 여부가 관건", detail: "항로를 통해 정유·소비지까지 안정적으로 도달하는지가 핵심이라는 입장" },
+            { inst: "EIA", dir: "down", s: 2, key: "2027년 초 생산·교역 대부분 회복", detail: "생산 복구와 재고 재축적이 2027년 $69 경로의 전제" },
+            { inst: "JPMorgan", dir: "down", s: 3, key: "비OPEC <em>+2.44mb/d</em> (전년比, 이번 10년 최고)", detail: "1H26 페르시아만 외 생산이 예상보다 +0.7mb/d 많았고 하반기·2027년에도 견조 전망" }
+          ] },
+        { axis: "재고 · 현재 인출 vs 향후 재축적", factor: "mixed",
+          why: "현재의 재고 인출은 상승요인, 향후 재축적 전망은 하락요인. 같은 ‘재고’라도 시점에 따라 방향이 반대입니다.",
+          rows: [
+            { inst: "Goldman Sachs", dir: "up", s: 3, key: "가시 재고 최근 2주 <em>−6.3mb/d</em>", detail: "현물 긴축 판단의 중심. 다만 전체 상업·전략 재고를 대표하는 수치는 아님" },
+            { inst: "JPMorgan", dir: "up", s: 3, key: "공급 손실 보전에 <em>6억 배럴</em> 인출 (5억 추적 가능)", detail: "차질이 없었다면 약 4억 배럴이 재고 증가로 갔을 것 — 완충력을 이미 소진했다는 의미" },
+            { inst: "S&P Global", dir: "up", s: 2, key: "원유·제품 재고 전쟁 전比 <em>−4.4억 배럴</em>", detail: "단 전쟁 완화 시 2027년부터 전략재고 재축적 예상 → 그 시점엔 하락요인으로 전환" },
+            { inst: "EIA", dir: "up", s: 2, key: "미 상업재고 5·6·7월 <em>−25/−15/−4mb</em>", detail: "2026년 말 5개년 최저 하회 전망. 단 9/2 실제 관측은 5개년 평균 +1%로 아직 미확인" }
+          ] },
+        { axis: "수요 · 수준과 구조", factor: "down",
+          why: "수요가 약할수록 유가 하방. 단기 반등과 중기 구조적 약화(EV)를 분리해 읽어야 합니다.",
+          rows: [
+            { inst: "Goldman Sachs", dir: "mixed", s: 2, key: "5월 저점 이후 반등 / 중국 EV는 2027 구조적 하방", detail: "단기 수요·높은 현물 프리미엄은 지지 요인, 중기 EV 침투는 하방 요인으로 병존" },
+            { inst: "JPMorgan", dir: "neutral", s: 0, key: "수요 직접 판단 없음", detail: "공급 손실·대체 생산·재고 인출 중심 리포트로 수요 방향을 덧붙이지 않음" },
+            { inst: "EIA", dir: "down", s: 1, key: "중국 정유 가동 감소로 세계 정제활동 저하", detail: "수요의 독립적 판단은 자제. 수송·정유 정상화가 경로를 좌우한다는 서술" },
+            { inst: "S&P Global", dir: "down", s: 3, key: "2026 수요 <em>103.9mb/d</em> (전년比 <em>−2.1mb/d</em>)", detail: "2027년 약 +3mb/d 회복해도 전쟁 전 예상 경로에는 미달" }
+          ] },
+        { axis: "지정학 · 항로 차질의 현재 크기", factor: "up",
+          why: "차질 규모를 크게 볼수록 현재 긴축을 강하게 판단 — 유가 상승요인. 네 기관 모두 상승이지만 근거 수치가 다릅니다.",
+          rows: [
+            { inst: "EIA", dir: "up", s: 3, key: "호르무즈 2Q26 <em>4.9mb/d</em> (4Q25 21.6 대비 <em>−77%</em>)", detail: "바브엘만데브 우회가 8.1mb/d로 늘었으나 병목 자체는 해소되지 않음" },
+            { inst: "JPMorgan", dir: "up", s: 3, key: "3~7월 중동 손실 <em>19억 배럴</em> (<em>12.6mb/d</em>)", detail: "손실 규모 추정치가 네 기관 중 가장 큼" },
+            { inst: "Goldman Sachs", dir: "up", s: 3, key: "페르시아만 흐름 전쟁 전의 <em>36%</em> (약 9mb/d)", detail: "러시아 정유 가동중단도 최근 3.8mb/d 수준으로 병행 제시" },
+            { inst: "S&P Global", dir: "up", s: 2, key: "수출 재개·중단 <em>반복</em>을 전제", detail: "해협 재개 ‘선언’보다 안정된 흐름이 유지되는지가 관건이라는 조건부 서술" }
+          ] },
+        { axis: "가격 전망 (결론)", factor: "mixed",
+          why: "위 가정들이 합쳐진 결과값. 같은 8/3 기준점 $83.77에서 출발해 2027년에 $69와 $81로 갈립니다.",
+          rows: [
+            { inst: "S&P Global", dir: "up", s: 2, key: "2H26 Dated Brent <em>$87.5</em> (85–90) · 2027 <em>$81</em>", detail: "기준 시나리오. 장기 공급 손실 시 상방 재시험 위험 별도 제시" },
+            { inst: "Goldman Sachs", dir: "up", s: 2, key: "<em>$80–90</em> 조건부 · 현물 공정가치 $80 · 36M $76", detail: "확정 전망이 아니라 합의 확인·공격 확대 여부에 달린 조건부 범위" },
+            { inst: "JPMorgan", dir: "neutral", s: 0, key: "직접 가격 전망 없음", detail: "8월 입력 자료에 가격 경로가 포함되지 않음" },
+            { inst: "EIA", dir: "down", s: 3, key: "2027 Brent 평균 <em>$69</em>", detail: "재고 재축적과 생산 복구가 실현될 때 성립하는 조건부 가격 경로" }
+          ] }
+      ];
+
+      function renderDisagreementAxes() {
+        const host = document.getElementById("disagreementAxes");
+        if (!host) return;
+        const score = (r) => (r.dir === "up" ? 1 : r.dir === "down" ? -1 : r.dir === "mixed" ? 0.3 : 0) * (r.s || 0);
+        const dirLabel = { up: "상승", down: "하락", mixed: "혼조", neutral: "중립" };
+        host.replaceChildren(...disagreementAxes.map((ax) => {
+          const card = document.createElement("article"); card.className = "daxis";
+          const head = document.createElement("div"); head.className = "daxis-head";
+          const h4 = document.createElement("h4"); h4.textContent = ax.axis;
+          const f = document.createElement("span");
+          f.className = `factor ${ax.factor}`; f.textContent = FACTOR_LABEL[ax.factor];
+          head.append(h4, f);
+          const why = document.createElement("p"); why.className = "daxis-why"; why.textContent = ax.why;
+          const rows = document.createElement("div"); rows.className = "daxis-rows";
+          ax.rows.slice().sort((a, b) => score(b) - score(a)).forEach((r) => {
+            const row = document.createElement("div"); row.className = "drow";
+            const inst = document.createElement("span"); inst.className = "d-inst"; inst.textContent = r.inst;
+            const dir = document.createElement("span");
+            dir.className = `d-dir ${r.dir}`; dir.textContent = dirLabel[r.dir];
+            const bar = document.createElement("span");
+            bar.className = `d-bar ${r.dir === "neutral" ? "" : r.dir}`;
+            bar.setAttribute("aria-label", `상대 강도 ${r.s}/3`);
+            bar.title = `상대 강도 ${r.s}/3`;
+            for (let k = 1; k <= 3; k += 1) {
+              const pip = document.createElement("i");
+              if (k <= r.s) pip.className = "f";
+              bar.append(pip);
+            }
+            const copy = document.createElement("span"); copy.className = "d-copy";
+            const key = document.createElement("span"); key.className = "d-key"; key.innerHTML = r.key;
+            const det = document.createElement("span"); det.className = "d-detail"; det.textContent = r.detail;
+            copy.append(key, det);
+            row.append(inst, dir, bar, copy);
+            rows.append(row);
+          });
+          card.append(head, why, rows);
+          return card;
+        }));
       }
 
       // Colorize the scenario narrative direction badge by its text (no edit to existing fn)
@@ -2583,9 +2871,9 @@
       })();
 
       renderStancePanel();
+      renderDisagreementAxes();
       renderScenarioCompare();
 
-      renderIndicatorCharts();
       renderPriceChart();
       renderScenario();
       activateDashboardTab("market");
