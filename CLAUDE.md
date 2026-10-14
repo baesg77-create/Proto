@@ -14,6 +14,18 @@
 
 이 순서를 어기고 "레포에 있는 최신 파일 = 오늘"로 추론하면, 실제로는 어제 날짜인데 오늘 작업을 건너뛰는 오류가 발생한다 (2026-07-16 실행 시 실제 발생한 사례).
 
+## 일일 시황 스크리닝 루틴 — 뉴스 수집 소스
+
+날짜 확정 후 뉴스를 수집할 때는 아래 도구들을 함께 사용해 소스를 다변화한다 (2026-10-14 `korean-news-mcp` 추가 반영).
+
+- `mcp__PlayMCP__NaverSearch-*`: 네이버 뉴스 기반 검색 (기존 주력 소스)
+- `mcp__korean-news-mcp__korean_news`: 네이버 뉴스 RSS + Google News 한국판, 카테고리별(속보/정치/경제/사회/IT/세계/연예/스포츠) 조회
+- `mcp__korean-news-mcp__news_search`: 키워드 기반 뉴스 검색 (한국어/영어)
+- `mcp__korean-news-mcp__trending`: 실시간 트렌딩/헤드라인 뉴스
+- `mcp__korean-news-mcp__tech_news`, `daily_briefing`, `read_article`: 필요 시 보조적으로 활용 (AI/테크 뉴스, 종합 브리핑, 기사 본문 읽기)
+
+`korean-news-mcp`는 API 키 없이 동작하는 외부(서드파티) MCP 서버이므로, 네이버 소스와 겹치지 않는 Google News/Daum 등 보강 소스로 보조적으로 활용하고, 뉴스 신뢰도 판단 시 출처를 함께 명시한다.
+
 ## 주간 리포트 루틴 — 날짜 확정 절차 (필수)
 
 매주 월요일에 실행되는 "주간 시황 주제 추천" 작업(`weekly-topics/YYYY-MM-DD.md` 생성)도 일일 스크리닝과 동일한 날짜 착오 위험이 있다. 작업 시작 전 아래 절차를 반드시 따른다.
